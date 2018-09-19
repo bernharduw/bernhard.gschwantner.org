@@ -1,16 +1,10 @@
 import React from 'react';
-import { Link, graphql } from 'gatsby';
+import { Link, StaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import { Flex, Box, Image, Heading, Text } from 'rebass';
 import Layout from '../components/layout';
 
-const IndexPage = ({
-  data: {
-    image: {
-      childImageSharp: { fluid },
-    },
-  },
-}) => (
+const IndexPage = () => (
   <Layout>
     <Box
       as="header"
@@ -59,7 +53,26 @@ const IndexPage = ({
         </Box>
 
         <Box width={[1, 1 / 3, 1 / 2]} css="align-self: flex-end;">
-          <Image as={Img} fluid={fluid} />
+          <StaticQuery
+            query={graphql`
+              query BernhardImage {
+                image: file(name: { eq: "bernhard" }) {
+                  childImageSharp {
+                    fluid(maxWidth: 1280) {
+                      ...GatsbyImageSharpFluid_withWebp
+                    }
+                  }
+                }
+              }
+            `}
+            render={data => (
+              <Image
+                as={Img}
+                fluid={data.image.childImageSharp.fluid}
+                critical
+              />
+            )}
+          />
         </Box>
       </Flex>
     </Box>
@@ -67,15 +80,3 @@ const IndexPage = ({
 );
 
 export default IndexPage;
-
-export const query = graphql`
-  query {
-    image: file(name: { eq: "bernhard" }) {
-      childImageSharp {
-        fluid(maxWidth: 1280) {
-          ...GatsbyImageSharpFluid_withWebp
-        }
-      }
-    }
-  }
-`;
