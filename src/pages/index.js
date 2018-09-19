@@ -4,6 +4,35 @@ import Img from 'gatsby-image';
 import { Flex, Box, Image, Heading, Text } from 'rebass';
 import Layout from '../components/layout';
 
+const Container = props => (
+  <Box
+    px={[2, 3]}
+    py={4}
+    css={`
+      max-width: 1000px;
+      margin: 0 auto;
+    `}
+    {...props}
+  />
+);
+
+const Project = props => (
+  <Flex
+    alignItems="center"
+    bg="lightblue"
+    p={4}
+    mr={2}
+    mb={2}
+    width={[232, 312]}
+    css={`
+      flex-grow: 1;
+    `}
+    {...props}
+  />
+);
+
+const Post = props => <Box pb={4} {...props} />;
+
 const IndexPage = () => (
   <Layout>
     <Box
@@ -76,6 +105,28 @@ const IndexPage = () => (
         </Box>
       </Flex>
     </Box>
+
+    <Container>
+      <Heading mb={4}>Case Studies</Heading>
+      <Flex mr={-2} flexWrap="wrap">
+        <Project bg="lightblue">First project</Project>
+        <Project bg="lightgreen">Second project</Project>
+        <Project bg="yellow">Third project</Project>
+        <Project ProjectWrap="wrap" bg="orange">
+          Fourth project
+        </Project>
+        <Project bg="pink">Fifth project</Project>
+        <Project bg="lightcyan">Sixth project</Project>
+      </Flex>
+      <Link to="/projects">All Projects</Link>
+    </Container>
+
+    <Container>
+      <Heading mb={4}>Recent Posts</Heading>
+      <Post>First Post</Post>
+      <Post>Second Post</Post>
+      <Post>Third Post</Post>
+    </Container>
   </Layout>
 );
 
