@@ -3,21 +3,7 @@ import { Link, StaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import { Flex, Box, Image, Heading, Text } from 'rebass';
 import Layout from '../components/layout';
-import { keyframes, css } from 'styled-components';
-
-const moveBackground = keyframes`
-  0% {
-		background-position: 100% 50%;
-	}
-
-	50% {
-		background-position: 0% 50%;
-  }
-
-  100% {
-		background-position: 100% 50%;
-	}
-`;
+import Header from '../components/MainHeader';
 
 const Container = props => (
   <Box
@@ -47,33 +33,12 @@ const Project = props => (
   />
 );
 
-const gradient = ['#660022', '#c90057', '#ea5971', '#ff8c00'];
-
-const Header = ({ css: additionalCss = '', ...props }) => (
-  <Flex
-    as="header"
-    css={css`
-      background-image: linear-gradient(to bottom left, ${gradient.join(',')});
-      background-color: #c90057;
-      background-attachment: fixed;
-      background-size: 400% 100%;
-      background-position: 50% 50%;
-      animation: ${moveBackground} 15s ease-in-out infinite;
-      ${additionalCss};
-    `}
-    {...props}
-  />
-);
-
 const Post = props => <Box pb={4} as="section" {...props} />;
 
 const IndexPage = () => (
   <Layout>
     <Header
-      alignItems="center"
       justifyContent="flex-end"
-      color="white"
-      flexDirection={['column', 'row']}
       css={`
         @media screen and (min-width: 64em) and (max-height: 50em) {
           min-height: 100vh;
