@@ -4,6 +4,10 @@ import Img from 'gatsby-image';
 import { Flex, Box, Image, Heading, Text, Button } from 'rebass';
 import Layout from '../components/layout';
 import Header from '../components/MainHeader';
+import getTimeColor from '../helpers/getTimeColor';
+
+const color = getTimeColor(new Date());
+console.log(color);
 
 const Container = props => (
   <Box
@@ -51,6 +55,7 @@ const IndexPage = () => (
   <Layout>
     <Header
       // animate
+      color={color}
       justifyContent="flex-end"
       css={`
         @media screen and (min-width: 64em) and (max-height: 50em) {
@@ -73,7 +78,7 @@ const IndexPage = () => (
         <a href="#about">
           <Button
             bg="white"
-            color="#ea5971"
+            color={color}
             fontWeight="normal"
             border="2px solid #fff"
             css={`
