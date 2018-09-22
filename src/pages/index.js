@@ -34,7 +34,6 @@ const IndexPage = () => (
     <Header
       // animate
       color={color}
-      justifyContent="flex-end"
       css={`
         @media screen and (min-width: 64em) and (max-height: 50em) {
           min-height: 100vh;
