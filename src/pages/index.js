@@ -1,37 +1,15 @@
 import React from 'react';
 import { Link, StaticQuery, graphql } from 'gatsby';
-import Img from 'gatsby-image';
-import { Flex, Box, Image, Heading, Text, Button } from 'rebass';
+import Image from 'gatsby-image';
+import { Flex, Box, Heading, Text, Button } from 'rebass';
 import Layout from '../components/layout';
 import Header from '../components/MainHeader';
+import Container from '../components/Container';
+import SemiContainer from '../components/SemiContainer';
 import getTimeColor from '../helpers/getTimeColor';
 
 const color = getTimeColor(new Date());
 console.log(color);
-
-const Container = props => (
-  <Box
-    px={[2, 3]}
-    py={4}
-    css={`
-      max-width: 1000px;
-      margin: 0 auto;
-    `}
-    {...props}
-  />
-);
-
-const SemiContainer = ({ side = 'start', ...props }) => (
-  <Box
-    width={[1, 1 / 2]}
-    pl={[2, side === 'start' ? 3 : 0]}
-    pr={[2, side === 'end' ? 3 : 0]}
-    css={`
-      max-width: 500px;
-    `}
-    {...props}
-  />
-);
 
 const Project = props => (
   <Flex
@@ -108,7 +86,7 @@ const IndexPage = () => (
             }
           `}
           render={data => (
-            <Image as={Img} fluid={data.image.childImageSharp.fluid} critical />
+            <Image fluid={data.image.childImageSharp.fluid} critical />
           )}
         />
       </Box>
