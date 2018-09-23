@@ -12,14 +12,11 @@ const Project = props => (
   <Flex
     as="section"
     alignItems="center"
+    flex={['1 232px', '1 0 312px']}
     bg="lightblue"
     p={4}
     mr={2}
     mb={2}
-    width={[232, 312]}
-    css={`
-      flex-grow: 1;
-    `}
     {...props}
   />
 );
@@ -59,6 +56,7 @@ const IndexPage = () => (
                 border="2px solid #fff"
                 css={`
                   transition: color 0.3s ease-out, background 0.3s ease-out;
+
                   &:hover {
                     background-color: transparent;
                     color: #fff;
@@ -70,7 +68,7 @@ const IndexPage = () => (
             </a>
           </SemiContainer>
 
-          <Box width={[1, 1 / 3, 1 / 2]} css="align-self: flex-end;">
+          <Box width={[1, 1 / 3, 1 / 2]} alignSelf="flex-end">
             <StaticQuery
               query={graphql`
                 query {
@@ -92,8 +90,8 @@ const IndexPage = () => (
       )}
     </TimeColor>
 
-    <Container as="section" id="about">
-      <Heading mb={4}>About me</Heading>
+    <Container as="section" id="about" py={4}>
+      <Heading mb={4}>What I do</Heading>
       <Flex>
         <Box width={[1, 1 / 2]}>
           <Text mb={4}>I create web apps with React, CouchDB and NodeJS.</Text>
@@ -104,7 +102,7 @@ const IndexPage = () => (
     </Container>
 
     <Box bg="#f4f4f4" as="section">
-      <Container>
+      <Container py={4}>
         <Heading mb={4}>Recent work</Heading>
         <Flex mr={-2} flexWrap="wrap">
           <Project bg="lightblue">
@@ -120,7 +118,7 @@ const IndexPage = () => (
       </Container>
     </Box>
 
-    <Container as="section">
+    <Container as="section" py={4}>
       <Heading mb={4}>Recent Posts</Heading>
       <Post>First Post</Post>
       <Post>Second Post</Post>
@@ -128,7 +126,7 @@ const IndexPage = () => (
     </Container>
 
     <Box bg="#555" color="#fff" as="footer">
-      <Container>
+      <Container py={4}>
         <Heading mb={4}>Footer</Heading>
         <Text>First nav item</Text>
         <Text>Second nav item</Text>

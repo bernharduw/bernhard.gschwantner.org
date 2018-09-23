@@ -39,7 +39,10 @@ export default class TimeColor extends React.PureComponent {
   }
 
   render() {
-    console.log(this.state.color, new Date());
+    console.log(
+      this.state.color,
+      `${new Date().getHours()}:${new Date().getMinutes()}`
+    );
     return this.props.children(this.state.color);
   }
 }
