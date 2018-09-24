@@ -5,6 +5,7 @@ import Image from 'gatsby-image';
 import { css } from 'styled-components';
 
 import Layout from '../../components/layout';
+import Browser from '../../components/Browser';
 
 const Title = props => <Heading as="h1" fontSize={6} mb={3} {...props} />;
 const H2 = props => <Heading mb={3} {...props} />;
@@ -52,71 +53,6 @@ const ExplainerSection = props => (
     `}
     {...props}
   />
-);
-
-const Browser = props => (
-  <Box
-    as={props.href ? 'a' : props.to ? Link : 'div'}
-    css={css`
-      display: block;
-      position: relative;
-      border: 2px solid #f0f0f0;
-      border-radius: 2px;
-      border-top-width: 16px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    `}
-    {...props}
-  >
-    <Box
-      css={css`
-        top: -12px;
-        left: 4px;
-        background-color: #ff706f;
-        &,
-        &::before,
-        &::after {
-          position: absolute;
-          border-radius: 4px;
-          padding: 4px;
-          height: 4px;
-          background-color: #c2c2c2;
-        }
-        &::before,
-        &::after {
-          content: ' ';
-          display: block;
-          top: 0;
-        }
-        &::before {
-          left: 12px;
-          /* background-color: #fadc31; */
-        }
-        &::after {
-          left: 24px;
-          /* background-color: #5ce87a; */
-        }
-      `}
-    />
-    <Box
-      fontSize={0}
-      css={css`
-        position: absolute;
-        top: -13px;
-        left: 48px;
-        right: 12px;
-        height: 10px;
-        background-color: #fff;
-        color: #ccc;
-        font-size: 8px;
-        line-height: 10px;
-        padding: 0 8px;
-        font-family: sans-serif;
-      `}
-    >
-      {props.href || props.to || 'https://bernhard.gschwantner.org'}
-    </Box>
-    {props.children}
-  </Box>
 );
 
 const LayoutIllustration = ({ lines, sections, browser }) => (
