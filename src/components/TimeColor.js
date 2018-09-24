@@ -22,7 +22,7 @@ function getTimeColor(date) {
 }
 
 export default class TimeColor extends React.PureComponent {
-  state = { color: '#7a0033' };
+  state = { color: undefined };
   interval = undefined;
 
   componentDidMount() {

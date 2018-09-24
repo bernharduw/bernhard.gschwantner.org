@@ -51,7 +51,7 @@ const IndexPage = () => (
             <a href="#about">
               <Button
                 bg="white"
-                color={color}
+                color={color || '#555'}
                 fontWeight="normal"
                 border="2px solid #fff"
                 css={`
