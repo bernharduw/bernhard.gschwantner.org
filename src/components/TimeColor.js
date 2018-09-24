@@ -22,7 +22,10 @@ function getTimeColor(date) {
 }
 
 export default class TimeColor extends React.PureComponent {
-  state = { color: getTimeColor(new Date()) };
+  constructor(props) {
+    super(props);
+    this.state = { color: getTimeColor(new Date()) };
+  }
 
   interval = undefined;
 
