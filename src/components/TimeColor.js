@@ -21,7 +21,7 @@ function getTimeColor(date) {
   return mix(mixFactor, next.color, previous.color);
 }
 
-export default class TimeColor extends React.PureComponent {
+export default class TimeColor extends React.Component {
   constructor(props) {
     super(props);
     this.state = { color: getTimeColor(new Date()) };
