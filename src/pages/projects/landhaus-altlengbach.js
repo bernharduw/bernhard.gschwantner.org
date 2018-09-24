@@ -36,7 +36,7 @@ const IllustrationColumn = ({ children, ...props }) => (
     </Box>
   </Col>
 );
-const TextColumn = props => <Col bg="#fff" py={4} {...props} />;
+const TextColumn = props => <Col bg="#fff" {...props} />;
 
 const Container = props => (
   <Flex flexDirection={['column', 'row']} {...props} />
@@ -110,7 +110,7 @@ export default class AltlengbachPage extends React.Component {
           <IllustrationColumn>
             <Title>Website for a house sale</Title>
           </IllustrationColumn>
-          <TextColumn>
+          <TextColumn py={4}>
             <P>
               <a href="https://altlengbach.netlify.com">
                 www.landhaus-altlengbach.at
@@ -127,11 +127,14 @@ export default class AltlengbachPage extends React.Component {
                 top: 16px;
               `}
             >
-              <LayoutIllustration {...illustrationState}>
+              <LayoutIllustration
+                {...illustrationState}
+                href="https://altlengbach.netlify.com"
+              >
                 <StaticQuery
                   query={graphql`
                     query {
-                      image: file(name: { eq: "landhaus-altlengbach-home" }) {
+                      home: file(name: { eq: "landhaus-altlengbach-home" }) {
                         childImageSharp {
                           fluid(maxWidth: 1280) {
                             ...GatsbyImageSharpFluid_withWebp
@@ -140,13 +143,14 @@ export default class AltlengbachPage extends React.Component {
                       }
                     }
                   `}
-                  render={({ image }) => (
-                    <Image fluid={image.childImageSharp.fluid} critical />
+                  render={({ home }) => (
+                    <Image fluid={home.childImageSharp.fluid} critical />
                   )}
                 />
               </LayoutIllustration>
             </Box>
           </IllustrationColumn>
+
           <TextColumn>
             <TextSection id="start" onSection={this.handleSection}>
               <P>
@@ -203,16 +207,6 @@ export default class AltlengbachPage extends React.Component {
                 <a href="#developing">Continue</a>
               </P>
             </TextSection>
-          </TextColumn>
-        </Container>
-
-        <Container>
-          <TextColumn
-            ml="auto"
-            css={css`
-              max-width: 500px;
-            `}
-          >
             <TextSection id="developing" onSection={this.handleSection}>
               <H2>Developing The Site</H2>
               <P>
@@ -243,7 +237,18 @@ export default class AltlengbachPage extends React.Component {
                 impression that they are breathing. I also animated the local
                 navigation to make the site architecture even clearer.
               </P>
+            </TextSection>
+          </TextColumn>
+        </Container>
 
+        <Container>
+          <TextColumn
+            ml="auto"
+            css={css`
+              max-width: 500px;
+            `}
+          >
+            <TextSection>
               <H2>Planned Improvements</H2>
               <P>
                 Unfortunately the transitions' performance degraded after adding
@@ -290,12 +295,12 @@ export default class AltlengbachPage extends React.Component {
 }
 
 const LayoutSvg = styled.svg`
-  transition: transform 0.3s;
+  transition: transform 1s;
   transform: ${({ zoom }) => (zoom ? 'translate(-50%,50%) scale(2)' : '')};
 `;
 
 const Group = styled.g`
-  transition: opacity 0.3s;
+  transition: opacity 1s;
   opacity: ${({ show, opacity = 1 }) => (show ? opacity : 0)};
 `;
 
@@ -381,24 +386,35 @@ const LayoutIllustration = ({
         <path
           stroke="#fff"
           strokeWidth="4"
-          d={`M0,${height * 0.8} L${2 * width},${height * 0.8}`}
+          d={`M0,${height * 0.85} L${2 * width},${height * 0.85}`}
         />
         <path
           stroke="#fff"
           strokeWidth="4"
-          d={`M0,${height * 1.2} L${2 * width},${height * 1.2}`}
+          d={`M0,${height * 1.15} L${2 * width},${height * 1.15}`}
         />
       </Group>
-      <Group show={showBrowser}>
+      <Group show={showBrowser && !showChildren}>
         <foreignObject x={width} y="0" width={width} height={height}>
           <Browser
             {...rest}
             css={css`
+              height: 100%;
               height: calc(100% + 18px);
               margin: -16px -2px -2px;
             `}
+          />
+        </foreignObject>
+      </Group>
+      <Group show={showChildren}>
+        <foreignObject x={width} y="0" width={width} height={height}>
+          <Browser
+            {...rest}
+            css={css`
+              margin: -16px -2px -2px;
+            `}
           >
-            <div style={{ opacity: showChildren ? 1 : 0 }}>{children}</div>
+            {children}
           </Browser>
         </foreignObject>
       </Group>
