@@ -106,7 +106,7 @@ const IndexPage = () => (
         <Heading mb={4}>Recent work</Heading>
         <Flex mr={-2} flexWrap="wrap">
           <Project bg="lightblue">
-            <Link to="./projects/landhaus-altlengbach">First Project</Link>
+            <Link to="/projects/landhaus-altlengbach">First Project</Link>
           </Project>
           <Project bg="lightgreen">Second project</Project>
           <Project bg="yellow">Third project</Project>
