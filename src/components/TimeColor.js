@@ -21,15 +21,12 @@ function getTimeColor(date) {
   return mix(mixFactor, next.color, previous.color);
 }
 
-export default class TimeColor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { color: getTimeColor(new Date()) };
-  }
-
+export default class TimeColor extends React.PureComponent {
+  state = { color: getTimeColor(new Date()) };
   interval = undefined;
 
   componentDidMount() {
+    this.setState({ color: getTimeColor(new Date()) });
     // Update the color every 10 minutes.
     this.interval = setInterval(
       () => this.setState({ color: getTimeColor(new Date()) }),
