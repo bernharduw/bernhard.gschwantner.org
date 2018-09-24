@@ -1,8 +1,8 @@
 import React from 'react';
 import { Heading, Text, Flex, Box } from 'rebass';
-import { Link, StaticQuery } from 'gatsby';
+import { Link, StaticQuery, graphql } from 'gatsby';
 import Image from 'gatsby-image';
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import Layout from '../../components/layout';
 import Browser from '../../components/Browser';
@@ -96,11 +96,11 @@ export default class AltlengbachPage extends React.Component {
   render() {
     const { currentSection } = this.state;
     const states = {
-      start: { zoom: true, browser: true, children: true },
-      layout: { sections: true, browser: true },
-      division: { sections: true, lines: true },
-      animation: { sections: true, lines: true, browser: true },
-      developing: { zoom: true, browser: true, children: true },
+      start: { zoom: true, showBrowser: true, showChildren: true },
+      layout: { showSections: true, showBrowser: true },
+      division: { showSections: true, showLines: true },
+      animation: { showSections: true, showLines: true, showBrowser: true },
+      developing: { zoom: true, showBrowser: true, showChildren: true },
     };
     const illustrationState = states[currentSection];
 
@@ -128,27 +128,22 @@ export default class AltlengbachPage extends React.Component {
               `}
             >
               <LayoutIllustration {...illustrationState}>
-                <Browser href="https://altlengbach.netlify.com">
-                  <StaticQuery
-                    query={graphql`
-                      query {
-                        image: file(name: { eq: "landhaus-altlengbach-1" }) {
-                          childImageSharp {
-                            fluid(maxWidth: 1280) {
-                              ...GatsbyImageSharpFluid_withWebp
-                            }
+                <StaticQuery
+                  query={graphql`
+                    query {
+                      image: file(name: { eq: "landhaus-altlengbach-home" }) {
+                        childImageSharp {
+                          fluid(maxWidth: 1280) {
+                            ...GatsbyImageSharpFluid_withWebp
                           }
                         }
                       }
-                    `}
-                    render={data => (
-                      <Image
-                        fluid={data.image.childImageSharp.fluid}
-                        critical
-                      />
-                    )}
-                  />
-                </Browser>
+                    }
+                  `}
+                  render={({ image }) => (
+                    <Image fluid={image.childImageSharp.fluid} critical />
+                  )}
+                />
               </LayoutIllustration>
             </Box>
           </IllustrationColumn>
@@ -294,84 +289,119 @@ export default class AltlengbachPage extends React.Component {
   }
 }
 
-const LayoutIllustration = ({ lines, sections, browser }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 530 400">
-    <rect x="0" y="0" width="520" height="390" fill="rgba(0,0,0,0.1)" />
-    <g opacity={sections ? 1 : 0}>
-      <g className="contactSection">
+const LayoutSvg = styled.svg`
+  transition: transform 0.3s;
+  transform: ${({ zoom }) => (zoom ? 'translate(-50%,50%) scale(2)' : '')};
+`;
+
+const Group = styled.g`
+  transition: opacity 0.3s;
+  opacity: ${({ show, opacity = 1 }) => (show ? opacity : 0)};
+`;
+
+const LayoutIllustration = ({
+  zoom,
+  width = 640,
+  height = 360,
+  showLines,
+  showSections,
+  showBrowser,
+  showChildren,
+  children,
+  ...rest
+}) => (
+  <Box>
+    <LayoutSvg
+      zoom={zoom}
+      viewBox={`-2 -16 ${2 * width + 4} ${2 * height + 18}`}
+    >
+      <Group show={showSections}>
         <rect
           x="0"
           y="0"
-          width="260"
-          height="195"
-          fill="orange"
-          opacity="0.5"
+          width={2 * width}
+          height={2 * height}
+          fill="rgba(0,0,0,0.1)"
         />
-        <foreignObject
-          x="0"
-          y="80"
-          width="260"
-          height="20"
-          style={{ textAlign: 'center' }}
-        >
-          <p>Contact</p>
-        </foreignObject>
-      </g>
-      <g className="mainSection">
-        <rect
-          x="260"
-          y="0"
-          width="260"
-          height="195"
-          fill="green"
-          opacity="0.5"
+        <g className="contactSection">
+          <rect x="0" y="0" width={width} height={height} fill="orange" />
+          <foreignObject
+            x="0"
+            y={height / 2 - height / 20}
+            width={width}
+            height={height / 10}
+            style={{ textAlign: 'center', fontSize: height / 10 }}
+          >
+            <p>Contact</p>
+          </foreignObject>
+        </g>
+        <g className="mainSection">
+          <rect x={width} y="0" width={width} height={height} fill="green" />
+          <foreignObject
+            x={width}
+            y={height / 2 - height / 20}
+            width={width}
+            height={height / 10}
+            style={{ textAlign: 'center', fontSize: height / 10 }}
+          >
+            <p>Main</p>
+          </foreignObject>
+        </g>
+        <g className="plansSection">
+          <rect
+            x={width}
+            y={height}
+            width={width}
+            height={height}
+            fill="blue"
+            opacity="0.5"
+          />
+          <foreignObject
+            x={width}
+            y={height + height / 2 - height / 20}
+            width={width}
+            height={height / 10}
+            style={{ textAlign: 'center', fontSize: height / 10 }}
+          >
+            <p>Plans</p>
+          </foreignObject>
+        </g>
+      </Group>
+      <Group show={showLines} opacity={showBrowser ? 0.2 : 1}>
+        <path
+          stroke="#fff"
+          strokeWidth="4"
+          d={`M${width * 0.9},0 L${width * 0.9},${height * 2}`}
         />
-        <foreignObject
-          x="260"
-          y="80"
-          width="260"
-          height="20"
-          style={{ textAlign: 'center' }}
-        >
-          <p>Main</p>
-        </foreignObject>
-      </g>
-      <g className="plansSection">
-        <rect
-          x="260"
-          y="195"
-          width="260"
-          height="195"
-          fill="blue"
-          opacity="0.5"
+        <path
+          stroke="#fff"
+          strokeWidth="4"
+          d={`M${(width * 18) / 13},0 L${(width * 18) / 13},${height * 2}`}
         />
-        <foreignObject
-          x="260"
-          y="275"
-          width="260"
-          height="20"
-          style={{ textAlign: 'center' }}
-        >
-          <p>Plans</p>
+        <path
+          stroke="#fff"
+          strokeWidth="4"
+          d={`M0,${height * 0.8} L${2 * width},${height * 0.8}`}
+        />
+        <path
+          stroke="#fff"
+          strokeWidth="4"
+          d={`M0,${height * 1.2} L${2 * width},${height * 1.2}`}
+        />
+      </Group>
+      <Group show={showBrowser}>
+        <foreignObject x={width} y="0" width={width} height={height}>
+          <Browser
+            {...rest}
+            css={css`
+              height: calc(100% + 18px);
+              margin: -16px -2px -2px;
+            `}
+          >
+            <div style={{ opacity: showChildren ? 1 : 0 }}>{children}</div>
+          </Browser>
         </foreignObject>
-      </g>
-    </g>
-    <g className="lines" opacity={lines ? 1 : 0}>
-      <path stroke="#fff" d="M240,0 L240,390" />
-      <path stroke="#fff" d="M360,0 L360,390" />
-      <path stroke="#fff" d="M0,175 L520,175" />
-      <path stroke="#fff" d="M0,215 L520,215" />
-    </g>
-    <rect
-      className="browser"
-      x="260"
-      y="0"
-      width="260"
-      height="195"
-      stroke="currentColor"
-      strokeWidth="3"
-      opacity={browser ? 1 : 0}
-      fill="transparent"
-    />
-  </svg>
+      </Group>
+    </LayoutSvg>
+  </Box>
 );
