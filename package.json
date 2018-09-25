@@ -1,8 +1,8 @@
 {
-  "name": "gatsby-starter-default",
-  "description": "Gatsby default starter",
-  "version": "1.0.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "name": "bernhard.gschwantner.org",
+  "description": "Website of Bernhard Gschwantner",
+  "version": "0.1.0",
+  "author": "Bernhard Gschwantner <bernhard@gschwantner.org>",
   "dependencies": {
     "babel-plugin-styled-components": "^1.7.1",
     "gatsby": "^2.0.0",
