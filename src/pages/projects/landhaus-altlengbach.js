@@ -3,6 +3,7 @@ import { Heading, Text, Flex, Box } from 'rebass';
 import { Link, graphql } from 'gatsby';
 import Image from 'gatsby-image';
 import styled, { css, keyframes } from 'styled-components';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import Layout from '../../components/layout';
 import Browser from '../../components/Browser';
@@ -73,23 +74,15 @@ const Screenshot = ({ image: { childImageSharp } = {}, ...rest }) => (
   <Image {...childImageSharp} {...rest} />
 );
 
-const defaultIllustration = {
-  showBrowser: true,
-  showChildren: true,
-  image: 'home',
-};
-
 export default class AltlengbachPage extends React.Component {
   state = {
     currentSection: '',
-    visibleSections: [{ id: '', illustration: defaultIllustration }],
-    illustration: defaultIllustration,
+    visibleSections: [{ id: '', illustration: {} }],
+    illustration: {},
   };
 
   handleSection = (currentSection, { type, illustration }) => {
     if (type === 'enter') {
-      console.log(currentSection, illustration, this.state.visibleSections);
-
       this.setState(({ visibleSections }) => ({
         currentSection,
         illustration,
@@ -104,7 +97,7 @@ export default class AltlengbachPage extends React.Component {
         );
         const { id, illustration } = newVisibleSections[
           newVisibleSections.length - 1
-        ] || { id: '', illustration: defaultIllustration };
+        ] || { id: '', illustration: {} };
         return {
           currentSection: id,
           illustration,
@@ -117,9 +110,6 @@ export default class AltlengbachPage extends React.Component {
   render() {
     const { data } = this.props;
     const { currentSection, illustration } = this.state;
-    console.log(currentSection, illustration);
-
-    const image = illustration.image || 'home';
 
     return (
       <Layout>
@@ -151,10 +141,11 @@ export default class AltlengbachPage extends React.Component {
               `}
             >
               <LayoutIllustration
+                currentSection={currentSection}
                 {...illustration}
                 href="https://altlengbach.netlify.com"
               >
-                <Screenshot image={data[image]} />
+                {illustration.renderContent && illustration.renderContent()}
               </LayoutIllustration>
             </Box>
           </IllustrationColumn>
@@ -164,8 +155,8 @@ export default class AltlengbachPage extends React.Component {
               id="start"
               onSection={this.handleSection}
               showBrowser
-              showChildren
-              image="kitchen"
+              contentKey="kitchen"
+              renderContent={() => <Screenshot image={data.kitchen} />}
             >
               <P>
                 I created a small presentational website to accompany the sale
@@ -249,8 +240,8 @@ export default class AltlengbachPage extends React.Component {
               id="developing"
               onSection={this.handleSection}
               showBrowser
-              showChildren
-              image="home"
+              contentKey="home"
+              renderContent={() => <Screenshot image={data.home} />}
             >
               <H2>Developing The Site</H2>
               <P>
@@ -266,8 +257,8 @@ export default class AltlengbachPage extends React.Component {
               id="sectionTransitions"
               onSection={this.handleSection}
               showBrowser
-              showChildren
-              image="kitchen"
+              contentKey="kitchen"
+              renderContent={() => <Screenshot image={data.kitchen} />}
             >
               <P>
                 However, creating transitions between the different pages wasn't
@@ -283,8 +274,8 @@ export default class AltlengbachPage extends React.Component {
               id="pageTransitions"
               onSection={this.handleSection}
               showBrowser
-              showChildren
-              image="plans"
+              contentKey="plans"
+              renderContent={() => <Screenshot image={data.plans} />}
             >
               <P>
                 The main section of the website shows large pictures to give a
@@ -300,8 +291,8 @@ export default class AltlengbachPage extends React.Component {
               id="breathing"
               onSection={this.handleSection}
               showBrowser
-              showChildren
-              image="home"
+              contentKey="home"
+              renderContent={() => <Screenshot image={data.home} />}
             >
               <P>
                 I added a subtle scaling animation to the images to evoke the
@@ -324,8 +315,8 @@ export default class AltlengbachPage extends React.Component {
               id="improvements"
               onSection={this.handleSection}
               showBrowser
-              showChildren
-              image="home"
+              contentKey="home"
+              renderContent={() => <Screenshot image={data.home} />}
             >
               <H2>Planned Improvements</H2>
               <P>
@@ -466,20 +457,27 @@ const moveBrowser = keyframes`
 90%     { transform: translateX(0%); }
 `;
 
-const AnimatedObject = styled.foreignObject`
+const AnimatedGroup = styled.g`
   animation: ${({ play, speed = '10s', delay = '0s' }) =>
     play ? css`${moveBrowser}  ${speed} ${delay} ease infinite` : 'none'};
-`;
 
-const moveCanvas = keyframes`
-0%      { transform: translateY(0%); }
-10%     { transform: translateY(-100%); }
-26.667% { transform: translateY(-100%); }
-36.667% { transform: translateY(0%); }
-53.333% { transform: translateY(0%); }
-63.333% { transform: translateX(100%); }
-80%     { transform: translateX(100%); }
-90%     { transform: translateX(0%); }
+  &.fade-enter,
+  &.fade-exit {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: opacity 0.5s;
+  }
+  &.fade-enter {
+    opacity: 0;
+  }
+  &.fade-enter-active {
+    opacity: 1;
+  }
+  &.fade-exit-active {
+    opacity: 0;
+  }
 `;
 
 const Group = styled.g`
@@ -489,9 +487,23 @@ const Group = styled.g`
     `${center ? 'translate(-25%, 25%)' : ''} ${
       zoom === 'canvas' ? 'scale(0.5)' : 'none'
     }`};
+  opacity: ${({ show = true, opacity = 1 }) => (show ? opacity : 0)};
+`;
+
+const moveCanvas = keyframes`
+  0%      { transform: translateY(0%); }
+  10%     { transform: translateY(-100%); }
+  26.667% { transform: translateY(-100%); }
+  36.667% { transform: translateY(0%); }
+  53.333% { transform: translateY(0%); }
+  63.333% { transform: translateX(100%); }
+  80%     { transform: translateX(100%); }
+  90%     { transform: translateX(0%); }
+`;
+
+const Canvas = styled(Group)`
   animation: ${({ play, speed = '10s', delay = '0s' }) =>
     play ? css`${moveCanvas}  ${speed} ${delay} ease infinite` : 'none'};
-  opacity: ${({ show = true, opacity = 1 }) => (show ? opacity : 0)};
 `;
 
 const LayoutIllustration = ({
@@ -502,14 +514,16 @@ const LayoutIllustration = ({
   showLines = false,
   showCanvas = false,
   showBrowser = false,
-  showChildren = false,
   animate = '',
   children,
+  classNames = 'fade',
+  contentKey,
+  timeout = 1000,
   ...rest
 }) => (
   <LayoutSvg viewBox={`0 0 ${width} ${height}`}>
     <Group center={center} zoom={zoom} show>
-      <Group show={showCanvas} play={animate === 'canvas'} delay="2s">
+      <Canvas show={showCanvas} play={animate === 'canvas'} delay="2s">
         <rect
           x={-width}
           y={0}
@@ -642,41 +656,36 @@ const LayoutIllustration = ({
             height={height}
           />
         </Group>
-      </Group>
+      </Canvas>
 
-      <Group show={showBrowser && !showChildren}>
-        <AnimatedObject
-          x={0}
-          y={0}
-          width={width}
-          height={height}
-          play={showBrowser && !showChildren && animate === 'browser'}
-          delay="2s"
-        >
-          <Browser
-            {...rest}
-            css={css`
-              height: 100%;
-              height: calc(100% + 19px);
-              margin: -16px -3px -3px;
-            `}
-          />
-        </AnimatedObject>
-      </Group>
-      <Group show={showChildren}>
-        <AnimatedObject
-          x={0}
-          y={0}
-          width={width}
-          height={height}
-          play={showChildren && animate === 'browser'}
-          delay="2s"
-        >
-          <Browser {...rest} css="margin: -16px -3px -3px;">
-            {children}
-          </Browser>
-        </AnimatedObject>
-      </Group>
+      <TransitionGroup component={null}>
+        {(children || showBrowser) && (
+          <CSSTransition
+            timeout={timeout}
+            classNames={classNames}
+            key={contentKey || 'default'}
+          >
+            <AnimatedGroup play={animate === 'browser'} delay="2s">
+              <foreignObject x={0} y={0} width={width} height={height}>
+                <Browser
+                  {...rest}
+                  css={css`
+                    ${children
+                      ? ''
+                      : `
+                        height: 100%;
+                        height: calc(100% + 19px);
+                      `};
+                    margin: -16px -3px -3px;
+                  `}
+                >
+                  {children}
+                </Browser>
+              </foreignObject>
+            </AnimatedGroup>
+          </CSSTransition>
+        )}
+      </TransitionGroup>
     </Group>
   </LayoutSvg>
 );
