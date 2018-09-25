@@ -94,38 +94,51 @@ export default class AltlengbachPage extends React.Component {
   render() {
     const { currentSection } = this.state;
     const states = {
-      start: { zoom: true, showBrowser: true, showChildren: true },
-      layout: { showSections: true, showBrowser: true, animate: 'browser' },
-      division: { showSections: true, showLines: true, animate: 'lines' },
+      start: { showBrowser: true, showChildren: true },
+      layout: {
+        showSections: true,
+        showBrowser: true,
+        animate: 'browser',
+        zoom: 'canvas',
+      },
+      division: {
+        showSections: true,
+        showLines: true,
+        animate: 'lines',
+        zoom: 'canvas',
+      },
       animation: {
         showSections: true,
         showLines: true,
         showBrowser: true,
         center: true,
+        zoom: 'browser',
         animate: 'canvas',
       },
       developing: {
-        zoom: true,
+        showBrowser: true,
+        showChildren: true,
+        image: 'home',
+      },
+      sectionTransitions: {
         showBrowser: true,
         showChildren: true,
         image: 'kitchen',
       },
-      transitions: {
-        zoom: true,
-        showBrowser: true,
-        showChildren: true,
-        image: 'contact',
-      },
-      breathing: {
-        zoom: true,
+      pageTransitions: {
         showBrowser: true,
         showChildren: true,
         image: 'plans',
       },
+      breathing: {
+        showBrowser: true,
+        showChildren: true,
+        image: 'home',
+      },
       improvements: { zoom: true, showBrowser: true, showChildren: true },
       conclusion: { zoom: true, showBrowser: true, showChildren: true },
     };
-    const illustrationState = states[currentSection];
+    const illustrationState = states[currentSection] || {};
     const image = illustrationState.image || 'home';
 
     return (
@@ -267,13 +280,19 @@ export default class AltlengbachPage extends React.Component {
                 <a href="#developing">Continue</a>
               </P>
             </TextSection>
+
             <TextSection id="developing" onSection={this.handleSection}>
               <H2>Developing The Site</H2>
               <P>
                 When I started developing the website, Gatsby V2 was just in
-                beta. I had briefly tried Gatsby V1 before, and generally I felt
-                like the changes in the new version simplified things a lot.
+                beta. Creating the layouts and filling the pages with content
+                was super easy and fast. I had briefly tried Gatsby V1 before,
+                and generally I felt like the changes in the new version
+                simplified things a lot.
               </P>
+            </TextSection>
+
+            <TextSection id="sectionTransitions" onSection={this.handleSection}>
               <P>
                 However, creating transitions between the different pages wasn't
                 as straightforward as I expected, largely due to some changes in
@@ -284,7 +303,7 @@ export default class AltlengbachPage extends React.Component {
                 separate blog post about that.
               </P>
             </TextSection>
-            <TextSection id="transitions" onSection={this.handleSection}>
+            <TextSection id="pageTransitions" onSection={this.handleSection}>
               <P>
                 The main section of the website shows large pictures to give a
                 great impression of the house's individual areas. I decided to
@@ -308,7 +327,7 @@ export default class AltlengbachPage extends React.Component {
         <Container>
           <IllustrationColumn />
           <TextColumn
-            ml="auto"
+            mr="auto"
             css={css`
               max-width: 500px;
             `}
@@ -411,12 +430,12 @@ const Rect = styled.rect.attrs({ fill: 'rgba(255, 255, 255, 0.3)' })`
 
 const moveBrowser = keyframes`
 0%      { transform: translateY(0%); }
-10%     { transform: translateY(50%); }
-26.667% { transform: translateY(50%); }
+10%     { transform: translateY(100%); }
+26.667% { transform: translateY(100%); }
 36.667% { transform: translateY(0%); }
 53.333% { transform: translateY(0%); }
-63.333% { transform: translateX(-50%); }
-80%     { transform: translateX(-50%); }
+63.333% { transform: translateX(-100%); }
+80%     { transform: translateX(-100%); }
 90%     { transform: translateX(0%); }
 `;
 
@@ -427,12 +446,12 @@ const AnimatedObject = styled.foreignObject`
 
 const moveCanvas = keyframes`
 0%      { transform: translateY(0%); }
-10%     { transform: translateY(-50%); }
-26.667% { transform: translateY(-50%); }
+10%     { transform: translateY(-100%); }
+26.667% { transform: translateY(-100%); }
 36.667% { transform: translateY(0%); }
 53.333% { transform: translateY(0%); }
-63.333% { transform: translateX(50%); }
-80%     { transform: translateX(50%); }
+63.333% { transform: translateX(100%); }
+80%     { transform: translateX(100%); }
 90%     { transform: translateX(0%); }
 `;
 
@@ -440,14 +459,16 @@ const Group = styled.g`
   transform-origin: 100% 0;
   transition: opacity 1s, transform 1s;
   transform: ${({ center, zoom }) =>
-    `${center ? 'translate(-25%, 25%)' : ''} ${zoom ? 'scale(2)' : ''}`};
+    `${center ? 'translate(-25%, 25%)' : ''} ${
+      zoom === 'canvas' ? 'scale(0.5)' : 'none'
+    }`};
   animation: ${({ play, speed = '10s', delay = '0s' }) =>
     play ? css`${moveCanvas}  ${speed} ${delay} ease infinite` : 'none'};
   opacity: ${({ show = true, opacity = 1 }) => (show ? opacity : 0)};
 `;
 
 const LayoutIllustration = ({
-  zoom = false,
+  zoom = '',
   center = false,
   width = 640,
   height = 360,
@@ -459,20 +480,20 @@ const LayoutIllustration = ({
   children,
   ...rest
 }) => (
-  <LayoutSvg viewBox={`0 -32 ${2 * width} ${2 * height + 32 + 6}`}>
+  <LayoutSvg viewBox={`0 0 ${width} ${height}`}>
     <Group center={center} zoom={zoom} show>
       <Group show={showSections} play={animate === 'canvas'} delay="2s">
         <rect
-          x="0"
-          y="0"
+          x={-width}
+          y={0}
           width={2 * width}
           height={2 * height}
           fill="rgba(0,0,0,0.1)"
         />
         <g className="contactSection">
-          <rect x="0" y="0" width={width} height={height} fill="#6e8b3d" />
+          <rect x={-width} y="0" width={width} height={height} fill="#6e8b3d" />
           <foreignObject
-            x="0"
+            x={-width}
             y={height / 2 - height / 20}
             width={width}
             height={height / 10}
@@ -482,9 +503,9 @@ const LayoutIllustration = ({
           </foreignObject>
         </g>
         <g className="mainSection">
-          <rect x={width} y="0" width={width} height={height} fill="#52682d" />
+          <rect x="0" y="0" width={width} height={height} fill="#52682d" />
           <foreignObject
-            x={width}
+            x={0}
             y={height / 2 - height / 20}
             width={width}
             height={height / 10}
@@ -494,15 +515,9 @@ const LayoutIllustration = ({
           </foreignObject>
         </g>
         <g className="plansSection">
-          <rect
-            x={width}
-            y={height}
-            width={width}
-            height={height}
-            fill="#435626"
-          />
+          <rect x={0} y={height} width={width} height={height} fill="#435626" />
           <foreignObject
-            x={width}
+            x={0}
             y={height + height / 2 - height / 20}
             width={width}
             height={height / 10}
@@ -516,12 +531,12 @@ const LayoutIllustration = ({
           <Line
             play={animate === 'lines'}
             delay="1s"
-            d={`M${(width * 18) / 13},0 L${(width * 18) / 13},${height * 2}`}
+            d={`M${(width / 13) * 5},0 L${(width / 13) * 5},${height * 2}`}
           />
           <Rect
             delay="1.25s"
             play={animate === 'lines'}
-            x={width}
+            x="0"
             y="0"
             width={(width / 13) * 5}
             height={height}
@@ -530,12 +545,12 @@ const LayoutIllustration = ({
             horizontal
             delay="1.5s"
             play={animate === 'lines'}
-            d={`M0,${height * 0.85} L${2 * width},${height * 0.85}`}
+            d={`M${width},${height * 0.85} L${-width},${height * 0.85}`}
           />
           <Rect
             delay="1.75s"
             play={animate === 'lines'}
-            x={width}
+            x={0}
             y={height * 0.85}
             width={width}
             height={height * 0.15}
@@ -544,12 +559,12 @@ const LayoutIllustration = ({
             horizontal
             delay="2s"
             play={animate === 'lines'}
-            d={`M0,${height * 1.15} L${2 * width},${height * 1.15}`}
+            d={`M${width},${height * 1.15} L${-width},${height * 1.15}`}
           />
           <Rect
             delay="2.25s"
             play={animate === 'lines'}
-            x={width}
+            x={0}
             y={height}
             width={width}
             height={height * 0.15}
@@ -557,7 +572,7 @@ const LayoutIllustration = ({
           <Rect
             delay="2.75s"
             play={animate === 'lines'}
-            x={width}
+            x={0}
             y={height}
             width={(width / 13) * 5}
             height={height}
@@ -565,12 +580,12 @@ const LayoutIllustration = ({
           <Line
             delay="3s"
             play={animate === 'lines'}
-            d={`M${width * 0.9},0 L${width * 0.9},${height * 2}`}
+            d={`M${width * -0.1},0 L${width * -0.1},${height * 2}`}
           />
           <Rect
             delay="3.25s"
             play={animate === 'lines'}
-            x={width * 0.9}
+            x={width * -0.1}
             y="0"
             width={width * 0.1}
             height={height}
@@ -578,7 +593,7 @@ const LayoutIllustration = ({
           <Rect
             delay="3.75s"
             play={animate === 'lines'}
-            x="0"
+            x={-width}
             y={height * 0.85}
             width={width}
             height={height * 0.15}
@@ -586,7 +601,7 @@ const LayoutIllustration = ({
           <Rect
             delay="4.25s"
             play={animate === 'lines'}
-            x="0"
+            x={-width}
             y={height}
             width={width}
             height={height * 0.15}
@@ -594,7 +609,7 @@ const LayoutIllustration = ({
           <Rect
             delay="4.75s"
             play={animate === 'lines'}
-            x={width * 0.9}
+            x={width * -0.1}
             y={height}
             width={width * 0.1}
             height={height}
@@ -604,8 +619,8 @@ const LayoutIllustration = ({
 
       <Group show={showBrowser && !showChildren}>
         <AnimatedObject
-          x={width}
-          y="0"
+          x={0}
+          y={0}
           width={width}
           height={height}
           play={showBrowser && !showChildren && animate === 'browser'}
@@ -623,8 +638,8 @@ const LayoutIllustration = ({
       </Group>
       <Group show={showChildren}>
         <AnimatedObject
-          x={width}
-          y="0"
+          x={0}
+          y={0}
           width={width}
           height={height}
           play={showChildren && animate === 'browser'}
