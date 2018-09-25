@@ -1,6 +1,6 @@
 import React from 'react';
 import { Heading, Text, Flex, Box } from 'rebass';
-import { Link, StaticQuery, graphql } from 'gatsby';
+import { Link, graphql } from 'gatsby';
 import Image from 'gatsby-image';
 import styled, { css, keyframes } from 'styled-components';
 
@@ -25,13 +25,7 @@ const Col = props => <Box width={[1, 1 / 2]} px={[2, 3]} {...props} />;
 
 const IllustrationColumn = ({ children, ...props }) => (
   <Col bg="#555" color="#fff" py={4} {...props}>
-    <Box
-      css={`
-        height: 100%;
-      `}
-    >
-      {children}
-    </Box>
+    <Box css="height: 100%;">{children}</Box>
   </Col>
 );
 const TextColumn = props => <Col bg="#fff" {...props} />;
@@ -46,8 +40,16 @@ const TextSection = ({ onSection, id, children, ...props }) => (
   <Waypoint
     bottomOffset="30%"
     topOffset="30%"
-    onEnter={onSection && (props => onSection(id, { type: 'enter', ...props }))}
-    onLeave={onSection && (props => onSection(id, { type: 'leave', ...props }))}
+    onEnter={
+      onSection &&
+      (waypointProps =>
+        onSection(id, { type: 'enter', ...waypointProps, illustration: props }))
+    }
+    onLeave={
+      onSection &&
+      (waypointProps =>
+        onSection(id, { type: 'leave', ...waypointProps, illustration: props }))
+    }
   >
     <WaypointAdapter>
       {ref => (
@@ -67,24 +69,45 @@ const TextSection = ({ onSection, id, children, ...props }) => (
   </Waypoint>
 );
 
-export default class AltlengbachPage extends React.Component {
-  state = { currentSection: 'start', visibleSections: ['start'] };
+const Screenshot = ({ image: { childImageSharp } = {}, ...rest }) => (
+  <Image {...childImageSharp} {...rest} />
+);
 
-  handleSection = (currentSection, { type }) => {
+const defaultIllustration = {
+  showBrowser: true,
+  showChildren: true,
+  image: 'home',
+};
+
+export default class AltlengbachPage extends React.Component {
+  state = {
+    currentSection: '',
+    visibleSections: [{ id: '', illustration: defaultIllustration }],
+    illustration: defaultIllustration,
+  };
+
+  handleSection = (currentSection, { type, illustration }) => {
     if (type === 'enter') {
+      console.log(currentSection, illustration, this.state.visibleSections);
+
       this.setState(({ visibleSections }) => ({
         currentSection,
-        visibleSections: visibleSections.includes(currentSection)
+        illustration,
+        visibleSections: visibleSections.find(({ id }) => id === currentSection)
           ? visibleSections
-          : [...visibleSections, currentSection],
+          : [...visibleSections, { id: currentSection, illustration }],
       }));
     } else {
       this.setState(({ visibleSections }) => {
         const newVisibleSections = visibleSections.filter(
-          section => section !== currentSection
+          ({ id }) => id !== currentSection
         );
+        const { id, illustration } = newVisibleSections[
+          newVisibleSections.length - 1
+        ] || { id: '', illustration: defaultIllustration };
         return {
-          currentSection: newVisibleSections[newVisibleSections.length - 1],
+          currentSection: id,
+          illustration,
           visibleSections: newVisibleSections,
         };
       });
@@ -92,54 +115,11 @@ export default class AltlengbachPage extends React.Component {
   };
 
   render() {
-    const { currentSection } = this.state;
-    const states = {
-      start: { showBrowser: true, showChildren: true },
-      layout: {
-        showSections: true,
-        showBrowser: true,
-        animate: 'browser',
-        zoom: 'canvas',
-      },
-      division: {
-        showSections: true,
-        showLines: true,
-        animate: 'lines',
-        zoom: 'canvas',
-      },
-      animation: {
-        showSections: true,
-        showLines: true,
-        showBrowser: true,
-        center: true,
-        zoom: 'browser',
-        animate: 'canvas',
-      },
-      developing: {
-        showBrowser: true,
-        showChildren: true,
-        image: 'home',
-      },
-      sectionTransitions: {
-        showBrowser: true,
-        showChildren: true,
-        image: 'kitchen',
-      },
-      pageTransitions: {
-        showBrowser: true,
-        showChildren: true,
-        image: 'plans',
-      },
-      breathing: {
-        showBrowser: true,
-        showChildren: true,
-        image: 'home',
-      },
-      improvements: { zoom: true, showBrowser: true, showChildren: true },
-      conclusion: { zoom: true, showBrowser: true, showChildren: true },
-    };
-    const illustrationState = states[currentSection] || {};
-    const image = illustrationState.image || 'home';
+    const { data } = this.props;
+    const { currentSection, illustration } = this.state;
+    console.log(currentSection, illustration);
+
+    const image = illustration.image || 'home';
 
     return (
       <Layout>
@@ -171,61 +151,22 @@ export default class AltlengbachPage extends React.Component {
               `}
             >
               <LayoutIllustration
-                {...illustrationState}
+                {...illustration}
                 href="https://altlengbach.netlify.com"
               >
-                <StaticQuery
-                  query={graphql`
-                    query {
-                      home: file(name: { eq: "landhaus-altlengbach-home" }) {
-                        childImageSharp {
-                          fluid(maxWidth: 1280) {
-                            ...GatsbyImageSharpFluid_withWebp
-                          }
-                        }
-                      }
-                      kitchen: file(
-                        name: { eq: "landhaus-altlengbach-kitchen" }
-                      ) {
-                        childImageSharp {
-                          fluid(maxWidth: 1280) {
-                            ...GatsbyImageSharpFluid_withWebp
-                          }
-                        }
-                      }
-                      contact: file(
-                        name: { eq: "landhaus-altlengbach-contact" }
-                      ) {
-                        childImageSharp {
-                          fluid(maxWidth: 1280) {
-                            ...GatsbyImageSharpFluid_withWebp
-                          }
-                        }
-                      }
-                      plans: file(name: { eq: "landhaus-altlengbach-plans" }) {
-                        childImageSharp {
-                          fluid(maxWidth: 1280) {
-                            ...GatsbyImageSharpFluid_withWebp
-                          }
-                        }
-                      }
-                    }
-                  `}
-                  render={images => (
-                    <>
-                      <Image
-                        fluid={images[image].childImageSharp.fluid}
-                        critical
-                      />
-                    </>
-                  )}
-                />
+                <Screenshot image={data[image]} />
               </LayoutIllustration>
             </Box>
           </IllustrationColumn>
 
           <TextColumn>
-            <TextSection id="start" onSection={this.handleSection}>
+            <TextSection
+              id="start"
+              onSection={this.handleSection}
+              showBrowser
+              showChildren
+              image="kitchen"
+            >
               <P>
                 I created a small presentational website to accompany the sale
                 of our parents' house. Because this was a private side project,
@@ -242,7 +183,14 @@ export default class AltlengbachPage extends React.Component {
               </P>
             </TextSection>
 
-            <TextSection id="layout" onSection={this.handleSection}>
+            <TextSection
+              id="layout"
+              onSection={this.handleSection}
+              showCanvas
+              showBrowser
+              animate="browser"
+              zoom="canvas"
+            >
               <H2>The Layout: Canvas and Lens</H2>
               <P>
                 The layout is based on the idea of a virtual canvas with three
@@ -255,7 +203,14 @@ export default class AltlengbachPage extends React.Component {
               </P>
             </TextSection>
 
-            <TextSection id="division" onSection={this.handleSection}>
+            <TextSection
+              id="division"
+              onSection={this.handleSection}
+              showCanvas
+              showLines
+              animate="lines"
+              zoom="canvas"
+            >
               <P>
                 Each page is divided into four parts by a vertical and a
                 horizontal line: A vertical ribbon with text, a large image
@@ -268,7 +223,16 @@ export default class AltlengbachPage extends React.Component {
               </P>
             </TextSection>
 
-            <TextSection id="animation" onSection={this.handleSection}>
+            <TextSection
+              id="animation"
+              onSection={this.handleSection}
+              showCanvas
+              showLines
+              showBrowser
+              center
+              zoom="browser"
+              animate="canvas"
+            >
               <P>
                 To convey this concept to the site visitors, I used animated
                 transitions between the individual pages: when navigating
@@ -281,7 +245,13 @@ export default class AltlengbachPage extends React.Component {
               </P>
             </TextSection>
 
-            <TextSection id="developing" onSection={this.handleSection}>
+            <TextSection
+              id="developing"
+              onSection={this.handleSection}
+              showBrowser
+              showChildren
+              image="home"
+            >
               <H2>Developing The Site</H2>
               <P>
                 When I started developing the website, Gatsby V2 was just in
@@ -292,7 +262,13 @@ export default class AltlengbachPage extends React.Component {
               </P>
             </TextSection>
 
-            <TextSection id="sectionTransitions" onSection={this.handleSection}>
+            <TextSection
+              id="sectionTransitions"
+              onSection={this.handleSection}
+              showBrowser
+              showChildren
+              image="kitchen"
+            >
               <P>
                 However, creating transitions between the different pages wasn't
                 as straightforward as I expected, largely due to some changes in
@@ -303,7 +279,13 @@ export default class AltlengbachPage extends React.Component {
                 separate blog post about that.
               </P>
             </TextSection>
-            <TextSection id="pageTransitions" onSection={this.handleSection}>
+            <TextSection
+              id="pageTransitions"
+              onSection={this.handleSection}
+              showBrowser
+              showChildren
+              image="plans"
+            >
               <P>
                 The main section of the website shows large pictures to give a
                 great impression of the house's individual areas. I decided to
@@ -314,7 +296,13 @@ export default class AltlengbachPage extends React.Component {
                 page transitions by making them look like a slide show.
               </P>
             </TextSection>
-            <TextSection id="breathing" onSection={this.handleSection}>
+            <TextSection
+              id="breathing"
+              onSection={this.handleSection}
+              showBrowser
+              showChildren
+              image="home"
+            >
               <P>
                 I added a subtle scaling animation to the images to evoke the
                 impression that they were breathing. I also animated the local
@@ -332,7 +320,13 @@ export default class AltlengbachPage extends React.Component {
               max-width: 500px;
             `}
           >
-            <TextSection id="improvements" onSection={this.handleSection}>
+            <TextSection
+              id="improvements"
+              onSection={this.handleSection}
+              showBrowser
+              showChildren
+              image="home"
+            >
               <H2>Planned Improvements</H2>
               <P>
                 Using the new React DevTools profiler, I found out that the
@@ -378,6 +372,39 @@ export default class AltlengbachPage extends React.Component {
     );
   }
 }
+
+export const query = graphql`
+  query {
+    home: file(name: { eq: "landhaus-altlengbach-home" }) {
+      childImageSharp {
+        fluid(maxWidth: 1280) {
+          ...GatsbyImageSharpFluid_withWebp
+        }
+      }
+    }
+    kitchen: file(name: { eq: "landhaus-altlengbach-kitchen" }) {
+      childImageSharp {
+        fluid(maxWidth: 1280) {
+          ...GatsbyImageSharpFluid_withWebp
+        }
+      }
+    }
+    contact: file(name: { eq: "landhaus-altlengbach-contact" }) {
+      childImageSharp {
+        fluid(maxWidth: 1280) {
+          ...GatsbyImageSharpFluid_withWebp
+        }
+      }
+    }
+    plans: file(name: { eq: "landhaus-altlengbach-plans" }) {
+      childImageSharp {
+        fluid(maxWidth: 1280) {
+          ...GatsbyImageSharpFluid_withWebp
+        }
+      }
+    }
+  }
+`;
 
 const LayoutSvg = styled.svg`
   margin-left: auto;
@@ -473,7 +500,7 @@ const LayoutIllustration = ({
   width = 640,
   height = 360,
   showLines = false,
-  showSections = false,
+  showCanvas = false,
   showBrowser = false,
   showChildren = false,
   animate = '',
@@ -482,7 +509,7 @@ const LayoutIllustration = ({
 }) => (
   <LayoutSvg viewBox={`0 0 ${width} ${height}`}>
     <Group center={center} zoom={zoom} show>
-      <Group show={showSections} play={animate === 'canvas'} delay="2s">
+      <Group show={showCanvas} play={animate === 'canvas'} delay="2s">
         <rect
           x={-width}
           y={0}
