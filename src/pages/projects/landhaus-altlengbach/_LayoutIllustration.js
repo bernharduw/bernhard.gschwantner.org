@@ -1,16 +1,16 @@
 import React from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-import Browser from '../../../components/Browser';
 import {
   Container,
   Svg,
   Group,
-  FadingGroup,
+  AnimatedBrowser,
   Canvas,
   Text,
   Rect,
   Line,
+  Transition,
 } from './_Graphics';
 
 const LayoutIllustration = ({
@@ -159,30 +159,36 @@ const LayoutIllustration = ({
             />
           </Group>
         </Canvas>
-
-        <TransitionGroup component={null}>
-          {(renderContent || showBrowser) && (
-            <CSSTransition
-              timeout={timeout}
-              classNames={classNames}
-              key={contentKey || 'default'}
-            >
-              <FadingGroup play={animate === 'browser'} delay="2s">
-                <foreignObject x={0} y={0} width={width} height={height}>
-                  <Browser
-                    target="_blank"
-                    {...rest}
-                    css={'height: 100%; height: calc(100% + 19px);'}
-                  >
-                    {renderContent && renderContent()}
-                  </Browser>
-                </foreignObject>
-              </FadingGroup>
-            </CSSTransition>
-          )}
-        </TransitionGroup>
       </Group>
     </Svg>
+
+    <TransitionGroup component={null}>
+      {showBrowser && (
+        <CSSTransition timeout={timeout} classNames={classNames} key={animate}>
+          <AnimatedBrowser
+            play={animate === 'browser'}
+            delay="2s"
+            target="_blank"
+            {...rest}
+            css="height: 100%;"
+          >
+            <TransitionGroup component={null}>
+              {renderContent && (
+                <CSSTransition
+                  timeout={timeout}
+                  classNames={classNames}
+                  key={contentKey || 'default'}
+                >
+                  <Transition classNames={classNames}>
+                    {renderContent()}
+                  </Transition>
+                </CSSTransition>
+              )}
+            </TransitionGroup>
+          </AnimatedBrowser>
+        </CSSTransition>
+      )}
+    </TransitionGroup>
   </Container>
 );
 

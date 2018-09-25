@@ -1,8 +1,14 @@
+import React from 'react';
 import styled, { css } from 'styled-components';
 
+import Browser from '../../../components/Browser';
 import { moveCanvas, moveElement, fadeIn, scaleX, scaleY } from './_keyframes';
 
 export const Container = styled.div`
+  margin-left: auto;
+  margin-top: 16px;
+  max-width: 468px;
+  position: relative;
   transform-origin: 100% 0;
   transition: opacity 1s, transform 1s;
   transform: ${({ center, zoom }) =>
@@ -12,10 +18,7 @@ export const Container = styled.div`
 `;
 
 export const Svg = styled.svg`
-  margin-left: auto;
-  max-width: 468px;
   display: block;
-  padding-top: 16px;
   && {
     overflow: visible;
   }
@@ -36,18 +39,13 @@ export const Canvas = styled(Group)`
     play ? css`${moveCanvas}  ${speed} ${delay} ease infinite` : 'none'};
 `;
 
-export const FadingGroup = styled.g`
-  animation: ${({ play, speed = '10s', delay = '0s' }) =>
-    play ? css`${moveElement}  ${speed} ${delay} ease infinite` : 'none'};
+export const Transition = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.5s;
 
-  &.fade-enter,
-  &.fade-exit {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    transition: opacity 0.5s;
-  }
   &.fade-enter {
     opacity: 0;
   }
@@ -59,6 +57,16 @@ export const FadingGroup = styled.g`
   }
 `;
 
+const AnimatedElement = styled(Transition)`
+  animation: ${({ play, speed = '10s', delay = '0s' }) =>
+    play ? css`${moveElement}  ${speed} ${delay} ease infinite` : 'none'};
+`;
+
+export const AnimatedBrowser = ({ play, speed, delay, ...rest }) => (
+  <AnimatedElement play={play} speed={speed} delay={delay}>
+    <Browser {...rest} />
+  </AnimatedElement>
+);
 export const Rect = styled.rect.attrs({
   fill: 'rgba(255, 255, 255, 0.3)',
 })`

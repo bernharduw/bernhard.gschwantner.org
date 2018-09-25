@@ -51,7 +51,9 @@ export default class AltlengbachPage extends React.Component {
       <Layout>
         <Container>
           <IllustrationColumn>
-            <Title>Website for a house sale</Title>
+            <Box ml="auto" css="max-width: 468px;">
+              <Title>Website for a house sale</Title>
+            </Box>
           </IllustrationColumn>
           <TextColumn py={4}>
             <P>
@@ -71,26 +73,24 @@ export default class AltlengbachPage extends React.Component {
               css={css`
                 position: sticky;
                 top: 0;
+                // Allow zooming of the canvas.
                 margin-bottom: -100%;
                 padding-bottom: 100%;
                 overflow: hidden;
               `}
             >
-              <LayoutIllustration
-                currentSection={currentSection}
-                {...illustration}
-                href="https://altlengbach.netlify.com"
-              />
+              <LayoutIllustration {...illustration} />
             </Box>
           </IllustrationColumn>
 
-          <TextColumn>
+          <TextColumn mr="auto" css="max-width: 468px;">
             <TextSection
               id="start"
               onSection={this.handleSection}
               showBrowser
               contentKey="kitchen"
               renderContent={() => <Screenshot image={data.kitchen} />}
+              href="https://altlengbach.netlify.com/tour/01-kueche"
             >
               <P>
                 I created a small presentational website to accompany the sale
@@ -176,6 +176,7 @@ export default class AltlengbachPage extends React.Component {
               showBrowser
               contentKey="home"
               renderContent={() => <Screenshot image={data.home} />}
+              href="https://altlengbach.netlify.com"
             >
               <H2>Developing The Site</H2>
               <P>
@@ -191,8 +192,9 @@ export default class AltlengbachPage extends React.Component {
               id="sectionTransitions"
               onSection={this.handleSection}
               showBrowser
-              contentKey="kitchen"
-              renderContent={() => <Screenshot image={data.kitchen} />}
+              contentKey="contact"
+              renderContent={() => <Screenshot image={data.contact} />}
+              href="https://altlengbach.netlify.com/contact"
             >
               <P>
                 However, creating transitions between the different pages wasn't
@@ -210,6 +212,7 @@ export default class AltlengbachPage extends React.Component {
               showBrowser
               contentKey="plans"
               renderContent={() => <Screenshot image={data.plans} />}
+              href="https://altlengbach.netlify.com/floor-plans/"
             >
               <P>
                 The main section of the website shows large pictures to give a
@@ -227,6 +230,7 @@ export default class AltlengbachPage extends React.Component {
               showBrowser
               contentKey="home"
               renderContent={() => <Screenshot image={data.home} />}
+              href="https://altlengbach.netlify.com/"
             >
               <P>
                 I added a subtle scaling animation to the images to evoke the
@@ -234,23 +238,14 @@ export default class AltlengbachPage extends React.Component {
                 navigation to make the site architecture even clearer.
               </P>
             </TextSection>
-          </TextColumn>
-        </Container>
 
-        <Container>
-          <IllustrationColumn />
-          <TextColumn
-            mr="auto"
-            css={css`
-              max-width: 500px;
-            `}
-          >
             <TextSection
               id="improvements"
               onSection={this.handleSection}
               showBrowser
-              contentKey="home"
-              renderContent={() => <Screenshot image={data.home} />}
+              contentKey="contact"
+              renderContent={() => <Screenshot image={data.contact} />}
+              href="https://altlengbach.netlify.com/contact"
             >
               <H2>Planned Improvements</H2>
               <P>
@@ -272,8 +267,20 @@ export default class AltlengbachPage extends React.Component {
                 </li>
               </ul>
             </TextSection>
+          </TextColumn>
+        </Container>
 
-            <TextSection id="conclusion" onSection={this.handleSection}>
+        <Container>
+          <IllustrationColumn />
+          <TextColumn mr="auto" css="max-width: 468px;">
+            <TextSection
+              id="conclusion"
+              onSection={this.handleSection}
+              showBrowser
+              contentKey="contact"
+              renderContent={() => <Screenshot image={data.contact} />}
+              href="https://altlengbach.netlify.com/contact"
+            >
               <H2>My Impressions</H2>
               <P>
                 Working on the website was a very nice experience, with a lot of

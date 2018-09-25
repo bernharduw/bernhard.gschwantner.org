@@ -11,6 +11,7 @@ const BrowserFrame = styled(Box)`
   border-top-width: 16px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   margin: -16px -3px -3px;
+  box-sizing: content-box;
 `;
 
 const WindowControls = styled(Box)`
