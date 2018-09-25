@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Box } from 'rebass';
 
 const BrowserFrame = styled(Box)`
   display: block;
   position: relative;
-  border: 2px solid #f0f0f0;
-  border-radius: 3px;
+  border: 3px solid #f0f0f0;
+  border-radius: 4px;
   border-top-width: 16px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 `;
@@ -22,7 +22,6 @@ const WindowControls = styled(Box)`
     position: absolute;
     border-radius: 4px;
     padding: 4px;
-    height: 4px;
     background-color: #c2c2c2;
   }
   &::before,

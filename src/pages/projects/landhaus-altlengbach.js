@@ -2,7 +2,7 @@ import React from 'react';
 import { Heading, Text, Flex, Box } from 'rebass';
 import { Link, StaticQuery, graphql } from 'gatsby';
 import Image from 'gatsby-image';
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 import Layout from '../../components/layout';
 import Browser from '../../components/Browser';
@@ -27,8 +27,6 @@ const IllustrationColumn = ({ children, ...props }) => (
   <Col bg="#555" color="#fff" py={4} {...props}>
     <Box
       css={`
-        max-width: 468px;
-        margin-left: auto;
         height: 100%;
       `}
     >
@@ -97,10 +95,20 @@ export default class AltlengbachPage extends React.Component {
     const { currentSection } = this.state;
     const states = {
       start: { zoom: true, showBrowser: true, showChildren: true },
-      layout: { showSections: true, showBrowser: true },
-      division: { showSections: true, showLines: true },
-      animation: { showSections: true, showLines: true, showBrowser: true },
+      layout: { showSections: true, showBrowser: true, animate: 'browser' },
+      division: { showSections: true, showLines: true, animate: 'lines' },
+      animation: {
+        showSections: true,
+        showLines: true,
+        showBrowser: true,
+        center: true,
+        animate: 'canvas',
+      },
       developing: { zoom: true, showBrowser: true, showChildren: true },
+      transitions: { zoom: true, showBrowser: true, showChildren: true },
+      breathing: { zoom: true, showBrowser: true, showChildren: true },
+      improvements: { zoom: true, showBrowser: true, showChildren: true },
+      conclusion: { zoom: true, showBrowser: true, showChildren: true },
     };
     const illustrationState = states[currentSection];
 
@@ -122,9 +130,15 @@ export default class AltlengbachPage extends React.Component {
         <Container>
           <IllustrationColumn>
             <Box
+              mx={[-2, -3]}
+              px={[2, 3]}
+              pt={[2, 3]}
               css={css`
                 position: sticky;
-                top: 16px;
+                top: 0;
+                margin-bottom: -100%;
+                padding-bottom: 100%;
+                overflow: hidden;
               `}
             >
               <LayoutIllustration
@@ -223,6 +237,8 @@ export default class AltlengbachPage extends React.Component {
                 There's a lot to say about page transitions, so I will write a
                 separate blog post about that.
               </P>
+            </TextSection>
+            <TextSection id="transitions" onSection={this.handleSection}>
               <P>
                 The main section of the website shows large pictures to give a
                 great impression of the house's individual areas. I decided to
@@ -232,9 +248,11 @@ export default class AltlengbachPage extends React.Component {
                 resemble a slide show more and more, so I tried to match the
                 page transitions by making them look like a slide show.
               </P>
+            </TextSection>
+            <TextSection id="breathing" onSection={this.handleSection}>
               <P>
-                I also added a subtle scale animation to the images to give the
-                impression that they are breathing. I also animated the local
+                I added a subtle scaling animation to the images to evoke the
+                impression that they were breathing. I also animated the local
                 navigation to make the site architecture even clearer.
               </P>
             </TextSection>
@@ -248,15 +266,14 @@ export default class AltlengbachPage extends React.Component {
               max-width: 500px;
             `}
           >
-            <TextSection>
+            <TextSection id="improvements" onSection={this.handleSection}>
               <H2>Planned Improvements</H2>
               <P>
-                Unfortunately the transitions' performance degraded after adding
-                the subtle animations. Using the new React DevTools profiler, I
-                found out that the navigation transition takes much more time to
-                render than all the other animations together. Although I
-                decided to publish the site in the non-optimized state, I hope
-                to fix those and other open issues soon-ish:
+                Using the new React DevTools profiler, I found out that the
+                navigation transition takes much more time to render than all
+                the other animations together. Although I decided to publish the
+                site in the non-optimized state, I hope to fix those and other
+                open issues soon-ish:
               </P>
               <ul>
                 <li>Replace react-pose with pure CSS transitions,</li>
@@ -269,6 +286,9 @@ export default class AltlengbachPage extends React.Component {
                   floor plans.
                 </li>
               </ul>
+            </TextSection>
+
+            <TextSection id="conclusion" onSection={this.handleSection}>
               <H2>My Impressions</H2>
               <P>
                 Working on the website was a very nice experience, with a lot of
@@ -295,32 +315,107 @@ export default class AltlengbachPage extends React.Component {
 }
 
 const LayoutSvg = styled.svg`
-  transition: transform 1s;
-  transform: ${({ zoom }) => (zoom ? 'translate(-50%,50%) scale(2)' : '')};
+  margin-left: auto;
+  max-width: 468px;
+  display: block;
+
+  && {
+    overflow: visible;
+  }
+`;
+
+const scaleX = keyframes`
+0%   { transform: scaleX(0); }
+5%   { transform: scaleX(0.5); }
+20%  { transform: scaleX(0.5); }
+25%  { transform: scaleX(1); }
+100% { transform: scaleX(1); }
+`;
+const scaleY = keyframes`
+0%   { transform: scaleY(0); }
+5%   { transform: scaleY(0.5); }
+15%  { transform: scaleY(0.5); }
+20%  { transform: scaleY(1); }
+100% { transform: scaleY(1); }
+`;
+
+const fadeIn = keyframes`
+0%  { opacity: 0; }
+20% { opacity: 1; }
+80% { opacity: 1; }
+85% { opacity: 0; }
+`;
+
+const Line = styled.path.attrs({ stroke: '#fff', strokeWidth: 2 })`
+  animation: ${({ speed = '10s', delay = '0s', horizontal, play }) =>
+    play
+      ? css`${horizontal ? scaleX : scaleY} ${speed} ${delay} ease infinite`
+      : 'none'};
+  transform: ${props =>
+    props.play ? (props.horizontal ? 'scaleX(0)' : 'scaleY(0)') : 'none'};
+  transform-origin: ${props => (props.horizontal ? '100% 0%' : '0% 0%')};
+`;
+
+const Rect = styled.rect.attrs({ fill: 'rgba(255, 255, 255, 0.3)' })`
+  animation: ${({ play, speed = '10s', delay = '0s' }) =>
+    play ? css`${fadeIn}  ${speed} ${delay} ease infinite` : 'none'};
+  opacity: ${props => (props.play ? 0 : 1)};
+  transition: ${props => (props.play ? 'none' : 'opacity 1s')};
+`;
+
+const moveBrowser = keyframes`
+0%      { transform: translateY(0%); }
+10%     { transform: translateY(50%); }
+26.667% { transform: translateY(50%); }
+36.667% { transform: translateY(0%); }
+53.333% { transform: translateY(0%); }
+63.333% { transform: translateX(-50%); }
+80%     { transform: translateX(-50%); }
+90%     { transform: translateX(0%); }
+`;
+
+const AnimatedObject = styled.foreignObject`
+  animation: ${({ play, speed = '10s', delay = '0s' }) =>
+    play ? css`${moveBrowser}  ${speed} ${delay} ease infinite` : 'none'};
+`;
+
+const moveCanvas = keyframes`
+0%      { transform: translateY(0%); }
+10%     { transform: translateY(-50%); }
+26.667% { transform: translateY(-50%); }
+36.667% { transform: translateY(0%); }
+53.333% { transform: translateY(0%); }
+63.333% { transform: translateX(50%); }
+80%     { transform: translateX(50%); }
+90%     { transform: translateX(0%); }
 `;
 
 const Group = styled.g`
-  transition: opacity 1s;
-  opacity: ${({ show, opacity = 1 }) => (show ? opacity : 0)};
+  transform-origin: 100% 0;
+  transition: opacity 1s, transform 1s;
+  transform: ${({ center, zoom }) =>
+    `${center ? 'translate(-25%, 25%)' : ''} ${zoom ? 'scale(2)' : ''}`};
+  animation: ${({ play, speed = '10s', delay = '0s' }) =>
+    play ? css`${moveCanvas}  ${speed} ${delay} ease infinite` : 'none'};
+  opacity: ${({ show = true, opacity = 1 }) => (show ? opacity : 0)};
 `;
 
 const LayoutIllustration = ({
-  zoom,
+  zoom = false,
+  center = false,
   width = 640,
   height = 360,
-  showLines,
-  showSections,
-  showBrowser,
-  showChildren,
+  showLines = false,
+  showSections = false,
+  showBrowser = false,
+  showChildren = false,
+  animate = '',
   children,
   ...rest
 }) => (
-  <Box>
-    <LayoutSvg
-      zoom={zoom}
-      viewBox={`-2 -16 ${2 * width + 4} ${2 * height + 18}`}
-    >
-      <Group show={showSections}>
+  <LayoutSvg viewBox={`0 -32 ${2 * width} ${2 * height + 32 + 6}`}>
+    <Group center={center} zoom={zoom} show>
+      <Group show={showSections} play={animate === 'canvas'} delay="2s">
         <rect
           x="0"
           y="0"
@@ -329,7 +424,7 @@ const LayoutIllustration = ({
           fill="rgba(0,0,0,0.1)"
         />
         <g className="contactSection">
-          <rect x="0" y="0" width={width} height={height} fill="orange" />
+          <rect x="0" y="0" width={width} height={height} fill="#6e8b3d" />
           <foreignObject
             x="0"
             y={height / 2 - height / 20}
@@ -341,7 +436,7 @@ const LayoutIllustration = ({
           </foreignObject>
         </g>
         <g className="mainSection">
-          <rect x={width} y="0" width={width} height={height} fill="green" />
+          <rect x={width} y="0" width={width} height={height} fill="#52682d" />
           <foreignObject
             x={width}
             y={height / 2 - height / 20}
@@ -358,8 +453,7 @@ const LayoutIllustration = ({
             y={height}
             width={width}
             height={height}
-            fill="blue"
-            opacity="0.5"
+            fill="#435626"
           />
           <foreignObject
             x={width}
@@ -371,53 +465,130 @@ const LayoutIllustration = ({
             <p>Plans</p>
           </foreignObject>
         </g>
+
+        <Group show={showLines} opacity={showBrowser ? 0.2 : 1}>
+          <Line
+            play={animate === 'lines'}
+            delay="1s"
+            d={`M${(width * 18) / 13},0 L${(width * 18) / 13},${height * 2}`}
+          />
+          <Rect
+            delay="1.25s"
+            play={animate === 'lines'}
+            x={width}
+            y="0"
+            width={(width / 13) * 5}
+            height={height}
+          />
+          <Line
+            horizontal
+            delay="1.5s"
+            play={animate === 'lines'}
+            d={`M0,${height * 0.85} L${2 * width},${height * 0.85}`}
+          />
+          <Rect
+            delay="1.75s"
+            play={animate === 'lines'}
+            x={width}
+            y={height * 0.85}
+            width={width}
+            height={height * 0.15}
+          />
+          <Line
+            horizontal
+            delay="2s"
+            play={animate === 'lines'}
+            d={`M0,${height * 1.15} L${2 * width},${height * 1.15}`}
+          />
+          <Rect
+            delay="2.25s"
+            play={animate === 'lines'}
+            x={width}
+            y={height}
+            width={width}
+            height={height * 0.15}
+          />
+          <Rect
+            delay="2.75s"
+            play={animate === 'lines'}
+            x={width}
+            y={height}
+            width={(width / 13) * 5}
+            height={height}
+          />
+          <Line
+            delay="3s"
+            play={animate === 'lines'}
+            d={`M${width * 0.9},0 L${width * 0.9},${height * 2}`}
+          />
+          <Rect
+            delay="3.25s"
+            play={animate === 'lines'}
+            x={width * 0.9}
+            y="0"
+            width={width * 0.1}
+            height={height}
+          />
+          <Rect
+            delay="3.75s"
+            play={animate === 'lines'}
+            x="0"
+            y={height * 0.85}
+            width={width}
+            height={height * 0.15}
+          />
+          <Rect
+            delay="4.25s"
+            play={animate === 'lines'}
+            x="0"
+            y={height}
+            width={width}
+            height={height * 0.15}
+          />
+          <Rect
+            delay="4.75s"
+            play={animate === 'lines'}
+            x={width * 0.9}
+            y={height}
+            width={width * 0.1}
+            height={height}
+          />
+        </Group>
       </Group>
-      <Group show={showLines} opacity={showBrowser ? 0.2 : 1}>
-        <path
-          stroke="#fff"
-          strokeWidth="4"
-          d={`M${width * 0.9},0 L${width * 0.9},${height * 2}`}
-        />
-        <path
-          stroke="#fff"
-          strokeWidth="4"
-          d={`M${(width * 18) / 13},0 L${(width * 18) / 13},${height * 2}`}
-        />
-        <path
-          stroke="#fff"
-          strokeWidth="4"
-          d={`M0,${height * 0.85} L${2 * width},${height * 0.85}`}
-        />
-        <path
-          stroke="#fff"
-          strokeWidth="4"
-          d={`M0,${height * 1.15} L${2 * width},${height * 1.15}`}
-        />
-      </Group>
+
       <Group show={showBrowser && !showChildren}>
-        <foreignObject x={width} y="0" width={width} height={height}>
+        <AnimatedObject
+          x={width}
+          y="0"
+          width={width}
+          height={height}
+          play={showBrowser && !showChildren && animate === 'browser'}
+          delay="2s"
+        >
           <Browser
             {...rest}
             css={css`
               height: 100%;
-              height: calc(100% + 18px);
-              margin: -16px -2px -2px;
+              height: calc(100% + 19px);
+              margin: -16px -3px -3px;
             `}
           />
-        </foreignObject>
+        </AnimatedObject>
       </Group>
       <Group show={showChildren}>
-        <foreignObject x={width} y="0" width={width} height={height}>
-          <Browser
-            {...rest}
-            css={css`
-              margin: -16px -2px -2px;
-            `}
-          >
+        <AnimatedObject
+          x={width}
+          y="0"
+          width={width}
+          height={height}
+          play={showChildren && animate === 'browser'}
+          delay="2s"
+        >
+          <Browser {...rest} css="margin: -16px -3px -3px;">
             {children}
           </Browser>
-        </foreignObject>
+        </AnimatedObject>
       </Group>
-    </LayoutSvg>
-  </Box>
+    </Group>
+  </LayoutSvg>
 );
