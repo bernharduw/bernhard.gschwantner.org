@@ -2,6 +2,15 @@ import styled, { css } from 'styled-components';
 
 import { moveCanvas, moveElement, fadeIn, scaleX, scaleY } from './_keyframes';
 
+export const Container = styled.div`
+  transform-origin: 100% 0;
+  transition: opacity 1s, transform 1s;
+  transform: ${({ center, zoom }) =>
+    `${center ? 'translate(-25%, 25%)' : ''} ${
+      zoom === 'canvas' ? 'scale(0.5)' : 'none'
+    }`};
+`;
+
 export const Svg = styled.svg`
   margin-left: auto;
   max-width: 468px;
@@ -57,6 +66,14 @@ export const Rect = styled.rect.attrs({
     play ? css`${fadeIn}  ${speed} ${delay} ease infinite` : 'none'};
   opacity: ${props => (props.play ? 0 : 1)};
   transition: ${props => (props.play ? 'none' : 'opacity 1s')};
+`;
+
+export const Text = styled.text.attrs({
+  textAnchor: 'middle',
+  alignmentBaseline: 'central',
+})`
+  fill: #fff;
+  font-size: ${props => props.fontSize}px;
 `;
 
 export const Line = styled.path.attrs({
