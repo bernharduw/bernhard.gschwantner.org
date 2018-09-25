@@ -2,7 +2,13 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 import Browser from '../../../components/Browser';
-import { moveCanvas, moveElement, fadeIn, scaleX, scaleY } from './_keyframes';
+import {
+  moveCanvas,
+  moveElement,
+  makeFadeIn,
+  makeScaleX,
+  makeScaleY,
+} from './_keyframes';
 
 export const Container = styled.div`
   margin-left: auto;
@@ -68,10 +74,15 @@ export const AnimatedBrowser = ({ play, speed, delay, ...rest }) => (
   </AnimatedElement>
 );
 export const Rect = styled.rect.attrs({
-  fill: 'rgba(255, 255, 255, 0.3)',
+  fill: 'rgba(255, 255, 255, 0.2)',
 })`
-  animation: ${({ play, speed = '10s', delay = '0s' }) =>
-    play ? css`${fadeIn}  ${speed} ${delay} ease infinite` : 'none'};
+  animation: ${({ play, speed = '5s', delay = '0s' }) =>
+    play
+      ? css`${makeFadeIn(
+          parseFloat(delay),
+          parseFloat(speed)
+        )}  ${speed} ${delay} ease infinite`
+      : 'none'};
   opacity: ${props => (props.play ? 0 : 1)};
   transition: ${props => (props.play ? 'none' : 'opacity 1s')};
 `;
@@ -88,9 +99,13 @@ export const Line = styled.path.attrs({
   stroke: '#fff',
   strokeWidth: 2,
 })`
-  animation: ${({ speed = '10s', delay = '0s', horizontal, play }) =>
+  animation: ${({ speed = '5s', delay = '0s', horizontal, play }) =>
     play
-      ? css`${horizontal ? scaleX : scaleY} ${speed} ${delay} ease infinite`
+      ? css`${
+          horizontal
+            ? makeScaleX(parseFloat(delay), parseFloat(speed))
+            : makeScaleY(parseFloat(delay), parseFloat(speed))
+        } ${speed} ${delay} ease infinite`
       : 'none'};
   transform: ${props =>
     props.play ? (props.horizontal ? 'scaleX(0)' : 'scaleY(0)') : 'none'};

@@ -70,14 +70,14 @@ const LayoutIllustration = ({
             </Text>
           </g>
 
-          <Group show={showLines} opacity={showBrowser ? 0.2 : 1}>
+          <Group show={showLines} opacity={showBrowser ? 0.4 : 1}>
             <Line
               play={animate === 'lines'}
-              delay="1s"
+              delay="0.5s"
               d={`M${(width / 13) * 5},0 L${(width / 13) * 5},${height * 2}`}
             />
             <Rect
-              delay="1.25s"
+              delay="0.625s"
               play={animate === 'lines'}
               x="0"
               y="0"
@@ -86,12 +86,12 @@ const LayoutIllustration = ({
             />
             <Line
               horizontal
-              delay="1.5s"
+              delay="0.75s"
               play={animate === 'lines'}
               d={`M${width},${height * 0.85} L${-width},${height * 0.85}`}
             />
             <Rect
-              delay="1.75s"
+              delay="0.875s"
               play={animate === 'lines'}
               x={0}
               y={height * 0.85}
@@ -100,12 +100,12 @@ const LayoutIllustration = ({
             />
             <Line
               horizontal
-              delay="2s"
+              delay="1s"
               play={animate === 'lines'}
               d={`M${width},${height * 1.15} L${-width},${height * 1.15}`}
             />
             <Rect
-              delay="2.25s"
+              delay="1.125s"
               play={animate === 'lines'}
               x={0}
               y={height}
@@ -113,7 +113,7 @@ const LayoutIllustration = ({
               height={height * 0.15}
             />
             <Rect
-              delay="2.75s"
+              delay="1.375s"
               play={animate === 'lines'}
               x={0}
               y={height}
@@ -121,12 +121,12 @@ const LayoutIllustration = ({
               height={height}
             />
             <Line
-              delay="3s"
+              delay="1.5s"
               play={animate === 'lines'}
               d={`M${width * -0.1},0 L${width * -0.1},${height * 2}`}
             />
             <Rect
-              delay="3.25s"
+              delay="1.625s"
               play={animate === 'lines'}
               x={width * -0.1}
               y="0"
@@ -134,7 +134,7 @@ const LayoutIllustration = ({
               height={height}
             />
             <Rect
-              delay="3.75s"
+              delay="1.875s"
               play={animate === 'lines'}
               x={-width}
               y={height * 0.85}
@@ -142,7 +142,7 @@ const LayoutIllustration = ({
               height={height * 0.15}
             />
             <Rect
-              delay="4.25s"
+              delay="2.125s"
               play={animate === 'lines'}
               x={-width}
               y={height}
@@ -150,7 +150,7 @@ const LayoutIllustration = ({
               height={height * 0.15}
             />
             <Rect
-              delay="4.75s"
+              delay="2.375s"
               play={animate === 'lines'}
               x={width * -0.1}
               y={height}

@@ -1,26 +1,28 @@
 import { keyframes } from 'styled-components';
 
-export const scaleX = keyframes`
+export const makeScaleX = (delay, speed) => keyframes`
   0%   { transform: scaleX(0); }
   5%   { transform: scaleX(0.5); }
   20%  { transform: scaleX(0.5); }
   25%  { transform: scaleX(1); }
-  100% { transform: scaleX(1); }
+  ${95 - (100 / speed) * delay}% { transform: scaleX(1); opacity: 1; }
+  ${100 - (100 / speed) * delay}%   { transform: scaleX(0); opacity: 0; }
 `;
 
-export const scaleY = keyframes`
+export const makeScaleY = (delay, speed) => keyframes`
   0%   { transform: scaleY(0); }
   5%   { transform: scaleY(0.5); }
   15%  { transform: scaleY(0.5); }
   20%  { transform: scaleY(1); }
-  100% { transform: scaleY(1); }
+  ${95 - (100 / speed) * delay}% { transform: scaleY(1); opacity: 1; }
+  ${100 - (100 / speed) * delay}%   { transform: scaleY(0); opacity: 0; }
 `;
 
-export const fadeIn = keyframes`
+export const makeFadeIn = (delay, speed) => keyframes`
   0%  { opacity: 0; }
   20% { opacity: 1; }
-  80% { opacity: 1; }
-  85% { opacity: 0; }
+  ${95 - (100 / speed) * delay}% { opacity: 1; }
+  ${100 - (100 / speed) * delay}% { opacity: 0; }
 `;
 
 export const moveElement = keyframes`
