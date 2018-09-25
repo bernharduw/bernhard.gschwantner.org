@@ -104,13 +104,29 @@ export default class AltlengbachPage extends React.Component {
         center: true,
         animate: 'canvas',
       },
-      developing: { zoom: true, showBrowser: true, showChildren: true },
-      transitions: { zoom: true, showBrowser: true, showChildren: true },
-      breathing: { zoom: true, showBrowser: true, showChildren: true },
+      developing: {
+        zoom: true,
+        showBrowser: true,
+        showChildren: true,
+        image: 'kitchen',
+      },
+      transitions: {
+        zoom: true,
+        showBrowser: true,
+        showChildren: true,
+        image: 'contact',
+      },
+      breathing: {
+        zoom: true,
+        showBrowser: true,
+        showChildren: true,
+        image: 'plans',
+      },
       improvements: { zoom: true, showBrowser: true, showChildren: true },
       conclusion: { zoom: true, showBrowser: true, showChildren: true },
     };
     const illustrationState = states[currentSection];
+    const image = illustrationState.image || 'home';
 
     return (
       <Layout>
@@ -155,10 +171,40 @@ export default class AltlengbachPage extends React.Component {
                           }
                         }
                       }
+                      kitchen: file(
+                        name: { eq: "landhaus-altlengbach-kitchen" }
+                      ) {
+                        childImageSharp {
+                          fluid(maxWidth: 1280) {
+                            ...GatsbyImageSharpFluid_withWebp
+                          }
+                        }
+                      }
+                      contact: file(
+                        name: { eq: "landhaus-altlengbach-contact" }
+                      ) {
+                        childImageSharp {
+                          fluid(maxWidth: 1280) {
+                            ...GatsbyImageSharpFluid_withWebp
+                          }
+                        }
+                      }
+                      plans: file(name: { eq: "landhaus-altlengbach-plans" }) {
+                        childImageSharp {
+                          fluid(maxWidth: 1280) {
+                            ...GatsbyImageSharpFluid_withWebp
+                          }
+                        }
+                      }
                     }
                   `}
-                  render={({ home }) => (
-                    <Image fluid={home.childImageSharp.fluid} critical />
+                  render={images => (
+                    <>
+                      <Image
+                        fluid={images[image].childImageSharp.fluid}
+                        critical
+                      />
+                    </>
                   )}
                 />
               </LayoutIllustration>
@@ -260,6 +306,7 @@ export default class AltlengbachPage extends React.Component {
         </Container>
 
         <Container>
+          <IllustrationColumn />
           <TextColumn
             ml="auto"
             css={css`
@@ -307,7 +354,6 @@ export default class AltlengbachPage extends React.Component {
               </P>
             </TextSection>
           </TextColumn>
-          <IllustrationColumn />
         </Container>
       </Layout>
     );
