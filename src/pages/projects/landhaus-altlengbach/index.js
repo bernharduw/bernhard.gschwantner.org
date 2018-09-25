@@ -17,7 +17,7 @@ const P = props => (
     mb={3}
     css={`
       max-width: 30em;
-    `}
+    `} 
     {...props}
   />
 );
