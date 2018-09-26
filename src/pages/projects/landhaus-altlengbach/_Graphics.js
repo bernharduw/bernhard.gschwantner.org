@@ -35,7 +35,6 @@ export const Container = styled.div`
   max-width: 468px;
   position: relative;
   transform-origin: 100% 0;
-  height: ${props => props.height}px;
   transition: opacity 1s, transform 1s;
   transform: ${({ center, zoom }) =>
     `${center ? 'translate(-25%, 25%)' : ''} ${

@@ -57,7 +57,7 @@ export default class AltlengbachPage extends React.Component {
           </IllustrationColumn>
           <TextColumn py={4}>
             <P>
-              <a href="https://altlengbach.netlify.com">
+              <a href="https://altlengbach.netlify.com/">
                 www.landhaus-altlengbach.at
               </a>{' '}
             </P>
@@ -163,6 +163,7 @@ export default class AltlengbachPage extends React.Component {
               zoom="browser"
               animate="canvas"
             >
+              {/* TODO add an animation segment for in-section transitions */}
               <P>
                 To convey this concept to the site visitors, I used animated
                 transitions between the individual pages: when navigating
@@ -181,7 +182,7 @@ export default class AltlengbachPage extends React.Component {
               showBrowser
               contentKey="home"
               renderContent={() => <Screenshot image={data.home} />}
-              href="https://altlengbach.netlify.com"
+              href="https://altlengbach.netlify.com/"
             >
               <H2>Developing The Site</H2>
               <P>
@@ -197,9 +198,9 @@ export default class AltlengbachPage extends React.Component {
               id="sectionTransitions"
               onSection={this.handleSection}
               showBrowser
-              contentKey="contact"
-              renderContent={() => <Screenshot image={data.contact} />}
-              href="https://altlengbach.netlify.com/contact"
+              contentKey="plans"
+              renderContent={() => <Screenshot image={data.plans} />}
+              href="https://altlengbach.netlify.com/floor-plans/"
             >
               <P>
                 However, creating transitions between the different pages wasn't
@@ -215,10 +216,11 @@ export default class AltlengbachPage extends React.Component {
               id="pageTransitions"
               onSection={this.handleSection}
               showBrowser
-              contentKey="plans"
-              renderContent={() => <Screenshot image={data.plans} />}
-              href="https://altlengbach.netlify.com/floor-plans/"
+              contentKey="kitchen"
+              renderContent={() => <Screenshot image={data.kitchen} />}
+              href="https://altlengbach.netlify.com/tour/01-kueche"
             >
+              {/* // TODO Show in-page transitions here. */}
               <P>
                 The main section of the website shows large pictures to give a
                 great impression of the house's individual areas. I decided to
@@ -237,6 +239,7 @@ export default class AltlengbachPage extends React.Component {
               renderContent={() => <Screenshot image={data.home} />}
               href="https://altlengbach.netlify.com/"
             >
+              {/* // TODO Show x-ray here. */}
               <P>
                 I added a subtle scaling animation to the images to evoke the
                 impression that they were breathing. I also animated the local
@@ -286,7 +289,9 @@ export default class AltlengbachPage extends React.Component {
               renderContent={() => <Screenshot image={data.contact} />}
               href="https://altlengbach.netlify.com/contact"
             >
-              <H2>My Impressions</H2>
+              {/* // TODO Show contact data and call to action here. */}
+
+              <H2>Final Thoughts</H2>
               <P>
                 Working on the website was a very nice experience, with a lot of
                 learnings. Gatsby turned out to be extremely powerful and simple
