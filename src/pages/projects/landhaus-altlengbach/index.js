@@ -230,7 +230,7 @@ export default class AltlengbachPage extends React.Component {
                 <P>
                   Largely due to some changes in the way Gatsby renders the
                   individual page layouts, creating transitions between the
-                  different pages wasn't as straightforward as I expecte,. After
+                  different pages wasn't as straightforward as I expected. After
                   some experiments with different methods, I settled on{' '}
                   <code>react-pose</code> because of its simple state model.
                   There's a lot to say about page transitions, so I will write a
