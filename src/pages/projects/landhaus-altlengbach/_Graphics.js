@@ -29,10 +29,9 @@ export const Transition = styled.div`
   }
 `;
 
-export const Container = styled.div`
-  margin-left: auto;
+export const IllustrationContainer = styled.div`
   margin-top: 16px;
-  max-width: 468px;
+  margin-bottom: 16px;
   position: relative;
   transform-origin: 100% 0;
   transition: opacity 1s, transform 1s;
@@ -40,6 +39,11 @@ export const Container = styled.div`
     `${center ? 'translate(-25%, 25%)' : ''} ${
       zoom === 'canvas' ? 'scale(0.5)' : 'none'
     }`};
+
+  @media screen and (orientation: landscape) {
+    max-width: 468px;
+    margin-left: auto;
+  }
 `;
 
 export const Svg = styled.svg`

@@ -4,8 +4,13 @@ import { Link, graphql } from 'gatsby';
 import { css } from 'styled-components';
 
 import Layout from '../../../components/layout';
-import { Container, Title, H2, P, Ul } from './_components';
-import { IllustrationColumn, TextColumn } from './_Column';
+import { Title, H2, P, Ul } from './_text';
+import {
+  Container,
+  AsideColumn,
+  IllustrationColumn,
+  TextColumn,
+} from './_layout';
 import TextSection from './_TextSection';
 import Screenshot from './_Screenshot';
 import LayoutIllustration from './_LayoutIllustration';
@@ -50,11 +55,18 @@ export default class AltlengbachPage extends React.Component {
     return (
       <Layout>
         <Container>
-          <IllustrationColumn>
-            <Box ml="auto" css="max-width: 468px;">
+          <AsideColumn>
+            <Box
+              css={`
+                @media screen and (orientation: landscape) {
+                  max-width: 468px;
+                  margin-left: auto;
+                }
+              `}
+            >
               <Title>Website for a house sale</Title>
             </Box>
-          </IllustrationColumn>
+          </AsideColumn>
           <TextColumn py={4}>
             <P>
               <a href="https://altlengbach.netlify.com/">
@@ -72,12 +84,17 @@ export default class AltlengbachPage extends React.Component {
               px={[2, 3]}
               pt={[2, 3]}
               css={css`
-                position: sticky;
-                top: 0;
                 // Allow zooming of the canvas.
                 margin-bottom: -100%;
                 padding-bottom: 100%;
                 overflow: hidden;
+
+                @media screen and (min-width: 40em) and (orientation: landscape) {
+                  position: sticky;
+                  top: 0;
+                  // Place the illustration on the same top position as the sticky heading to the right.
+                  padding-top: 48px;
+                }
               `}
             >
               <LayoutIllustration {...illustration} />
@@ -85,204 +102,215 @@ export default class AltlengbachPage extends React.Component {
           </IllustrationColumn>
 
           <TextColumn mr="auto" css="max-width: 468px;">
-            <TextSection
-              id="start"
-              onSection={this.handleSection}
-              showBrowser
-              contentKey="home"
-              renderContent={() => <Screenshot image={data.home} />}
-              href="https://altlengbach.netlify.com/"
-            >
-              <P>
-                I created a small presentational website to accompany the sale
-                of our parents' house. Because this was a private side project,
-                I decided to experiment with some technologies I hadn't used
-                before:
-              </P>
-              <Ul>
-                <li>Gatsby, a static website renderer;</li>
-                <li>Various techniques for creating page transitions;</li>
-                <li>Netlify for continuous deployment and static hosting.</li>
-              </Ul>
-              <P>
-                <a href="#layout">Continue: The layout</a>
-              </P>
-            </TextSection>
+            <div id="start">
+              <H2>The Premises</H2>
+              <TextSection
+                section="start"
+                onSection={this.handleSection}
+                showBrowser
+                contentKey="home"
+                renderContent={() => <Screenshot image={data.home} />}
+                href="https://altlengbach.netlify.com/"
+              >
+                <P>
+                  I created a small presentational website to accompany the sale
+                  of our parents' house. Because this was a private side
+                  project, I decided to experiment with some technologies I
+                  hadn't used before:
+                </P>
+                <Ul>
+                  <li>Gatsby, a static website renderer;</li>
+                  <li>Various techniques for creating page transitions;</li>
+                  <li>Netlify for continuous deployment and static hosting.</li>
+                </Ul>
+                <P>
+                  <a href="#layout">Continue: The layout</a>
+                </P>
+              </TextSection>
+            </div>
 
-            <TextSection
-              id="layout"
-              onSection={this.handleSection}
-              showCanvas
-              showBrowser
-              href="https://altlengbach.netlify.com/"
-              animate="browser"
-              zoom="canvas"
-            >
+            <div id="layout">
               <H2>The Layout: Canvas and Lens</H2>
-              <P>
-                The layout is based on the idea of a virtual canvas with three
-                individual site sections. The web browser acts as a lens
-                displaying only a part of that canvas. It expands on the concept
-                I developed for the <Link to="sumera">Sumera mobile app</Link>.
-              </P>
-              <P>
-                <a href="#division">Continue</a>
-              </P>
-            </TextSection>
 
-            <TextSection
-              id="division"
-              onSection={this.handleSection}
-              showCanvas
-              showLines
-              showBrowser
-              href="https://altlengbach.netlify.com/"
-              animate="lines"
-              zoom="browser"
-            >
-              <P>
-                Each page is divided into four parts by a vertical and a
-                horizontal line: A vertical ribbon with text, a large image
-                area, and a horizontal menu bar with two parts, one for global
-                navigation, one for the local navigation within the current
-                section.
-              </P>
-              <P>
-                <a href="#animation">Continue</a>
-              </P>
-            </TextSection>
+              <TextSection
+                section="layout"
+                onSection={this.handleSection}
+                showCanvas
+                showBrowser
+                href="https://altlengbach.netlify.com/"
+                animate="browser"
+                zoom="canvas"
+              >
+                <P>
+                  The layout is based on the idea of a virtual canvas with three
+                  individual site sections. The web browser acts as a lens
+                  displaying only a part of that canvas. It expands on the
+                  concept I developed for the{' '}
+                  <Link to="sumera">Sumera mobile app</Link>.
+                </P>
+                <P>
+                  <a href="#division">Continue</a>
+                </P>
+              </TextSection>
 
-            <TextSection
-              id="animation"
-              onSection={this.handleSection}
-              showCanvas
-              showLines
-              showBrowser
-              href="https://altlengbach.netlify.com/"
-              center
-              zoom="browser"
-              animate="canvas"
-            >
-              {/* TODO add an animation segment for in-section transitions */}
-              <P>
-                To convey this concept to the site visitors, I used animated
-                transitions between the individual pages: when navigating
-                between sections, the full page slides to the next section's
-                page, whereas navigating within a section animates only parts of
-                the page.
-              </P>
-              <P>
-                <a href="#developing">Continue</a>
-              </P>
-            </TextSection>
+              <TextSection
+                section="division"
+                onSection={this.handleSection}
+                showCanvas
+                showLines
+                showBrowser
+                href="https://altlengbach.netlify.com/"
+                animate="lines"
+                zoom="browser"
+              >
+                <P id="division">
+                  Each page is divided into four parts by a vertical and a
+                  horizontal line: A vertical ribbon with text, a large image
+                  area, and a horizontal menu bar with two parts, one for global
+                  navigation, one for the local navigation within the current
+                  section.
+                </P>
+                <P>
+                  <a href="#animation">Continue</a>
+                </P>
+              </TextSection>
 
-            <TextSection
-              id="developing"
-              onSection={this.handleSection}
-              showBrowser
-              contentKey="home"
-              renderContent={() => <Screenshot image={data.home} />}
-              href="https://altlengbach.netlify.com/"
-            >
+              <TextSection
+                section="animation"
+                onSection={this.handleSection}
+                showCanvas
+                showLines
+                showBrowser
+                href="https://altlengbach.netlify.com/"
+                center
+                zoom="browser"
+                animate="canvas"
+              >
+                {/* TODO add an animation segment for in-section transitions */}
+                <P id="animation">
+                  To convey this concept to the site visitors, I used animated
+                  transitions between the individual pages: when navigating
+                  between sections, the full page slides to the next section's
+                  page, whereas navigating within a section animates only parts
+                  of the page.
+                </P>
+                <P>
+                  <a href="#developing">Continue</a>
+                </P>
+              </TextSection>
+            </div>
+
+            <div id="developing">
               <H2>Developing The Site</H2>
-              <P>
-                When I started developing the website, Gatsby V2 was just in
-                beta. Creating the layouts and filling the pages with content
-                was super easy and fast. I had briefly tried Gatsby V1 before,
-                and generally I felt like the changes in the new version
-                simplified things a lot.
-              </P>
-            </TextSection>
+              <TextSection
+                section="developing"
+                onSection={this.handleSection}
+                showBrowser
+                contentKey="home"
+                renderContent={() => <Screenshot image={data.home} />}
+                href="https://altlengbach.netlify.com/"
+              >
+                <P>
+                  When I started developing the website, Gatsby V2 was just in
+                  beta. Creating the layouts and filling the pages with content
+                  was super easy and fast. I had briefly tried Gatsby V1 before,
+                  and generally I felt like the changes in the new version
+                  simplified things a lot.
+                </P>
+              </TextSection>
 
-            <TextSection
-              id="sectionTransitions"
-              onSection={this.handleSection}
-              showBrowser
-              contentKey="plans"
-              renderContent={() => <Screenshot image={data.plans} />}
-              href="https://altlengbach.netlify.com/floor-plans/"
-            >
-              <P>
-                However, creating transitions between the different pages wasn't
-                as straightforward as I expected, largely due to some changes in
-                the way Gatsby renders the individual page layouts. After some
-                experiments with different methods, I settled on{' '}
-                <code>react-pose</code> because of its simple state model.
-                There's a lot to say about page transitions, so I will write a
-                separate blog post about that.
-              </P>
-            </TextSection>
-            <TextSection
-              id="pageTransitions"
-              onSection={this.handleSection}
-              showBrowser
-              contentKey="kitchen"
-              renderContent={() => <Screenshot image={data.kitchen} />}
-              href="https://altlengbach.netlify.com/tour/01-kueche"
-            >
-              {/* // TODO Show in-page transitions here. */}
-              <P>
-                The main section of the website shows large pictures to give a
-                great impression of the house's individual areas. I decided to
-                place only a single image per page, with some accompanying text
-                and plenty of white-space to match the generous dimensions of
-                the house. During the design process, the pages started to
-                resemble a slide show more and more, so I tried to match the
-                page transitions by making them look like a slide show.
-              </P>
-            </TextSection>
-            <TextSection
-              id="breathing"
-              onSection={this.handleSection}
-              showBrowser
-              contentKey="home"
-              renderContent={() => <Screenshot image={data.home} />}
-              href="https://altlengbach.netlify.com/"
-            >
-              {/* // TODO Show x-ray here. */}
-              <P>
-                I added a subtle scaling animation to the images to evoke the
-                impression that they were breathing. I also animated the local
-                navigation to make the site architecture even clearer.
-              </P>
-            </TextSection>
-
-            <TextSection
-              id="improvements"
-              onSection={this.handleSection}
-              showBrowser
-              contentKey="contact"
-              renderContent={() => <Screenshot image={data.contact} />}
-              href="https://altlengbach.netlify.com/contact"
-            >
+              <TextSection
+                section="sectionTransitions"
+                onSection={this.handleSection}
+                showBrowser
+                contentKey="plans"
+                renderContent={() => <Screenshot image={data.plans} />}
+                href="https://altlengbach.netlify.com/floor-plans/"
+              >
+                <P>
+                  However, creating transitions between the different pages
+                  wasn't as straightforward as I expected, largely due to some
+                  changes in the way Gatsby renders the individual page layouts.
+                  After some experiments with different methods, I settled on{' '}
+                  <code>react-pose</code> because of its simple state model.
+                  There's a lot to say about page transitions, so I will write a
+                  separate blog post about that.
+                </P>
+              </TextSection>
+              <TextSection
+                section="pageTransitions"
+                onSection={this.handleSection}
+                showBrowser
+                contentKey="kitchen"
+                renderContent={() => <Screenshot image={data.kitchen} />}
+                href="https://altlengbach.netlify.com/tour/01-kueche"
+              >
+                {/* // TODO Show in-page transitions here. */}
+                <P>
+                  The main section of the website shows large pictures to give a
+                  great impression of the house's individual areas. I decided to
+                  place only a single image per page, with some accompanying
+                  text and plenty of white-space to match the generous
+                  dimensions of the house. During the design process, the pages
+                  started to resemble a slide show more and more, so I tried to
+                  match the page transitions by making them look like a slide
+                  show.
+                </P>
+              </TextSection>
+              <TextSection
+                section="breathing"
+                onSection={this.handleSection}
+                showBrowser
+                contentKey="home"
+                renderContent={() => <Screenshot image={data.home} />}
+                href="https://altlengbach.netlify.com/"
+              >
+                {/* // TODO Show x-ray here. */}
+                <P>
+                  I added a subtle scaling animation to the images to evoke the
+                  impression that they were breathing. I also animated the local
+                  navigation to make the site architecture even clearer.
+                </P>
+              </TextSection>
+            </div>
+            <div id="improvements">
               <H2>Planned Improvements</H2>
-              <P>
-                Using the new React DevTools profiler, I found out that the
-                navigation transition takes much more time to render than all
-                the other animations together. Although I decided to publish the
-                site in the non-optimized state, I hope to fix those and other
-                open issues soon-ish:
-              </P>
-              <Ul>
-                <li>Replace react-pose with pure CSS transitions,</li>
-                <li>
-                  optimize the performance, especially of the more complex
-                  transitions,
-                </li>
-                <li>
-                  and refine the other sections' animations, especially the
-                  floor plans.
-                </li>
-              </Ul>
-            </TextSection>
+              <TextSection
+                section="improvements"
+                onSection={this.handleSection}
+                showBrowser
+                contentKey="contact"
+                renderContent={() => <Screenshot image={data.contact} />}
+                href="https://altlengbach.netlify.com/contact"
+              >
+                <P>
+                  Using the new React DevTools profiler, I found out that the
+                  navigation transition takes much more time to render than all
+                  the other animations together. Although I decided to publish
+                  the site in the non-optimized state, I hope to fix those and
+                  other open issues soon-ish:
+                </P>
+                <Ul>
+                  <li>Replace react-pose with pure CSS transitions,</li>
+                  <li>
+                    optimize the performance, especially of the more complex
+                    transitions,
+                  </li>
+                  <li>
+                    and refine the other sections' animations, especially the
+                    floor plans.
+                  </li>
+                </Ul>
+              </TextSection>
+            </div>
           </TextColumn>
         </Container>
 
         <Container>
-          <IllustrationColumn />
+          <AsideColumn />
           <TextColumn mr="auto" css="max-width: 468px;">
             <TextSection
-              id="conclusion"
+              section="conclusion"
               onSection={this.handleSection}
               showBrowser
               contentKey="contact"

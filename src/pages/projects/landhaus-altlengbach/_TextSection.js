@@ -4,19 +4,27 @@ import Waypoint from 'react-waypoint';
 
 const WaypointAdapter = ({ children, innerRef }) => children(innerRef);
 
-const TextSection = ({ onSection, id, children, ...props }) => (
+const TextSection = ({ onSection, section, children, ...props }) => (
   <Waypoint
     bottomOffset="30%"
     topOffset="30%"
     onEnter={
       onSection &&
       (waypointProps =>
-        onSection(id, { type: 'enter', ...waypointProps, illustration: props }))
+        onSection(section, {
+          type: 'enter',
+          ...waypointProps,
+          illustration: props,
+        }))
     }
     onLeave={
       onSection &&
       (waypointProps =>
-        onSection(id, { type: 'leave', ...waypointProps, illustration: props }))
+        onSection(section, {
+          type: 'leave',
+          ...waypointProps,
+          illustration: props,
+        }))
     }
   >
     <WaypointAdapter>
@@ -27,7 +35,6 @@ const TextSection = ({ onSection, id, children, ...props }) => (
           css={`
             min-height: 100vh;
           `}
-          id={id}
           {...props}
         >
           {children}

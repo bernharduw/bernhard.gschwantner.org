@@ -2,7 +2,7 @@ import React from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import {
-  Container,
+  IllustrationContainer,
   Svg,
   AnimatedBrowser,
   Canvas,
@@ -159,7 +159,7 @@ const LayoutIllustration = ({
   renderContent,
   ...rest
 }) => (
-  <Container zoom={zoom} center={center}>
+  <IllustrationContainer zoom={zoom} center={center}>
     <Svg viewBox={`0 0 ${width} ${height}`}>
       <CSSTransition
         timeout={timeout}
@@ -219,7 +219,7 @@ const LayoutIllustration = ({
         </AnimatedBrowser>
       </CSSTransition>
     </TransitionGroup>
-  </Container>
+  </IllustrationContainer>
 );
 
 export default LayoutIllustration;
