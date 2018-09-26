@@ -18,8 +18,8 @@ import LayoutIllustration from './_LayoutIllustration';
 export default class AltlengbachPage extends React.Component {
   state = {
     currentSection: '',
-    visibleSections: [{ id: '', illustration: {} }],
-    illustration: {},
+    visibleSections: [{ id: '' }],
+    illustration: undefined,
   };
 
   handleSection = (currentSection, { type, illustration }) => {
@@ -50,7 +50,13 @@ export default class AltlengbachPage extends React.Component {
 
   render() {
     const { data } = this.props;
-    const { illustration } = this.state;
+    const defaultIllustration = {
+      contentKey: 'home',
+      showBrowser: true,
+      renderContent: () => <Screenshot image={data.home} />,
+      href: 'https://altlengbach.netlify.com/',
+    };
+    const { illustration = defaultIllustration } = this.state;
 
     return (
       <Layout>
