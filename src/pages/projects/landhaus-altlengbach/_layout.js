@@ -8,9 +8,6 @@ export const Container = props => (
       @media screen and (orientation: landscape) {
         flex-direction: row;
       }
-      @media screen and (orientation: portrait) {
-        margin-bottom: 50vh;
-      }
     `}
     {...props}
   />
@@ -35,7 +32,7 @@ export const AsideColumn = props => (
     py={4}
     css={`
       @media screen and (orientation: landscape) {
-        background-color: #555;
+        background-color: #5c644f;
         color: #fff;
       }
     `}
@@ -47,7 +44,7 @@ export const IllustrationColumn = ({ children, ...props }) => (
   <Col
     py={4}
     css={`
-      background-color: #555;
+      background-color: #5c644f;
       color: #fff;
       @media screen and (orientation: portrait) {
         position: fixed;

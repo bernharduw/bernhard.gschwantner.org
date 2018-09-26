@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heading, Text, Flex } from 'rebass';
+import { Heading, Text } from 'rebass';
 
 export const Title = props => (
   <Heading as="h1" fontSize={6} mb={3} {...props} />

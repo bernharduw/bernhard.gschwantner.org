@@ -66,21 +66,20 @@ export const Canvas = styled(Group)`
 /**
  * A page or other named area within the canvas.
  */
-
 export const CanvasArea = ({ x, y, width, height, fill, name }) => (
   <>
     <rect x={x} y={y} width={width} height={height} fill={fill} />
     {name && (
       <Box
-        textAnchor="middle"
         as="text"
         x={x + width / 2}
         y={y + height / 2}
-        css={`
-          font-size: ${height / 10}px;
-          fill: #fff;
-        `}
+        textAnchor="middle"
         alignmentBaseline="central"
+        css={`
+          font-size: ${height / 8}px;
+          fill: rgba(255, 255, 255, 0.8);
+        `}
       >
         {name}
       </Box>

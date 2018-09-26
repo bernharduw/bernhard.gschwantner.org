@@ -6,8 +6,8 @@ const WaypointAdapter = ({ children, innerRef }) => children(innerRef);
 
 const TextSection = ({ onSection, section, children, ...props }) => (
   <Waypoint
-    bottomOffset="30%"
     topOffset="30%"
+    bottomOffset="50%"
     onEnter={
       onSection &&
       (waypointProps =>
@@ -33,7 +33,10 @@ const TextSection = ({ onSection, section, children, ...props }) => (
           ref={ref}
           py={4}
           css={`
-            min-height: 100vh;
+            min-height: 50vh;
+            @media screen and (orientation: landscape) {
+              min-height: 100vh;
+            }
           `}
           {...props}
         >

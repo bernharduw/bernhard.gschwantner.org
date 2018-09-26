@@ -89,7 +89,7 @@ export default class AltlengbachPage extends React.Component {
                 padding-bottom: 100%;
                 overflow: hidden;
 
-                @media screen and (min-width: 40em) and (orientation: landscape) {
+                @media screen and (orientation: landscape) {
                   position: sticky;
                   top: 0;
                   // Place the illustration on the same top position as the sticky heading to the right.
@@ -101,9 +101,9 @@ export default class AltlengbachPage extends React.Component {
             </Box>
           </IllustrationColumn>
 
-          <TextColumn mr="auto" css="max-width: 468px;">
+          <TextColumn>
             <div id="start">
-              <H2>The Premises</H2>
+              <H2>Baseline</H2>
               <TextSection
                 section="start"
                 onSection={this.handleSection}
@@ -201,7 +201,7 @@ export default class AltlengbachPage extends React.Component {
             </div>
 
             <div id="developing">
-              <H2>Developing The Site</H2>
+              <H2>Creating The Site</H2>
               <TextSection
                 section="developing"
                 onSection={this.handleSection}
@@ -228,10 +228,10 @@ export default class AltlengbachPage extends React.Component {
                 href="https://altlengbach.netlify.com/floor-plans/"
               >
                 <P>
-                  However, creating transitions between the different pages
-                  wasn't as straightforward as I expected, largely due to some
-                  changes in the way Gatsby renders the individual page layouts.
-                  After some experiments with different methods, I settled on{' '}
+                  Largely due to some changes in the way Gatsby renders the
+                  individual page layouts, creating transitions between the
+                  different pages wasn't as straightforward as I expecte,. After
+                  some experiments with different methods, I settled on{' '}
                   <code>react-pose</code> because of its simple state model.
                   There's a lot to say about page transitions, so I will write a
                   separate blog post about that.
@@ -308,7 +308,7 @@ export default class AltlengbachPage extends React.Component {
 
         <Container>
           <AsideColumn />
-          <TextColumn mr="auto" css="max-width: 468px;">
+          <TextColumn mb="50vh">
             <TextSection
               section="conclusion"
               onSection={this.handleSection}
