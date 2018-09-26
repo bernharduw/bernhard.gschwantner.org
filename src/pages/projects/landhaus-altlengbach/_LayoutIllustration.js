@@ -190,35 +190,33 @@ const LayoutIllustration = ({
       </CSSTransition>
     </Svg>
 
-    <TransitionGroup component={null}>
-      <CSSTransition
+    <CSSTransition
+      classNames={classNames}
+      timeout={timeout}
+      in={showBrowser}
+      unmountOnExit
+    >
+      <AnimatedBrowser
         classNames={classNames}
-        timeout={timeout}
-        key={showBrowser}
+        play={animate === 'browser'}
+        delay="1s"
+        target="_blank"
+        {...rest}
+        css="height: 100%;"
       >
-        <AnimatedBrowser
-          play={animate === 'browser'}
-          delay="1s"
-          target="_blank"
-          {...rest}
-          css="height: 100%;"
-        >
-          <TransitionGroup component={null}>
-            {renderContent && (
-              <CSSTransition
-                timeout={timeout}
-                classNames={classNames}
-                key={contentKey || 'default'}
-              >
-                <Transition classNames={classNames}>
-                  {renderContent()}
-                </Transition>
-              </CSSTransition>
-            )}
-          </TransitionGroup>
-        </AnimatedBrowser>
-      </CSSTransition>
-    </TransitionGroup>
+        <TransitionGroup component={null}>
+          {renderContent && (
+            <CSSTransition
+              timeout={timeout}
+              classNames={classNames}
+              key={contentKey || 'default'}
+            >
+              <Transition classNames={classNames}>{renderContent()}</Transition>
+            </CSSTransition>
+          )}
+        </TransitionGroup>
+      </AnimatedBrowser>
+    </CSSTransition>
   </IllustrationContainer>
 );
 

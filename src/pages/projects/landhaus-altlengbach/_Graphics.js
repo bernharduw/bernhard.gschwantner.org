@@ -91,8 +91,19 @@ const AnimatedElement = styled(Transition)`
     play ? css`${moveElement}  ${speed} ${delay} ease infinite` : 'none'};
 `;
 
-export const AnimatedBrowser = ({ play, speed, delay, ...rest }) => (
-  <AnimatedElement play={play} speed={speed} delay={delay} classNames>
+export const AnimatedBrowser = ({
+  play,
+  speed,
+  delay,
+  classNames,
+  ...rest
+}) => (
+  <AnimatedElement
+    play={play}
+    speed={speed}
+    delay={delay}
+    classNames={classNames}
+  >
     <Browser {...rest} />
   </AnimatedElement>
 );
