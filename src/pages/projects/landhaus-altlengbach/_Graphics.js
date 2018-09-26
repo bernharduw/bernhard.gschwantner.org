@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { Box } from 'rebass';
 
 import Browser from '../../../components/Browser';
 import {
@@ -10,12 +11,31 @@ import {
   makeScaleY,
 } from './_keyframes';
 
+export const Transition = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.5s;
+
+  &.${props => props.classNames}-enter {
+    opacity: 0;
+  }
+  &.${props => props.classNames}-enter-active {
+    opacity: 1;
+  }
+  &.${props => props.classNames}-exit-active {
+    opacity: 0;
+  }
+`;
+
 export const Container = styled.div`
   margin-left: auto;
   margin-top: 16px;
   max-width: 468px;
   position: relative;
   transform-origin: 100% 0;
+  height: ${props => props.height}px;
   transition: opacity 1s, transform 1s;
   transform: ${({ center, zoom }) =>
     `${center ? 'translate(-25%, 25%)' : ''} ${
@@ -31,13 +51,8 @@ export const Svg = styled.svg`
 `;
 
 export const Group = styled.g`
-  transform-origin: 100% 0;
-  transition: opacity 1s, transform 1s;
-  transform: ${({ center, zoom }) =>
-    `${center ? 'translate(-25%, 25%)' : ''} ${
-      zoom === 'canvas' ? 'scale(0.5)' : 'none'
-    }`};
-  opacity: ${({ show = true, opacity = 1 }) => (show ? opacity : 0)};
+  transition: opacity 1s;
+  opacity: ${({ opacity = 1 }) => opacity};
 `;
 
 export const Canvas = styled(Group)`
@@ -45,31 +60,37 @@ export const Canvas = styled(Group)`
     play ? css`${moveCanvas}  ${speed} ${delay} ease infinite` : 'none'};
 `;
 
-export const Transition = styled.div`
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  transition: opacity 0.5s;
+/**
+ * A page or other named area within the canvas.
+ */
 
-  &.fade-enter {
-    opacity: 0;
-  }
-  &.fade-enter-active {
-    opacity: 1;
-  }
-  &.fade-exit-active {
-    opacity: 0;
-  }
-`;
-
+export const CanvasArea = ({ x, y, width, height, fill, name }) => (
+  <>
+    <rect x={x} y={y} width={width} height={height} fill={fill} />
+    {name && (
+      <Box
+        textAnchor="middle"
+        as="text"
+        x={x + width / 2}
+        y={y + height / 2}
+        css={`
+          font-size: ${height / 10}px;
+          fill: #fff;
+        `}
+        alignmentBaseline="central"
+      >
+        {name}
+      </Box>
+    )}
+  </>
+);
 const AnimatedElement = styled(Transition)`
   animation: ${({ play, speed = '10s', delay = '0s' }) =>
     play ? css`${moveElement}  ${speed} ${delay} ease infinite` : 'none'};
 `;
 
 export const AnimatedBrowser = ({ play, speed, delay, ...rest }) => (
-  <AnimatedElement play={play} speed={speed} delay={delay}>
+  <AnimatedElement play={play} speed={speed} delay={delay} classNames>
     <Browser {...rest} />
   </AnimatedElement>
 );
@@ -85,14 +106,6 @@ export const Rect = styled.rect.attrs({
       : 'none'};
   opacity: ${props => (props.play ? 0 : 1)};
   transition: ${props => (props.play ? 'none' : 'opacity 1s')};
-`;
-
-export const Text = styled.text.attrs({
-  textAnchor: 'middle',
-  alignmentBaseline: 'central',
-})`
-  fill: #fff;
-  font-size: ${props => props.fontSize}px;
 `;
 
 export const Line = styled.path.attrs({
