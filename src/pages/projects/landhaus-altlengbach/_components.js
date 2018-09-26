@@ -21,3 +21,16 @@ export const P = props => (
     {...props}
   />
 );
+
+export const Ul = props => (
+  <Text
+    as="ul"
+    mb={3}
+    css={`
+      & > li {
+        margin-bottom: 0;
+      }
+    `}
+    {...props}
+  />
+);

@@ -4,7 +4,7 @@ import { Link, graphql } from 'gatsby';
 import { css } from 'styled-components';
 
 import Layout from '../../../components/layout';
-import { Title, H2, P, Container } from './_components';
+import { Container, Title, H2, P, Ul } from './_components';
 import { IllustrationColumn, TextColumn } from './_Column';
 import TextSection from './_TextSection';
 import Screenshot from './_Screenshot';
@@ -45,7 +45,7 @@ export default class AltlengbachPage extends React.Component {
 
   render() {
     const { data } = this.props;
-    const { currentSection, illustration } = this.state;
+    const { illustration } = this.state;
 
     return (
       <Layout>
@@ -60,8 +60,9 @@ export default class AltlengbachPage extends React.Component {
               <a href="https://altlengbach.netlify.com">
                 www.landhaus-altlengbach.at
               </a>{' '}
-              (2018)
             </P>
+            (2018)
+            <P>Concept, design, programming</P>
           </TextColumn>
         </Container>
         <Container>
@@ -88,9 +89,9 @@ export default class AltlengbachPage extends React.Component {
               id="start"
               onSection={this.handleSection}
               showBrowser
-              contentKey="kitchen"
-              renderContent={() => <Screenshot image={data.kitchen} />}
-              href="https://altlengbach.netlify.com/tour/01-kueche"
+              contentKey="home"
+              renderContent={() => <Screenshot image={data.home} />}
+              href="https://altlengbach.netlify.com/"
             >
               <P>
                 I created a small presentational website to accompany the sale
@@ -98,11 +99,11 @@ export default class AltlengbachPage extends React.Component {
                 I decided to experiment with some technologies I hadn't used
                 before:
               </P>
-              <ul>
+              <Ul>
                 <li>Gatsby, a static website renderer;</li>
                 <li>Various techniques for creating page transitions;</li>
                 <li>Netlify for continuous deployment and static hosting.</li>
-              </ul>
+              </Ul>
               <P>
                 <a href="#layout">Continue: The layout</a>
               </P>
@@ -113,6 +114,7 @@ export default class AltlengbachPage extends React.Component {
               onSection={this.handleSection}
               showCanvas
               showBrowser
+              href="https://altlengbach.netlify.com/"
               animate="browser"
               zoom="canvas"
             >
@@ -133,8 +135,10 @@ export default class AltlengbachPage extends React.Component {
               onSection={this.handleSection}
               showCanvas
               showLines
+              showBrowser
+              href="https://altlengbach.netlify.com/"
               animate="lines"
-              zoom="canvas"
+              zoom="browser"
             >
               <P>
                 Each page is divided into four parts by a vertical and a
@@ -154,6 +158,7 @@ export default class AltlengbachPage extends React.Component {
               showCanvas
               showLines
               showBrowser
+              href="https://altlengbach.netlify.com/"
               center
               zoom="browser"
               animate="canvas"
@@ -255,7 +260,7 @@ export default class AltlengbachPage extends React.Component {
                 site in the non-optimized state, I hope to fix those and other
                 open issues soon-ish:
               </P>
-              <ul>
+              <Ul>
                 <li>Replace react-pose with pure CSS transitions,</li>
                 <li>
                   optimize the performance, especially of the more complex
@@ -265,7 +270,7 @@ export default class AltlengbachPage extends React.Component {
                   and refine the other sections' animations, especially the
                   floor plans.
                 </li>
-              </ul>
+              </Ul>
             </TextSection>
           </TextColumn>
         </Container>
