@@ -78,8 +78,8 @@ export default class AltlengbachPage extends React.Component {
               <a href="https://altlengbach.netlify.com/">
                 www.landhaus-altlengbach.at
               </a>{' '}
+              (2018)
             </P>
-            (2018)
             <P>Concept, design, programming</P>
           </TextColumn>
         </Container>
@@ -109,7 +109,7 @@ export default class AltlengbachPage extends React.Component {
 
           <TextColumn>
             <div id="start">
-              <H2>Baseline</H2>
+              <H2>The Baseline</H2>
               <TextSection
                 section="start"
                 onSection={this.handleSection}

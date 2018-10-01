@@ -32,7 +32,7 @@ export const AsideColumn = props => (
     py={4}
     css={`
       @media screen and (orientation: landscape) {
-        background-color: #5c644f;
+        background-color: #5a5d56;
         color: #fff;
       }
     `}
@@ -42,10 +42,11 @@ export const AsideColumn = props => (
 
 export const IllustrationColumn = ({ children, ...props }) => (
   <Col
-    py={4}
+    pb={4}
     css={`
-      background-color: #5c644f;
+      background-color: #5a5d56;
       color: #fff;
+
       @media screen and (orientation: portrait) {
         position: fixed;
         bottom: 0;

@@ -45,7 +45,7 @@ function CanvasBackground({ width, height }) {
         y={height}
         width={width}
         height={height}
-        fill="rgba(0,0,0,0.1)"
+        fill="#37471f"
       />
     </>
   );
