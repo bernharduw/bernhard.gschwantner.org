@@ -29,7 +29,7 @@ export const Transition = styled.div`
   }
 `;
 
-export const IllustrationContainer = styled.div`
+export const IllustrationContainer = styled(Box)`
   margin-top: 16px;
   margin-bottom: 16px;
   position: relative;
@@ -39,11 +39,6 @@ export const IllustrationContainer = styled.div`
     `${center ? 'translate(-25%, 25%)' : ''} ${
       zoom === 'canvas' ? 'scale(0.5)' : 'none'
     }`};
-
-  @media screen and (orientation: landscape) {
-    max-width: 468px;
-    margin-left: auto;
-  }
 `;
 
 export const Svg = styled.svg`

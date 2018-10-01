@@ -157,9 +157,10 @@ const LayoutIllustration = ({
   timeout = 1000,
   contentKey,
   renderContent,
+  css,
   ...rest
 }) => (
-  <IllustrationContainer zoom={zoom} center={center}>
+  <IllustrationContainer zoom={zoom} center={center} css={css}>
     <Svg viewBox={`0 0 ${width} ${height}`}>
       <CSSTransition
         timeout={timeout}

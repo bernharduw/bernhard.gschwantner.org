@@ -4,7 +4,7 @@ import Waypoint from 'react-waypoint';
 
 const WaypointAdapter = ({ children, innerRef }) => children(innerRef);
 
-const TextSection = ({ onSection, section, children, ...props }) => (
+const TextSection = ({ onSection, section, children, css='', ...props }) => (
   <Waypoint
     topOffset="30%"
     bottomOffset="50%"
@@ -37,6 +37,7 @@ const TextSection = ({ onSection, section, children, ...props }) => (
             @media screen and (orientation: landscape) {
               min-height: 100vh;
             }
+            ${css}
           `}
           {...props}
         >

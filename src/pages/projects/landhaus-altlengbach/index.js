@@ -15,6 +15,19 @@ import TextSection from './_TextSection';
 import Screenshot from './_Screenshot';
 import LayoutIllustration from './_LayoutIllustration';
 
+const constrainWidthLeft = `
+  @media screen and (orientation: landscape) {
+    max-width: 468px;
+    margin-left: auto;
+  }
+`;
+const constrainWidthRight = `
+  @media screen and (orientation: landscape) {
+    max-width: 468px;
+    margin-right: auto;
+  }
+`;
+
 export default class AltlengbachPage extends React.Component {
   state = {
     currentSection: '',
@@ -62,18 +75,11 @@ export default class AltlengbachPage extends React.Component {
       <Layout>
         <Container>
           <AsideColumn>
-            <Box
-              css={`
-                @media screen and (orientation: landscape) {
-                  max-width: 468px;
-                  margin-left: auto;
-                }
-              `}
-            >
+            <Box css={constrainWidthLeft}>
               <Title>Website for a house sale</Title>
             </Box>
           </AsideColumn>
-          <TextColumn py={4}>
+          <TextColumn py={4} css={constrainWidthRight}>
             <P>
               <a href="https://altlengbach.netlify.com/">
                 www.landhaus-altlengbach.at
@@ -103,11 +109,11 @@ export default class AltlengbachPage extends React.Component {
                 }
               `}
             >
-              <LayoutIllustration {...illustration} />
+              <LayoutIllustration {...illustration} css={constrainWidthLeft} />
             </Box>
           </IllustrationColumn>
 
-          <TextColumn>
+          <TextColumn css={constrainWidthRight}>
             <div id="start">
               <H2>The Baseline</H2>
               <TextSection
@@ -314,7 +320,7 @@ export default class AltlengbachPage extends React.Component {
 
         <Container>
           <AsideColumn />
-          <TextColumn mb="50vh">
+          <TextColumn mb="50vh" css={constrainWidthRight}>
             <TextSection
               section="conclusion"
               onSection={this.handleSection}
