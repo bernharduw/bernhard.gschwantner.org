@@ -5,19 +5,25 @@ export const Title = props => (
   <Heading as="h1" fontSize={6} mb={3} {...props} />
 );
 
-export const H2 = props => (
+const stickyStyle = `
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+`;
+
+export const H2 = ({ css, sticky, ...props }) => (
   <Heading
     mb={3}
     mx={-1}
     p={1}
     pt={[3, 4]}
+    {...props}
     css={`
       border-bottom: 4px solid currentColor;
-      position: sticky;
-      top: 0;
-      background-color: #fff;
+
+      ${sticky ? stickyStyle : ''};
+      ${css || ''};
     `}
-    {...props}
   />
 );
 

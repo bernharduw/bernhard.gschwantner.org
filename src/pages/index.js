@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link, StaticQuery, graphql } from 'gatsby';
 import Image from 'gatsby-image';
-import { Flex, Box, Heading, Text, Button } from 'rebass';
+import { Flex, Box, Text, Button } from 'rebass';
 import Layout from '../components/layout';
 import Header from '../components/MainHeader';
 import Container from '../components/Container';
 import SemiContainer from '../components/SemiContainer';
 import TimeColor from '../components/TimeColor';
+import { Title, H2, P } from '../components/Text';
 
 const Project = props => (
   <Flex
@@ -37,13 +38,13 @@ const IndexPage = () => (
           `}
         >
           <SemiContainer width={[1, 2 / 3, 1 / 2]} fontSize={[3, 4]} py={5}>
-            <Text mb={1}>Hi, my name is</Text>
-            <Heading as="h1" fontSize={[6, 7, 8, 96]} mb={[3, 4]}>
+            <P mb={1}>Hi, my name is</P>
+            <Title fontSize={[6, 7, 8, 96]} mb={[3, 4]}>
               Bernhard{' '}
-              <Text fontSize={[5, 6, 6, 8]} as="small" css="display:block;">
+              <P fontSize={[5, 6, 6, 8]} as="small" css="display:block;">
                 Gschwantner.
-              </Text>
-            </Heading>
+              </P>
+            </Title>
 
             <Text mb={4} css="max-width: 16em;">
               I'm a long-time software developer, founder and tech enthusiast.
@@ -91,7 +92,7 @@ const IndexPage = () => (
     </TimeColor>
 
     <Container as="section" id="about" py={4}>
-      <Heading mb={4}>What I do</Heading>
+      <H2>What I do</H2>
       <Flex>
         <Box width={[1, 1 / 2]}>
           <Text mb={4}>I create web apps with React, CouchDB and NodeJS.</Text>
@@ -103,7 +104,7 @@ const IndexPage = () => (
 
     <Box bg="#f4f4f4" as="section">
       <Container py={4}>
-        <Heading mb={4}>Recent work</Heading>
+        <H2>Recent work</H2>
         <Flex mr={-2} flexWrap="wrap">
           <Project bg="lightblue">
             <Link to="/projects/landhaus-altlengbach">First Project</Link>
@@ -119,7 +120,7 @@ const IndexPage = () => (
     </Box>
 
     <Container as="section" py={4}>
-      <Heading mb={4}>Recent Posts</Heading>
+      <H2>Recent Posts</H2>
       <Post>First Post</Post>
       <Post>Second Post</Post>
       <Post>Third Post</Post>
@@ -127,7 +128,7 @@ const IndexPage = () => (
 
     <Box bg="#555" color="#fff" as="footer">
       <Container py={4}>
-        <Heading mb={4}>Footer</Heading>
+        <H2>Footer</H2>
         <Text>First nav item</Text>
         <Text>Second nav item</Text>
         <Text>Third nav item</Text>

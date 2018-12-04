@@ -1,6 +1,24 @@
 import React from 'react';
 import { Box, Flex } from 'rebass';
 
+const backgroundImage = `
+linear-gradient(
+  to bottom left,
+  hsl(330, 100%, 30%),
+  hsl(350, 85%, 40%),
+  hsl(15, 80%, 60%)
+)`;
+
+export const Background = props => (
+  <Box
+    css={`
+      background-image: ${backgroundImage};
+      color: #fff;
+    `}
+    {...props}
+  />
+);
+
 export const Container = props => (
   <Flex
     css={`
@@ -27,14 +45,14 @@ const Col = props => (
     `}
   />
 );
-export const AsideColumn = props => (
+export const AsideColumn = ({ css, ...props }) => (
   <Col
     py={4}
     css={`
       @media screen and (orientation: landscape) {
-        background-color: #5a5d56;
         color: #fff;
       }
+      ${css || ''};
     `}
     {...props}
   />
@@ -44,15 +62,13 @@ export const IllustrationColumn = ({ children, ...props }) => (
   <Col
     pb={4}
     css={`
-      background-color: #5a5d56;
-      color: #fff;
-
       @media screen and (orientation: portrait) {
         position: fixed;
         bottom: 0;
         z-index: 2;
         padding-bottom: 0;
         padding-top: 0;
+        background-image: ${backgroundImage};
       }
     `}
     {...props}
@@ -61,4 +77,6 @@ export const IllustrationColumn = ({ children, ...props }) => (
   </Col>
 );
 
-export const TextColumn = props => <Col bg="#fff" {...props} />;
+export const TextColumn = props => (
+  <Col bg="#fff" color={'hsla(0, 0%, 0%, 0.8)'} {...props} />
+);

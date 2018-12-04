@@ -22,7 +22,7 @@ function CanvasBackground({ width, height }) {
         y={0}
         width={width}
         height={height}
-        fill="#52682d"
+        fill="rgba(255, 255, 255, 0.25)"
       />
       <CanvasArea
         name="Contact"
@@ -30,7 +30,7 @@ function CanvasBackground({ width, height }) {
         y={0}
         width={width}
         height={height}
-        fill="#6e8b3d"
+        fill="rgba(255, 255, 255, 0.15)"
       />
       <CanvasArea
         name="Plans"
@@ -38,14 +38,14 @@ function CanvasBackground({ width, height }) {
         y={height}
         width={width}
         height={height}
-        fill="#435626"
+        fill="rgba(255, 255, 255, 0.15)"
       />
       <CanvasArea
         x={-width}
         y={height}
         width={width}
         height={height}
-        fill="#37471f"
+        fill="rgba(255, 255, 255, 0.05)"
       />
     </>
   );

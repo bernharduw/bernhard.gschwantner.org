@@ -2,9 +2,13 @@ import React from 'react';
 import { Box } from 'rebass';
 import Waypoint from 'react-waypoint';
 
+/**
+ * Waypoint still uses innerRef, while Box makes use of ref via React.forwardRef().
+ * This makes both compatible.
+ * */
 const WaypointAdapter = ({ children, innerRef }) => children(innerRef);
 
-const TextSection = ({ onSection, section, children, css='', ...props }) => (
+const TextSection = ({ onSection, section, children, css = '', ...props }) => (
   <Waypoint
     topOffset="30%"
     bottomOffset="50%"
@@ -35,9 +39,9 @@ const TextSection = ({ onSection, section, children, css='', ...props }) => (
           css={`
             min-height: 50vh;
             @media screen and (orientation: landscape) {
-              min-height: 100vh;
+              min-height: 90vh;
             }
-            ${css}
+            ${css};
           `}
           {...props}
         >

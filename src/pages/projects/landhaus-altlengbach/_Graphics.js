@@ -63,7 +63,16 @@ export const Canvas = styled(Group)`
  */
 export const CanvasArea = ({ x, y, width, height, fill, name }) => (
   <>
-    <rect x={x} y={y} width={width} height={height} fill={fill} />
+    <Box
+      as="rect"
+      x={x}
+      y={y}
+      width={width}
+      height={height}
+      css={`
+        fill: ${fill};
+      `}
+    />
     {name && (
       <Box
         as="text"
