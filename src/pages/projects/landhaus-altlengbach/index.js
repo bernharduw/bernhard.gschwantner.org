@@ -88,7 +88,7 @@ export default class AltlengbachPage extends React.Component {
             <TextColumn py={4} css={constrainWidthRight}>
               <P>
                 <a href="https://altlengbach.netlify.com/">
-                  www.landhaus-altlengbach.at
+                  altlengbach.netlify.com
                 </a>{' '}
                 (2018)
               </P>
