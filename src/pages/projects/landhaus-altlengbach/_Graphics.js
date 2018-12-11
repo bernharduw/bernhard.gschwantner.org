@@ -39,6 +39,15 @@ export const IllustrationContainer = styled(Box)`
     `${center ? 'translate(-25%, 25%)' : ''} ${
       zoom === 'canvas' ? 'scale(0.5)' : 'none'
     }`};
+
+  @media screen and (orientation: portrait) {
+    // The view height should never exceed 50% of the viewport.
+    // We can achieve that by constraining the width
+    // to 50% of the viewport height * the aspect ratio (e.g. 16/9).
+    max-width: ${props => 50 * props.aspectRatio}vh;
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 
 export const Svg = styled.svg`

@@ -160,7 +160,12 @@ const LayoutIllustration = ({
   css,
   ...rest
 }) => (
-  <IllustrationContainer zoom={zoom} center={center} css={css}>
+  <IllustrationContainer
+    zoom={zoom}
+    center={center}
+    css={css}
+    aspectRatio={width / height}
+  >
     <Svg viewBox={`0 0 ${width} ${height}`}>
       <CSSTransition
         timeout={timeout}
