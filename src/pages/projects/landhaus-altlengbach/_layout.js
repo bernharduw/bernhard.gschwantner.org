@@ -1,18 +1,10 @@
 import React from 'react';
 import { Box, Flex } from 'rebass';
 
-const backgroundImage = `
-linear-gradient(
-  to bottom left,
-  hsl(330, 100%, 30%),
-  hsl(350, 85%, 40%),
-  hsl(15, 80%, 60%)
-)`;
-
 export const Background = props => (
   <Box
     css={`
-      background-image: ${backgroundImage};
+      background-color: #333;
       color: #fff;
     `}
     {...props}
@@ -68,7 +60,7 @@ export const IllustrationColumn = ({ children, ...props }) => (
         z-index: 2;
         padding-bottom: 0;
         padding-top: 0;
-        background-image: ${backgroundImage};
+        background-color: #333;
       }
     `}
     {...props}
