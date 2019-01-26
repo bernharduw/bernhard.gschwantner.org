@@ -5,25 +5,25 @@ import Link from '../Link';
 export default function FancyButton({
   to,
   href,
-  color = '#333',
-  bg = 'transparent',
+  color = 'currentColor',
   borderColor = color,
-  hoverBg = color,
-  hoverColor = '#fff',
+  hoverColor = 'transparent',
   ...props
 }) {
   return (
-    <Link href={href} to={to}>
+    <Link href={href} to={to} css="border-radius: 50em;">
       <Button
-        bg={bg}
+        bg="transparent"
         color={color}
-        fontWeight="normal"
-        border="2px solid"
         borderColor={borderColor}
+        border="2px solid"
+        borderRadius="50em"
+        fontWeight="normal"
+        fontSize={3}
         css={`
           transition: color 0.3s ease-out, background 0.3s ease-out;
           &:hover {
-            background-color: ${hoverBg};
+            background-color: ${color};
             color: ${hoverColor};
           }
         `}

@@ -1,10 +1,8 @@
 import React from 'react';
-import { FiChevronsUp, FiChevronsDown } from 'react-icons/fi';
-import { Box, Flex, Heading as BaseHeading, Text } from 'rebass';
+import { Box, Flex, Heading as BaseHeading } from 'rebass';
 import Container from '../Container';
 import Link from '../Link';
 import SemiContainer from '../SemiContainer';
-import styled from 'styled-components';
 
 function ProjectTitle(props) {
   return (
@@ -29,93 +27,23 @@ function Subtitle(props) {
   );
 }
 
-const NavInner = styled(Text)`
-  display: inline-block;
-  border: 2px solid ${props => props.borderColor};
-  border-radius: 50em;
-  transition: background 0.3s ease-out;
-  line-height: 16px;
-  > svg {
-    font-size: 20px;
-    vertical-align: middle;
-  }
-`;
-
-function ProjectNav({ top, bottom, color, hoverColor, children, ...rest }) {
-  return (
-    <Link
-      display="block"
-      p={4}
-      textAlign="center"
-      css={`
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: ${bottom};
-        top: ${top};
-        opacity: 0.75;
-        :hover {
-          opacity: 1;
-          color: ${hoverColor};
-        }
-        &:hover ${NavInner} {
-          background-color: ${color};
-        }
-      `}
-      {...rest}
-    >
-      {children && (
-        <NavInner as="span" p={3} borderColor={color}>
-          {children}
-        </NavInner>
-      )}
-    </Link>
-  );
-}
-
 export default function ProjectTeaser({
-  id,
   title,
   year,
   href,
   subtitle,
   picture,
   features,
-  previousId,
-  nextId,
   reverse,
+  pictureWidth = [1, 1 / 2, null, 2 / 3],
+  textWidth = [1, 1 / 2, null, 1 / 3],
+  boxed = true,
   children,
-  pictureWidth = [1, 1 / 2],
-  textWidth = [1, 1 / 2],
-  boxed,
-  color,
-  bg,
-  ...rest
 }) {
   const alignHeading = reverse ? 'inherit' : ['inherit', 'right'];
   const contentDirection = reverse ? 'row-reverse' : 'row';
   return (
-    <Flex
-      as="article"
-      flexDirection="column"
-      justifyContent="center"
-      css={{ minHeight: '100vh', position: 'relative' }}
-      id={id}
-      py={6}
-      color={color}
-      bg={bg}
-      {...rest}
-    >
-      <ProjectNav
-        top={0}
-        href={previousId && `#${previousId}`}
-        title="Previous project"
-        color={color}
-        hoverColor={bg}
-      >
-        {previousId && <FiChevronsUp />}
-      </ProjectNav>
-
+    <div>
       <Container>
         <ProjectTitle textAlign={alignHeading}>
           {title} ({year})
@@ -145,16 +73,6 @@ export default function ProjectTeaser({
           </Flex>
         </SemiContainer>
       </Flex>
-
-      <ProjectNav
-        href={nextId && `#${nextId}`}
-        title="Next project"
-        bottom={0}
-        color={color}
-        hoverColor={bg}
-      >
-        {nextId && <FiChevronsDown />}
-      </ProjectNav>
-    </Flex>
+    </div>
   );
 }
