@@ -18,17 +18,22 @@ function ProjectTitle(props) {
   );
 }
 
-function ProjectNav(props) {
+function ProjectNav({ top, bottom, ...rest }) {
   return (
     <Link
       display="block"
       p={4}
       textAlign="center"
       css={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom,
+        top,
         opacity: 0.8,
         ':hover': { opacity: 1 },
       }}
-      {...props}
+      {...rest}
     />
   );
 }
@@ -76,52 +81,49 @@ export default function ProjectTeaser({
     <Flex
       as="article"
       flexDirection="column"
-      justifyContent="space-between"
-      css={{ minHeight: '100vh', overflowX: 'hidden' }}
+      justifyContent="center"
+      css={{ minHeight: '100vh', overflowX: 'hidden', position: 'relative' }}
       id={id}
       {...rest}
     >
       <ProjectNav
+        top={0}
         href={previousId && `#${previousId}`}
         title="Previous project"
       >
         {previousId && 'Previous'}
       </ProjectNav>
-      <div>
-        <Container>
-          <ProjectTitle textAlign={alignHeading}>
-            {title} ({year})
-          </ProjectTitle>
-          <Subtitle href={href} textAlign={alignHeading}>
-            {subtitle}
-          </Subtitle>
-        </Container>
-        <Flex
-          as={boxed ? Container : undefined}
-          flexWrap="wrap"
-          flexDirection={contentDirection}
+
+      <Container>
+        <ProjectTitle textAlign={alignHeading}>
+          {title} ({year})
+        </ProjectTitle>
+        <Subtitle href={href} textAlign={alignHeading}>
+          {subtitle}
+        </Subtitle>
+      </Container>
+      <Flex
+        as={boxed ? Container : undefined}
+        flexWrap="wrap"
+        flexDirection={contentDirection}
+      >
+        <Box width={pictureWidth}>{picture}</Box>
+        <SemiContainer
+          as={boxed ? Box : undefined}
+          width={textWidth}
+          pt={[4, 5]}
+          mb={4}
+          reverse={reverse}
+          css={{ display: 'flex' }}
         >
-          <Box width={pictureWidth}>{picture}</Box>
-          <SemiContainer
-            as={boxed ? Box : undefined}
-            width={textWidth}
-            mt={[4, 5]}
-            mb={4}
-            reverse={reverse}
-            css={{ display: 'flex' }}
-          >
-            <Flex
-              flexDirection="column"
-              justifyContent="space-between"
-              flex="1"
-            >
-              <section>{children}</section>
-              <section>{features}</section>
-            </Flex>
-          </SemiContainer>
-        </Flex>
-      </div>
-      <ProjectNav href={nextId && `#${nextId}`} title="Next project">
+          <Flex flexDirection="column" justifyContent="space-between" flex="1">
+            <section>{children}</section>
+            <section>{features}</section>
+          </Flex>
+        </SemiContainer>
+      </Flex>
+
+      <ProjectNav href={nextId && `#${nextId}`} title="Next project" bottom={0}>
         {nextId && 'Next'}
       </ProjectNav>
     </Flex>

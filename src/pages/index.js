@@ -1,11 +1,10 @@
-import { graphql, Link as BaseLink } from 'gatsby';
+import { graphql } from 'gatsby';
 import Image from 'gatsby-image';
 import React from 'react';
-import { Box, Button, Flex, Heading as BaseHeading, Text } from 'rebass';
+import { Box, Flex, Text } from 'rebass';
 import Container from '../components/Container';
 import Layout from '../components/layout';
 import Header from '../components/MainHeader';
-import FrameScreenshot, { PureScreenshot } from '../components/Screenshot';
 import SemiContainer from '../components/SemiContainer';
 import { H2, P, Title } from '../components/Text';
 import TimeColor from '../components/TimeColor';
@@ -20,135 +19,20 @@ import AlexandraKleinheinzTeaser from '../components/projects/AlexandraKleinhein
 import Unserwein2014Teaser from '../components/projects/UnserWein2014';
 import BGKSTeaser from '../components/projects/BGKS';
 import BrigitteKattTeaser from '../components/projects/BrigitteKatt';
-
-function Page(props) {
-  return (
-    <Flex
-      as="article"
-      flexDirection="column"
-      justifyContent="center"
-      css={{ minHeight: '100vh', overflowX: 'hidden' }}
-      {...props}
-    />
-  );
-}
-
-function Features({ title, ...props }) {
-  return (
-    <Flex pt={1} css={{ textAlign: 'left' }}>
-      <Text
-        as="h3"
-        fontSize={0}
-        lineHeight={2}
-        my={0}
-        pr={3}
-        width={1 / 4}
-        fontWeight="200"
-        css={{ textTransform: 'uppercase', opacity: 0.8 }}
-      >
-        {title}
-      </Text>
-      <Text as="ul" m={0} width={3 / 4} {...props} />
-    </Flex>
-  );
-}
-
-function Feature(props) {
-  return (
-    <Text
-      as="li"
-      mb={0}
-      fontSize={1}
-      lineHeight={1}
-      css={{
-        listStyle: 'none',
-        display: 'inline',
-        ':nth-last-child(n+2)::after': {
-          content: '", "',
-        },
-      }}
-      {...props}
-    />
-  );
-}
-
-function Heading(props) {
-  return (
-    <BaseHeading
-      fontSize={[5]}
-      lineHeight={1.5}
-      mb={1}
-      css="border-bottom:3px solid;"
-      {...props}
-    />
-  );
-}
-
-function Link(props) {
-  if (props.href) {
-    return <a css={{ textDecoration: 'none', color: 'inherit' }} {...props} />;
-  }
-  if (props.to) {
-    return (
-      <BaseLink css={{ textDecoration: 'none', color: 'inherit' }} {...props} />
-    );
-  }
-  return <div {...props} />;
-}
-
-function Subline({ href, children, ...props }) {
-  return (
-    <Text css={{ opacity: 0.8 }} {...props}>
-      {href ? (
-        <a
-          href={href}
-          css={{
-            textDecoration: 'none',
-            color: 'inherit',
-          }}
-        >
-          {children}
-        </a>
-      ) : (
-        children
-      )}
-    </Text>
-  );
-}
+import FancyButton from '../components/projects/FancyButton';
 
 function Post(props) {
   return <Box pb={4} as="section" {...props} />;
 }
 
-function FancyButton({
-  to,
-  href,
-  color = '#333',
-  bg = 'transparent',
-  borderColor = color,
-  hoverBg = color,
-  hoverColor = '#fff',
-
-  ...props
-}) {
+function Page(props) {
   return (
-    <Link href={href} to={to}>
-      <Button
-        bg={bg}
-        color={color}
-        fontWeight="normal"
-        border="2px solid"
-        borderColor={borderColor}
-        css={`
-          transition: color 0.3s ease-out, background 0.3s ease-out;
-          &:hover {
-            background-color: ${hoverBg};
-            color: ${hoverColor};
-          }
-        `}
-        {...props}
-      />
-    </Link>
+    <Flex
+      css={{ minHeight: '100vh' }}
+      flexDirection="column"
+      justifyContent="center"
+      {...props}
+    />
   );
 }
 
