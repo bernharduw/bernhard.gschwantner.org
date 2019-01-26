@@ -16,7 +16,12 @@ export default function SumeraTeaser(props) {
       boxed
       picture={
         <StaticQuery query={query}>
-          {data => <PureScreenshot fluid={data.mobile.childImageSharp.fluid} />}
+          {data => (
+            <PureScreenshot
+              css="max-height: 60vh;"
+              fluid={data.mobile.childImageSharp.fluid}
+            />
+          )}
         </StaticQuery>
       }
       pictureWidth={[1, 1 / 3]}
