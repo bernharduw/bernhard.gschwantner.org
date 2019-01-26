@@ -1,10 +1,9 @@
 import React from 'react';
-import { Box, Flex } from 'rebass';
+import { FiChevronsUp, FiChevronsDown } from 'react-icons/fi';
+import { Box, Flex, Heading as BaseHeading, Text } from 'rebass';
 import Container from '../Container';
-import SemiContainer from '../SemiContainer';
-
-import { Heading as BaseHeading, Text } from 'rebass';
 import Link from '../Link';
+import SemiContainer from '../SemiContainer';
 
 function ProjectTitle(props) {
   return (
@@ -15,6 +14,26 @@ function ProjectTitle(props) {
       css="border-bottom:3px solid;"
       {...props}
     />
+  );
+}
+
+function Subtitle({ href, children, ...props }) {
+  return (
+    <Text css={{ opacity: 0.75 }} pb={4} {...props}>
+      {href ? (
+        <a
+          href={href}
+          css={{
+            textDecoration: 'none',
+            color: 'inherit',
+          }}
+        >
+          {children}
+        </a>
+      ) : (
+        children
+      )}
+    </Text>
   );
 }
 
@@ -30,7 +49,7 @@ function ProjectNav({ top, bottom, ...rest }) {
         right: 0,
         bottom,
         top,
-        opacity: 0.8,
+        opacity: 0.75,
         ':hover': { opacity: 1 },
       }}
       {...rest}
@@ -38,23 +57,18 @@ function ProjectNav({ top, bottom, ...rest }) {
   );
 }
 
-function Subtitle({ href, children, ...props }) {
+function RoundButton(props) {
   return (
-    <Text css={{ opacity: 0.8 }} {...props}>
-      {href ? (
-        <a
-          href={href}
-          css={{
-            textDecoration: 'none',
-            color: 'inherit',
-          }}
-        >
-          {children}
-        </a>
-      ) : (
-        children
-      )}
-    </Text>
+    <Box
+      as="span"
+      p={3}
+      css="
+        border: 1px solid;
+        border-radius: 50em;
+        line-height: 1;
+        "
+      {...props}
+    />
   );
 }
 
@@ -75,7 +89,7 @@ export default function ProjectTeaser({
   boxed,
   ...rest
 }) {
-  const alignHeading = reverse ? 'inherit' : 'right';
+  const alignHeading = reverse ? 'inherit' : ['inherit', 'right'];
   const contentDirection = reverse ? 'row-reverse' : 'row';
   return (
     <Flex
@@ -84,6 +98,7 @@ export default function ProjectTeaser({
       justifyContent="center"
       css={{ minHeight: '100vh', overflowX: 'hidden', position: 'relative' }}
       id={id}
+      py={6}
       {...rest}
     >
       <ProjectNav
@@ -91,7 +106,11 @@ export default function ProjectTeaser({
         href={previousId && `#${previousId}`}
         title="Previous project"
       >
-        {previousId && 'Previous'}
+        {previousId && (
+          <RoundButton>
+            <FiChevronsUp />
+          </RoundButton>
+        )}
       </ProjectNav>
 
       <Container>
@@ -124,7 +143,11 @@ export default function ProjectTeaser({
       </Flex>
 
       <ProjectNav href={nextId && `#${nextId}`} title="Next project" bottom={0}>
-        {nextId && 'Next'}
+        {nextId && (
+          <RoundButton>
+            <FiChevronsDown />
+          </RoundButton>
+        )}
       </ProjectNav>
     </Flex>
   );
