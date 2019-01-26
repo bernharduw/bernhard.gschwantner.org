@@ -12,7 +12,11 @@ export default function Link(props) {
     <Text
       as={as}
       color="inherit"
-      css={{ textDecoration: 'none', transition: 'all 0.3s ease-out' }}
+      css={{
+        textDecoration: 'none',
+        transition: 'all 0.3s ease-out',
+        '&[href]:hover': { textDecoration: 'underline' },
+      }}
       {...variants[props.variant] || variants.default}
       {...props}
     />

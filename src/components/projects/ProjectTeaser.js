@@ -4,11 +4,12 @@ import { Box, Flex, Heading as BaseHeading, Text } from 'rebass';
 import Container from '../Container';
 import Link from '../Link';
 import SemiContainer from '../SemiContainer';
+import styled from 'styled-components';
 
 function ProjectTitle(props) {
   return (
     <BaseHeading
-      fontSize={[5]}
+      fontSize={[4, 5]}
       lineHeight={1.5}
       mb={1}
       css="border-bottom:3px solid;"
@@ -17,58 +18,58 @@ function ProjectTitle(props) {
   );
 }
 
-function Subtitle({ href, children, ...props }) {
+function Subtitle(props) {
   return (
-    <Text css={{ opacity: 0.75 }} pb={4} {...props}>
-      {href ? (
-        <a
-          href={href}
-          css={{
-            textDecoration: 'none',
-            color: 'inherit',
-          }}
-        >
-          {children}
-        </a>
-      ) : (
-        children
-      )}
-    </Text>
+    <Link
+      variant="hover"
+      css={{ opacity: 0.75, display: 'block' }}
+      pb={2}
+      {...props}
+    />
   );
 }
 
-function ProjectNav({ top, bottom, ...rest }) {
+const NavInner = styled(Text)`
+  display: inline-block;
+  border: 2px solid ${props => props.borderColor};
+  border-radius: 50em;
+  transition: background 0.3s ease-out;
+  line-height: 16px;
+  > svg {
+    font-size: 20px;
+    vertical-align: middle;
+  }
+`;
+
+function ProjectNav({ top, bottom, color, hoverColor, children, ...rest }) {
   return (
     <Link
       display="block"
       p={4}
       textAlign="center"
-      css={{
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom,
-        top,
-        opacity: 0.75,
-        ':hover': { opacity: 1 },
-      }}
+      css={`
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: ${bottom};
+        top: ${top};
+        opacity: 0.75;
+        :hover {
+          opacity: 1;
+          color: ${hoverColor};
+        }
+        &:hover ${NavInner} {
+          background-color: ${color};
+        }
+      `}
       {...rest}
-    />
-  );
-}
-
-function RoundButton(props) {
-  return (
-    <Box
-      as="span"
-      p={3}
-      css="
-        border: 1px solid;
-        border-radius: 50em;
-        line-height: 1;
-        "
-      {...props}
-    />
+    >
+      {children && (
+        <NavInner as="span" p={3} borderColor={color}>
+          {children}
+        </NavInner>
+      )}
+    </Link>
   );
 }
 
@@ -87,6 +88,8 @@ export default function ProjectTeaser({
   pictureWidth = [1, 1 / 2],
   textWidth = [1, 1 / 2],
   boxed,
+  color,
+  bg,
   ...rest
 }) {
   const alignHeading = reverse ? 'inherit' : ['inherit', 'right'];
@@ -96,21 +99,21 @@ export default function ProjectTeaser({
       as="article"
       flexDirection="column"
       justifyContent="center"
-      css={{ minHeight: '100vh', overflowX: 'hidden', position: 'relative' }}
+      css={{ minHeight: '100vh', position: 'relative' }}
       id={id}
       py={6}
+      color={color}
+      bg={bg}
       {...rest}
     >
       <ProjectNav
         top={0}
         href={previousId && `#${previousId}`}
         title="Previous project"
+        color={color}
+        hoverColor={bg}
       >
-        {previousId && (
-          <RoundButton>
-            <FiChevronsUp />
-          </RoundButton>
-        )}
+        {previousId && <FiChevronsUp />}
       </ProjectNav>
 
       <Container>
@@ -125,6 +128,7 @@ export default function ProjectTeaser({
         as={boxed ? Container : undefined}
         flexWrap="wrap"
         flexDirection={contentDirection}
+        css="overflow: hidden;"
       >
         <Box width={pictureWidth}>{picture}</Box>
         <SemiContainer
@@ -142,12 +146,14 @@ export default function ProjectTeaser({
         </SemiContainer>
       </Flex>
 
-      <ProjectNav href={nextId && `#${nextId}`} title="Next project" bottom={0}>
-        {nextId && (
-          <RoundButton>
-            <FiChevronsDown />
-          </RoundButton>
-        )}
+      <ProjectNav
+        href={nextId && `#${nextId}`}
+        title="Next project"
+        bottom={0}
+        color={color}
+        hoverColor={bg}
+      >
+        {nextId && <FiChevronsDown />}
       </ProjectNav>
     </Flex>
   );

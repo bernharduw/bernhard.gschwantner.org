@@ -24,7 +24,7 @@ const Laptop = styled(Image).attrs({
 const Frame = styled.div`
   position: relative;
   padding: 12.5%;
-  margin: -2.5%; /* Make up for the transparent border on the laptop frame. */
+  // margin: -2.5%; /* Make up for the transparent border on the laptop frame. */
 `;
 
 export function PureScreenshot(props) {

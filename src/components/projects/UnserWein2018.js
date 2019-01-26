@@ -10,9 +10,9 @@ export default function UnserWein2018Teaser(props) {
     <ProjectTeaser
       title="unserwein.at website relaunch"
       subtitle="www.unserwein.at"
-      link="https://www.unserwein.at"
+      href="https://www.unserwein.at"
       year="2018"
-      bg="#362D32"
+      bg="#41363b"
       color="#fff"
       picture={
         <StaticQuery query={query}>
