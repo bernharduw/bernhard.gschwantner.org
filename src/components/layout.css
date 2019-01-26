@@ -184,7 +184,7 @@ textarea {
   font: inherit;
 }
 html {
-  font: 112.5%/1.45em sans-serif;
+  font: 1em/1.5 sans-serif;
   box-sizing: border-box;
   overflow-y: scroll;
 }

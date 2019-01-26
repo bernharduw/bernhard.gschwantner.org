@@ -82,7 +82,7 @@ export default class AltlengbachPage extends React.Component {
           <Container>
             <AsideColumn css={constrainWidthLeft}>
               <Box>
-                <Title>Website for a house sale</Title>
+                <Title>Landhaus Altlengbach</Title>
               </Box>
             </AsideColumn>
             <TextColumn py={4} css={constrainWidthRight}>

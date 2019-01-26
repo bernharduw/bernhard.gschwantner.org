@@ -4,7 +4,7 @@ import { Box, Flex } from 'rebass';
 export const Background = props => (
   <Box
     css={`
-      background-color: #333;
+      background-color: #49592a;
       color: #fff;
     `}
     {...props}
@@ -60,7 +60,7 @@ export const IllustrationColumn = ({ children, ...props }) => (
         z-index: 2;
         padding-bottom: 0;
         padding-top: 0;
-        background-color: #333;
+        background-color: #49592a;
       }
     `}
     {...props}
