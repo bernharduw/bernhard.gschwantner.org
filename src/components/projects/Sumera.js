@@ -20,6 +20,7 @@ export default function SumeraTeaser(props) {
           <StaticQuery query={query}>
             {data => (
               <PureScreenshot
+                blur={false}
                 css="max-height: 60vh;"
                 fluid={data.mobile.childImageSharp.fluid}
               />
@@ -60,8 +61,17 @@ const query = graphql`
   query {
     mobile: file(name: { eq: "sumera-dashboard-iphone" }) {
       childImageSharp {
-        fluid(maxWidth: 640, quality: 90) {
-          ...GatsbyImageSharpFluid_withWebp
+        fluid(
+          maxWidth: 640
+          quality: 90
+          traceSVG: {
+            color: "#fff"
+            threshold: 240
+            turdSize: 41
+            blackOnWhite: false
+          }
+        ) {
+          ...GatsbyImageSharpFluid_withWebp_tracedSVG
         }
       }
     }
