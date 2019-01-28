@@ -19,32 +19,36 @@ export default function PageSection({
       flexDirection="column"
       justifyContent="center"
       css={{ minHeight: '100vh', position: 'relative' }}
-      pt={6}
-      pb={6}
+      pt={4}
+      pb={nextId ? 6 : 4}
       color={color}
       bg={bg}
       {...rest}
     >
       {children}
 
-      <PageSectionNav
-        href={nextId && `#${nextId}`}
-        title="Next project"
-        bottom={0}
-        color={color}
-        hoverColor={bg}
-      >
-        {nextId && <FiChevronsDown />}
-      </PageSectionNav>
-      <PageSectionNav
-        top={0}
-        href={previousId && `#${previousId}`}
-        title="Previous project"
-        color={color}
-        hoverColor={bg}
-      >
-        {previousId && <FiChevronsUp />}
-      </PageSectionNav>
+      {nextId && (
+        <PageSectionNav
+          href={`#${nextId}`}
+          title="Next project"
+          bottom={0}
+          color={color}
+          hoverColor={bg}
+        >
+          <FiChevronsDown />
+        </PageSectionNav>
+      )}
+      {previousId && (
+        <PageSectionNav
+          top={0}
+          href={`#${previousId}`}
+          title="Previous project"
+          color={color}
+          hoverColor={bg}
+        >
+          <FiChevronsUp />
+        </PageSectionNav>
+      )}
     </Flex>
   );
 }

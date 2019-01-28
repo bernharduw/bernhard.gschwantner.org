@@ -58,9 +58,10 @@ function Header({
       <AnimatedBackground
         bg={bg}
         color={color}
-        py={0}
+        py={[0, 0]}
         alignItems="center"
         flexDirection={['column', 'row']}
+        justifyContent="space-between"
         {...props}
       />
     );
@@ -70,9 +71,10 @@ function Header({
     <Background
       bg={bg}
       color={color}
-      py={0}
+      py={[0, 0]}
       alignItems="center"
       flexDirection={['column', 'row']}
+      justifyContent="space-between"
       {...props}
     />
   );

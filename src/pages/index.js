@@ -30,62 +30,62 @@ function IndexPage() {
         <EventDirectoryTeaser
           reverse
           id="bottlebooks"
-          previousId="about"
+          // previousId="about"
           nextId="unserwein-2018"
         />
         <UnserWein2018Teaser
           id="unserwein-2018"
-          previousId="bottlebooks"
+          // previousId="bottlebooks"
           nextId="gschwantner-org"
         />
         <GschwantnerOrgTeaser
           reverse
           id="gschwantner-org"
-          previousId="unserwein-2018"
+          // previousId="unserwein-2018"
           nextId="tasting-manager"
         />
         <TastingManagerTeaser
           id="tasting-manager"
-          previousId="gschwantner-org"
+          // previousId="gschwantner-org"
           nextId="landhaus-altlengbach"
         />
         <LandhausAltlengbachTeaser
           reverse
           id="landhaus-altlengbach"
-          previousId="tasting-manager"
+          // previousId="tasting-manager"
           nextId="brindlmayer"
         />
         <BrindlmayerTeaser
           id="brindlmayer"
-          previousId="landhaus-altlengbach"
+          // previousId="landhaus-altlengbach"
           nextId="sumera"
         />
         <SumeraTeaser
           reverse
           id="sumera"
-          previousId="brindlmayer"
+          // previousId="brindlmayer"
           nextId="alexandra-kleinheinz"
         />
         <AlexandraKleinheinzTeaser
           id="alexandra-kleinheinz"
-          previousId="sumera"
+          // previousId="sumera"
           nextId="unserwein-2014"
         />
         <Unserwein2014Teaser
           reverse
           id="unserwein-2014"
-          previousId="alexandra-kleinheinz"
+          // previousId="alexandra-kleinheinz"
           nextId="bgks"
         />
         <BGKSTeaser
           id="bgks"
-          previousId="unserwein-2014"
+          // previousId="unserwein-2014"
           nextId="brigitte-katt"
         />
         <BrigitteKattTeaser
           reverse
           id="brigitte-katt"
-          previousId="bgks"
+          // previousId="bgks"
           nextId="blog"
         />
       </div>
