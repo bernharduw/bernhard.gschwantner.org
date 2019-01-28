@@ -76,6 +76,12 @@ export function PageSectionNav({
         &:hover ${NavInner} {
           background-color: ${color};
         }
+        :focus {
+          outline: none;
+        }
+        &:focus ${NavInner} {
+          box-shadow: 0 0 0 2px ${color};
+        }
       `}
       {...rest}
     >

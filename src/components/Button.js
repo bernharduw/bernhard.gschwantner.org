@@ -14,7 +14,7 @@ const StyledLink = styled(Link)`
   }
   :focus {
     outline: none;
-    box-shadow: 0 0 0 3px;
+    box-shadow: 0 0 0 2px;
   }
   :disabled {
     opacity: 0.65;

@@ -3,13 +3,14 @@ import React from 'react';
 import PageSection from '../PageSection';
 import FrameScreenshot from '../Screenshot';
 import { P } from '../Text';
-import { Feature, Features } from './Features';
+import { Feature, Features } from '../Features';
 import ProjectTeaser from './ProjectTeaser';
 
 export default function Unserwein2014Teaser(props) {
   return (
     <PageSection as="article" bg="#7a0033" color="#fff" {...props}>
       <ProjectTeaser
+        bg="#7a0033"
         reverse={props.reverse}
         title="unserwein.at"
         subtitle="Superseded in 2018 by the relaunched site"

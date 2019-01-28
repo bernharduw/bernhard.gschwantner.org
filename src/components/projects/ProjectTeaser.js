@@ -3,18 +3,7 @@ import { Box, Flex, Heading as BaseHeading } from 'rebass';
 import Container from '../Container';
 import Link from '../Link';
 import SemiContainer from '../SemiContainer';
-
-function ProjectTitle(props) {
-  return (
-    <BaseHeading
-      fontSize={[4, 5]}
-      lineHeight={1.5}
-      mb={1}
-      css="border-bottom:3px solid;"
-      {...props}
-    />
-  );
-}
+import { H2 } from '../Text';
 
 function Subtitle(props) {
   return (
@@ -30,6 +19,7 @@ function Subtitle(props) {
 export default function ProjectTeaser({
   title,
   year,
+  bg,
   href,
   subtitle,
   picture,
@@ -44,10 +34,22 @@ export default function ProjectTeaser({
   const contentDirection = reverse ? 'row-reverse' : 'row';
   return (
     <div>
-      <Container>
-        <ProjectTitle textAlign={alignHeading}>
+      <Container
+        css={
+          bg &&
+          `
+          position: sticky;
+          top: 0;
+          z-index: 1;
+          background-color: ${bg};
+        `
+        }
+      >
+        <H2 textAlign={alignHeading} mb={1}>
           {title} ({year})
-        </ProjectTitle>
+        </H2>
+      </Container>
+      <Container>
         <Subtitle href={href} textAlign={alignHeading}>
           {subtitle}
         </Subtitle>

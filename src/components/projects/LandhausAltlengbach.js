@@ -4,13 +4,14 @@ import PageSection from '../PageSection';
 import FrameScreenshot from '../Screenshot';
 import { P } from '../Text';
 import Button from '../Button';
-import { Feature, Features } from './Features';
+import { Feature, Features } from '../Features';
 import ProjectTeaser from './ProjectTeaser';
 
 export default function LandhausAltlengbachTeaser(props) {
   return (
     <PageSection as="article" bg="#49592A" color="#fff" {...props}>
       <ProjectTeaser
+        bg="#49592A"
         reverse={props.reverse}
         title="Landhaus Altlengbach website"
         subtitle="altlengbach.netlify.com"

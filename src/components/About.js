@@ -6,7 +6,7 @@ import PageSection from './PageSection';
 
 export default function Intro(props) {
   return (
-    <PageSection {...props}>
+    <PageSection bg="#fff" color="#333" {...props}>
       <Container py={4}>
         <Flex flexWrap="wrap">
           <Box width={[1, 1 / 2]} p={5}>

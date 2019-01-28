@@ -3,13 +3,14 @@ import React from 'react';
 import PageSection from '../PageSection';
 import FrameScreenshot from '../Screenshot';
 import { P } from '../Text';
-import { Feature, Features } from './Features';
+import { Feature, Features } from '../Features';
 import ProjectTeaser from './ProjectTeaser';
 
 export default function GschwantnerOrgTeaser(props) {
   return (
     <PageSection as="article" bg="#654C3A" color="#fff" {...props}>
       <ProjectTeaser
+        bg="#654C3A"
         reverse={props.reverse}
         title="unserwein Tasting Manager"
         subtitle="events.unserwein.at/de/events/vievinum-2018"

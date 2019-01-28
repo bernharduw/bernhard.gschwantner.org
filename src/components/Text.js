@@ -14,6 +14,7 @@ const stickyStyle = `
 export const H2 = ({ css, sticky, ...props }) => (
   <Heading
     mb={3}
+    fontSize={4}
     mx={-1}
     p={1}
     pt={[3, 4]}

@@ -3,13 +3,14 @@ import React from 'react';
 import PageSection from '../PageSection';
 import { PureScreenshot } from '../Screenshot';
 import { P } from '../Text';
-import { Feature, Features } from './Features';
+import { Feature, Features } from '../Features';
 import ProjectTeaser from './ProjectTeaser';
 
 export default function SumeraTeaser(props) {
   return (
     <PageSection as="article" bg="#91168C" color="#fff" {...props}>
       <ProjectTeaser
+        bg="#91168C"
         reverse={props.reverse}
         title="Sumera Quiz app"
         subtitle="unpublished"

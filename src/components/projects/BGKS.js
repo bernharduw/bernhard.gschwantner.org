@@ -3,13 +3,14 @@ import React from 'react';
 import PageSection from '../PageSection';
 import FrameScreenshot from '../Screenshot';
 import { P } from '../Text';
-import { Feature, Features } from './Features';
+import { Feature, Features } from '../Features';
 import ProjectTeaser from './ProjectTeaser';
 
 export default function BGKSTeaser(props) {
   return (
     <PageSection as="article" bg="#4D454A" color="#fff" {...props}>
       <ProjectTeaser
+        bg="#4D454A"
         reverse={props.reverse}
         title="bgks architects"
         subtitle="www.bgks.at"

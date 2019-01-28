@@ -3,13 +3,14 @@ import React from 'react';
 import PageSection from '../PageSection';
 import FrameScreenshot from '../Screenshot';
 import { P } from '../Text';
-import { Feature, Features } from './Features';
+import { Feature, Features } from '../Features';
 import ProjectTeaser from './ProjectTeaser';
 
 export default function BrigitteKattTeaser(props) {
   return (
     <PageSection as="article" bg="#699C1B" color="#fff" {...props}>
       <ProjectTeaser
+        bg="#699C1B"
         reverse={props.reverse}
         title="Brigitte Katt"
         subtitle="www.brigitte-katt.at"

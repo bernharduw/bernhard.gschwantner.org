@@ -3,13 +3,14 @@ import React from 'react';
 import PageSection from '../PageSection';
 import FrameScreenshot from '../Screenshot';
 import { P } from '../Text';
-import { Feature, Features } from './Features';
+import { Feature, Features } from '../Features';
 import ProjectTeaser from './ProjectTeaser';
 
 export default function EventDirectoryTeaser(props) {
   return (
     <PageSection as="article" bg="#4D94AA" color="#fff" {...props}>
       <ProjectTeaser
+        bg="#4D94AA"
         reverse={props.reverse}
         title="Event directory for wine tastings"
         subtitle="Work in progress – unpublished yet"
