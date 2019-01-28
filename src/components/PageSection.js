@@ -25,16 +25,6 @@ export default function PageSection({
       bg={bg}
       {...rest}
     >
-      <PageSectionNav
-        top={0}
-        href={previousId && `#${previousId}`}
-        title="Previous project"
-        color={color}
-        hoverColor={bg}
-      >
-        {previousId && <FiChevronsUp />}
-      </PageSectionNav>
-
       {children}
 
       <PageSectionNav
@@ -45,6 +35,15 @@ export default function PageSection({
         hoverColor={bg}
       >
         {nextId && <FiChevronsDown />}
+      </PageSectionNav>
+      <PageSectionNav
+        top={0}
+        href={previousId && `#${previousId}`}
+        title="Previous project"
+        color={color}
+        hoverColor={bg}
+      >
+        {previousId && <FiChevronsUp />}
       </PageSectionNav>
     </Flex>
   );

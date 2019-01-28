@@ -12,7 +12,7 @@ import AlexandraKleinheinzTeaser from '../components/projects/AlexandraKleinhein
 import Unserwein2014Teaser from '../components/projects/UnserWein2014';
 import BGKSTeaser from '../components/projects/BGKS';
 import BrigitteKattTeaser from '../components/projects/BrigitteKatt';
-import Intro from '../components/Intro';
+import About from '../components/About';
 import Footer from '../components/Footer';
 
 // function Post(props) {
@@ -24,7 +24,7 @@ function IndexPage() {
     <Layout>
       <MainHeader nextId="about" />
 
-      <Intro id="about" nextId="projects" />
+      <About id="about" nextId="projects" />
 
       <div id="projects">
         <EventDirectoryTeaser

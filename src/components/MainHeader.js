@@ -2,20 +2,14 @@ import { graphql, StaticQuery } from 'gatsby';
 import Image from 'gatsby-image';
 import { adjustHue, darken, lighten } from 'polished';
 import React from 'react';
+import { FiChevronsDown } from 'react-icons/fi';
 import { Box, Text } from 'rebass';
-import { css, keyframes } from 'styled-components';
-import Button from '../components/projects/FancyButton';
+import styled, { keyframes } from 'styled-components';
+import Button from '../components/Button';
 import SemiContainer from '../components/SemiContainer';
 import { P, Title } from '../components/Text';
 import TimeColor from '../components/TimeColor';
 import PageSection from './PageSection';
-import { FiChevronsDown } from 'react-icons/fi';
-
-const moveBackground = keyframes`
-  0% { background-position: 100% 50%; }
-	50% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-`;
 
 function getGradient(color) {
   const gradient = [
@@ -28,6 +22,30 @@ function getGradient(color) {
   return gradient;
 }
 
+const Background = styled(PageSection)`
+  background-image: linear-gradient(
+    to bottom left,
+    ${props => getGradient(props.bg)}
+  );
+  background-attachment: fixed;
+  background-size: 400% 100%;
+  background-position: 100% 50%;
+  transition: background 4s ease-out;
+  &:hover {
+    background-position: 25% 50%;
+  }
+`;
+
+const panBackgroundHorizontally = keyframes`
+  0% { background-position: 100% 50%; }
+  50% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+`;
+
+const AnimatedBackground = styled(Background)`
+  animation: ${panBackgroundHorizontally} 20s ease-in-out infinite;
+`;
+
 function Header({
   css: additionalCss = '',
   bg = '#ea5971',
@@ -35,28 +53,23 @@ function Header({
   animate = false,
   ...props
 }) {
+  if (animate) {
+    return (
+      <AnimatedBackground
+        bg={bg}
+        color={color}
+        py={0}
+        alignItems="center"
+        flexDirection={['column', 'row']}
+        {...props}
+      />
+    );
+  }
+
   return (
-    <PageSection
+    <Background
       bg={bg}
       color={color}
-      css={css`
-        background-image: linear-gradient(to bottom left, ${getGradient(bg)});
-        background-attachment: fixed;
-        background-size: 400% 100%;
-        background-position: 100% 50%;
-        transition: background 4s ease-out;
-        @media screen and (min-width: 64em) and (max-height: 50em) {
-          min-height: 100vh;
-        }
-        &:hover {
-          background-position: 25% 50%;
-        }
-        ${animate
-          ? css`
-              animation: ${moveBackground} 20s ease-in-out infinite;
-            `
-          : ''};
-      `}
       py={0}
       alignItems="center"
       flexDirection={['column', 'row']}
@@ -68,14 +81,14 @@ function Header({
 function MainHeader({ id, nextId }) {
   return (
     <TimeColor>
-      {color => (
+      {bg => (
         <Header
           // animate
-          bg={color}
+          bg={bg}
           color="#fff"
           id={id}
         >
-          <SemiContainer width={[1, 2 / 3, 1 / 2]} fontSize={[3, 4]} py={5}>
+          <SemiContainer width={[1, 1 / 2]} fontSize={[3, 4]} py={5}>
             <P mb={1}>Hi, my name is</P>
             <Title
               fontSize={[6, 7, 8, 96]}
@@ -88,15 +101,20 @@ function MainHeader({ id, nextId }) {
               </P>
             </Title>
 
-            <Text mb={4} css="max-width: 16em;">
+            <Text mb={5} css="max-width: 16em;">
               I'm a long-time software developer, founder and tech enthusiast.
             </Text>
-            <Button href="#about" color="#fff" hoverColor={color}>
+            <Button
+              href={`#${nextId}`}
+              color="#fff"
+              hoverColor={bg}
+              fontSize={2}
+            >
               More about me <FiChevronsDown />
             </Button>
           </SemiContainer>
 
-          <Box width={[1, 1 / 3, 1 / 2]} alignSelf="flex-end">
+          <Box width={[1, 1 / 2]} alignSelf="flex-end">
             <StaticQuery query={query}>
               {({ headerImage: { childImageSharp } }) => (
                 <Image fluid={childImageSharp.fluid} critical />
@@ -115,8 +133,12 @@ const query = graphql`
   query {
     headerImage: file(name: { eq: "bernhard" }) {
       childImageSharp {
-        fluid(maxWidth: 1280) {
-          ...GatsbyImageSharpFluid_withWebp
+        fluid(
+          maxWidth: 1280
+          quality: 90
+          traceSVG: { color: "#41363b", threshold: 145 }
+        ) {
+          ...GatsbyImageSharpFluid_withWebp_tracedSVG
         }
       }
     }

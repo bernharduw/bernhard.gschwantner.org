@@ -3,7 +3,7 @@ import React from 'react';
 import PageSection from '../PageSection';
 import FrameScreenshot from '../Screenshot';
 import { P } from '../Text';
-import FancyButton from './FancyButton';
+import Button from '../Button';
 import { Feature, Features } from './Features';
 import ProjectTeaser from './ProjectTeaser';
 
@@ -44,17 +44,9 @@ export default function LandhausAltlengbachTeaser(props) {
           experimented with custom page transitions and animations in
           conjunction with Gatsby, a static site renderer.
         </P>
-        <FancyButton
-          color="rgba(255, 255, 255, 0.65)"
-          hoverBg="transparent"
-          hoverColor="rgba(255, 255, 255, 0.65)"
-          // hoverColor="#49592A"
-          mt={2}
-          mb={4}
-          disabled
-        >
+        <Button color="#fff" hoverColor="#49592A" mt={2} mb={4} disabled>
           Read more (soon)
-        </FancyButton>
+        </Button>
       </ProjectTeaser>
     </PageSection>
   );
