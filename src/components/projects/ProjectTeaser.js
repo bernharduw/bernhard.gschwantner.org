@@ -1,10 +1,31 @@
 import React from 'react';
-import { Box, Flex } from 'rebass';
+import { Box, Flex, Text } from 'rebass';
 import Container from '../Container';
 import Link from '../Link';
 import SemiContainer from '../SemiContainer';
 import { H2 } from '../Text';
+import { flexDirection, justifyContent, alignItems } from 'styled-system';
 import styled from 'styled-components';
+
+const ProjectHeader = styled(H2)`
+  display: flex;
+  ${flexDirection}
+  ${justifyContent}
+  ${alignItems}
+`;
+ProjectHeader.defaultProps = {
+  justifyContent: 'space-between',
+  alignItems: 'baseline',
+  mb: 1,
+};
+
+function ProjectTitle(props) {
+  return <Text as="span" display="block" flex="1" {...props} />;
+}
+function Year(props) {
+  return <Text as="span" fontWeight="200" fontSize={3} {...props} />;
+}
+
 function Subtitle(props) {
   return (
     <Link
@@ -15,11 +36,6 @@ function Subtitle(props) {
     />
   );
 }
-
-const Year = styled.div`
-  float: ${props => (props.reverse ? 'right' : 'left')};
-  font-weight: 200;
-`;
 
 export default function ProjectTeaser({
   title,
@@ -50,9 +66,10 @@ export default function ProjectTeaser({
         `
         }
       >
-        <H2 textAlign={alignHeading} mb={1}>
-          {title} <Year reverse={reverse}>{year}</Year>
-        </H2>
+        <ProjectHeader flexDirection={['row', reverse ? 'row' : 'row-reverse']}>
+          <ProjectTitle textAlign={alignHeading}>{title}</ProjectTitle>
+          <Year>{year}</Year>
+        </ProjectHeader>
       </Container>
       <Container>
         <Subtitle href={href} textAlign={alignHeading}>

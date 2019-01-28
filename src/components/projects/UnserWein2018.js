@@ -12,7 +12,7 @@ export default function UnserWein2018Teaser(props) {
       <ProjectTeaser
         bg="#41363b"
         reverse={props.reverse}
-        title="unserwein.at website relaunch"
+        title="unserwein.at relaunch"
         subtitle="www.unserwein.at"
         href="https://www.unserwein.at"
         year="2018"

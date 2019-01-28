@@ -13,7 +13,7 @@ export default function LandhausAltlengbachTeaser(props) {
       <ProjectTeaser
         bg="#49592A"
         reverse={props.reverse}
-        title="Landhaus Altlengbach website"
+        title="Landhaus Altlengbach"
         subtitle="altlengbach.netlify.com"
         href="https://altlengbach.netlify.com"
         year="2018"

@@ -12,7 +12,7 @@ export default function BrindlmayerTeaser(props) {
       <ProjectTeaser
         bg="#D7E7F1"
         reverse={props.reverse}
-        title="Weingut Brindlmayer website"
+        title="Weingut Brindlmayer"
         subtitle="www.brindlmayer.at"
         href="https://www.brindlmayer.at"
         year="2017/2018"
