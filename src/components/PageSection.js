@@ -18,7 +18,11 @@ export default function PageSection({
       id={id}
       flexDirection="column"
       justifyContent="center"
-      css={{ minHeight: '100vh', position: 'relative' }}
+      css={{
+        minHeight: '100vh',
+        position: 'relative',
+        scrollSnapAlign: 'start',
+      }}
       pt={4}
       pb={nextId ? 6 : 4}
       color={color}
@@ -30,7 +34,7 @@ export default function PageSection({
       {nextId && (
         <PageSectionNav
           href={`#${nextId}`}
-          title="Next project"
+          title="Go to next page"
           bottom={0}
           color={color}
           hoverColor={bg}
@@ -42,7 +46,7 @@ export default function PageSection({
         <PageSectionNav
           top={0}
           href={`#${previousId}`}
-          title="Previous project"
+          title="Go to previous page"
           color={color}
           hoverColor={bg}
         >
