@@ -1,7 +1,7 @@
 import React from 'react';
 import { FiChevronsDown, FiChevronsUp } from 'react-icons/fi';
 import { Flex, Text } from 'rebass';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Link from './Link';
 
 export default function PageSection({
@@ -10,41 +10,53 @@ export default function PageSection({
   nextId,
   color,
   bg,
+  style,
+  p,
+  py,
+  pt,
+  pb,
   children,
   ...rest
 }) {
-  // Create an positive or negative angle between 2 and 6 vh.
+  // Create a positive or negative angle between 2 and 6 vh.
   const [angle] = React.useState(
     (Math.random() * 4 + 2) * (Math.random() > 0.5 ? 1 : -1)
   );
-
+  // Slide through the padding defaults from p to py to pt
+  // and from p to py to pb. If nothing is defined use the base value:
+  // scale 4 top padding,
+  // and if there's a next button use scale 6, otherwise scale 4 for bottom padding.
+  pt = pt == null ? (py == null ? 4 : py) : pt;
+  pb = pb == null ? (py == null ? (p == null ? (nextId ? 6 : 4) : p) : py) : pb;
   return (
     <Flex
       id={id}
       flexDirection="column"
       justifyContent="center"
-      pt={4}
-      css={{
-        minHeight: '100vh',
-        position: 'relative',
-        scrollSnapAlign: 'start',
-        '@supports(clip-path: polygon(0 0,100vw 100vh))': {
-          clipPath: `polygon(0 ${Math.max(
-            angle,
-            0
-          )}vh,0 100%, 100% 100%,100% ${Math.max(-angle, 0)}vh)`,
-          marginTop: `-${Math.abs(angle)}vh`,
-          paddingTop:
-            rest.pt === undefined && rest.py === undefined
-              ? `calc(${Math.abs(angle)}vh + 32px)`
-              : undefined,
-          paddingBottom:
-            rest.pb === undefined && rest.py === undefined ? 128 : undefined,
-        },
-      }}
-      pb={nextId ? 6 : 4}
+      p={p}
+      py={py}
+      pt={pt}
+      pb={pb}
       color={color}
-      style={{ backgroundColor: bg }}
+      style={{ backgroundColor: bg, ...style }}
+      css={css`
+        min-height: 100vh;
+        position: relative;
+        scroll-snap-align: start;
+        @supports (clip-path: polygon(0 0, 100vw 100vh)) {
+          clip-path: polygon(
+            0 ${Math.max(angle, 0)}vh,
+            0 100%,
+            100% 100%,
+            100% ${Math.max(-angle, 0)}vh
+          );
+          margin-top: -${Math.abs(angle)}vh;
+          padding-top: ${pt == null
+            ? `calc(${Math.abs(angle)}vh + 32px)`
+            : undefined};
+          padding-bottom: ${pb == null ? 128 : undefined};
+        }
+      `}
       {...rest}
     >
       {children}
