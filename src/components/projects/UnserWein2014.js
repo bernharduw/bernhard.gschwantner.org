@@ -8,9 +8,9 @@ import ProjectTeaser from './ProjectTeaser';
 
 export default function Unserwein2014Teaser(props) {
   return (
-    <PageSection as="article" bg="#7a0033" color="#fff" {...props}>
+    <PageSection as="article" bg="#a6114f" color="#fff" {...props}>
       <ProjectTeaser
-        bg="#7a0033"
+        bg="#a6114f"
         reverse={props.reverse}
         title="unserwein.at"
         subtitle="Superseded in 2018 by the relaunched site"

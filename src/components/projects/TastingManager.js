@@ -36,7 +36,7 @@ export default function GschwantnerOrgTeaser(props) {
               <Feature>Redux</Feature>
               <Feature>CouchDB</Feature>
             </Features>
-            <Features title="Art direction">
+            <Features title="Design">
               <Feature>Alexander Ullrich</Feature>
             </Features>
           </>

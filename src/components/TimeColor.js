@@ -2,10 +2,10 @@ import React from 'react';
 import { mix } from 'polished';
 
 const timeColors = [
-  { time: 4, color: '#2196f3' },
-  { time: 12, color: '#e250db' },
-  { time: 16, color: '#ea5971' },
-  { time: 24, color: '#6046bd' },
+  { time: 8, color: '#6046bd' },
+  { time: 16, color: '#74acdc' },
+  { time: 19, color: '#d45e72' },
+  { time: 24, color: '#4D94AA' },
 ];
 
 function getTimeColor(date) {
@@ -26,7 +26,7 @@ export default class TimeColor extends React.PureComponent {
   interval = undefined;
 
   componentDidMount() {
-    this.setState({ color: getTimeColor(new Date()) });
+    this.setState({ color: getTimeColor(new Date('2017 18:00:00 GMT+01:00')) });
     // Update the color every 10 minutes.
     this.interval = setInterval(
       () => this.setState({ color: getTimeColor(new Date()) }),

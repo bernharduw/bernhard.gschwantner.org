@@ -8,9 +8,9 @@ import ProjectTeaser from './ProjectTeaser';
 
 export default function SumeraTeaser(props) {
   return (
-    <PageSection as="article" bg="#91168C" color="#fff" {...props}>
+    <PageSection as="article" bg="#cb6d8b" color="#fff" {...props}>
       <ProjectTeaser
-        bg="#91168C"
+        bg="#cb6d8b"
         reverse={props.reverse}
         title="Sumera Quiz app"
         subtitle="unpublished"

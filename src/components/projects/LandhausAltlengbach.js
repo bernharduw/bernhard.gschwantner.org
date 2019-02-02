@@ -9,9 +9,9 @@ import ProjectTeaser from './ProjectTeaser';
 
 export default function LandhausAltlengbachTeaser(props) {
   return (
-    <PageSection as="article" bg="#49592A" color="#fff" {...props}>
+    <PageSection as="article" bg="#d6c999" color="#000" {...props}>
       <ProjectTeaser
-        bg="#49592A"
+        bg="#d6c999"
         reverse={props.reverse}
         title="Landhaus Altlengbach"
         subtitle="altlengbach.netlify.com"
@@ -45,7 +45,7 @@ export default function LandhausAltlengbachTeaser(props) {
           experimented with custom page transitions and animations in
           conjunction with Gatsby, a static site renderer.
         </P>
-        <Button color="#fff" hoverColor="#49592A" mt={2} mb={4} disabled>
+        <Button color="#000" hoverColor="#d6c999" mt={2} mb={4} disabled>
           Read more (soon)
         </Button>
       </ProjectTeaser>
