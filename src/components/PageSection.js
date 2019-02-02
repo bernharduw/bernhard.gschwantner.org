@@ -35,6 +35,7 @@ export default function PageSection({
           )}vh,0 100%, 100% 100%,100% ${Math.max(-angle, 0)}vh)`,
           marginTop: `-${Math.abs(angle)}vh`,
           paddingTop: `calc(${Math.abs(angle)}vh + 32px)`,
+          paddingBottom: 128,
         },
       }}
       pb={nextId ? 6 : 4}
