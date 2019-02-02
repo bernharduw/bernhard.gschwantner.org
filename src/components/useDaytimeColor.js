@@ -24,12 +24,15 @@ function getDaytimeColor(date) {
 export default function useDaytimeColor(initialTime = new Date()) {
   const [color, setColor] = React.useState(getDaytimeColor(initialTime));
   React.useEffect(() => {
+    // Adjust the color every 10 minutes.
     const interval = setInterval(
       () => setColor(getDaytimeColor(new Date())),
-      600000 // Adjust the color every 10 minutes.
+      600000
     );
+    // Update the color immediately once
+    // because with server side rendering the wrong color is rendered.
+    setColor(getDaytimeColor(new Date()));
     return () => clearInterval(interval);
   }, []);
-  console.log(color, `${new Date().getHours()}:${new Date().getMinutes()}`);
   return color;
 }

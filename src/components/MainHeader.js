@@ -23,10 +23,6 @@ function getGradient(color) {
 }
 
 const Background = styled(PageSection)`
-  background-image: linear-gradient(
-    to bottom left,
-    ${props => getGradient(props.bg)}
-  );
   background-attachment: fixed;
   background-size: 400% 100%;
   background-position: 100% 50%;
@@ -58,10 +54,17 @@ function Header({
       <AnimatedBackground
         bg={bg}
         color={color}
-        py={[0, 0]}
+        pt={0}
+        pb={0}
         alignItems="center"
         flexDirection={['column', 'row']}
         justifyContent="space-between"
+        style={{
+          backgroundColor: bg,
+          backgroundImage: `linear-gradient(to bottom left, ${getGradient(
+            bg
+          )})`,
+        }}
         {...props}
       />
     );
@@ -71,17 +74,23 @@ function Header({
     <Background
       bg={bg}
       color={color}
-      py={[0, 0]}
+      pt={4}
+      pb={0}
       alignItems="center"
       flexDirection={['column', 'row']}
       justifyContent="space-between"
+      style={{
+        backgroundImage: `linear-gradient(to bottom left, ${getGradient(bg)})`,
+      }}
       {...props}
     />
   );
 }
 
 function MainHeader({ id, nextId }) {
-  const bg = useDaytimeColor(new Date());
+  const bg = useDaytimeColor();
+  // console.log(bg, `${new Date().getHours()}:${new Date().getMinutes()}`);
+
   return (
     <Header
       // animate
