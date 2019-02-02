@@ -103,7 +103,7 @@ function MainHeader({ id, nextId }) {
         </Title>
 
         <Text mb={5} css="max-width: 16em;">
-          I'm a long-time software developer, founder and tech enthusiast.
+          I'm a long-time full stack engineer, founder and tech enthusiast.
         </Text>
         <Button href={`#${nextId}`} color="#fff" hoverColor={bg} fontSize={2}>
           More about me <FiChevronsDown />
