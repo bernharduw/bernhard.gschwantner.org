@@ -26,7 +26,7 @@ export default function PageSection({
       pt={4}
       pb={nextId ? 6 : 4}
       color={color}
-      bg={bg}
+      style={{ backgroundColor: bg }}
       {...rest}
     >
       {children}

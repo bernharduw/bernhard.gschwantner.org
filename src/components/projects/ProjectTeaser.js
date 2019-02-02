@@ -51,7 +51,6 @@ export default function ProjectTeaser({
   boxed = true,
   children,
 }) {
-  const alignHeading = reverse ? 'inherit' : ['inherit', 'right'];
   const contentDirection = reverse ? 'row-reverse' : 'row';
   return (
     <div>
@@ -62,19 +61,17 @@ export default function ProjectTeaser({
           position: sticky;
           top: 0;
           z-index: 1;
-          background-color: ${bg};
         `
         }
+        style={{ backgroundColor: bg }}
       >
-        <ProjectHeader flexDirection={['row', reverse ? 'row' : 'row-reverse']}>
-          <ProjectTitle textAlign={alignHeading}>{title}</ProjectTitle>
+        <ProjectHeader>
+          <ProjectTitle>{title}</ProjectTitle>
           <Year>{year}</Year>
         </ProjectHeader>
       </Container>
       <Container>
-        <Subtitle href={href} textAlign={alignHeading}>
-          {subtitle}
-        </Subtitle>
+        <Subtitle href={href}>{subtitle}</Subtitle>
       </Container>
       <Flex
         as={boxed ? Container : undefined}
@@ -82,19 +79,21 @@ export default function ProjectTeaser({
         flexDirection={contentDirection}
         css="overflow: hidden;"
       >
-        <Box width={pictureWidth}>{picture}</Box>
+        <Box px={2} pt={[4, 5]} mb={4} width={pictureWidth}>
+          {picture}
+        </Box>
         <SemiContainer
           as={boxed ? Box : undefined}
           width={textWidth}
           pt={[4, 5]}
+          px={2}
           mb={4}
           reverse={reverse}
-          css={{ display: 'flex' }}
         >
-          <Flex flexDirection="column" justifyContent="space-between" flex="1">
-            <section>{children}</section>
-            <section>{features}</section>
-          </Flex>
+          <Box as="section" mb={4}>
+            {children}
+          </Box>
+          <Box as="section">{features}</Box>
         </SemiContainer>
       </Flex>
     </div>
