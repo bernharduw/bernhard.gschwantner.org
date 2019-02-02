@@ -13,17 +13,30 @@ export default function PageSection({
   children,
   ...rest
 }) {
+  // Create an positive or negative angle between 2 and 6 vh.
+  const [angle] = React.useState(
+    (Math.random() * 4 + 2) * (Math.random() > 0.5 ? 1 : -1)
+  );
+
   return (
     <Flex
       id={id}
       flexDirection="column"
       justifyContent="center"
+      pt={4}
       css={{
         minHeight: '100vh',
         position: 'relative',
         scrollSnapAlign: 'start',
+        '@supports(clip-path: polygon(0 0,100vw 100vh))': {
+          clipPath: `polygon(0 ${Math.max(
+            angle,
+            0
+          )}vh,0 100%, 100% 100%,100% ${Math.max(-angle, 0)}vh)`,
+          marginTop: `-${Math.abs(angle)}vh`,
+          paddingTop: `calc(${Math.abs(angle)}vh + 32px)`,
+        },
       }}
-      pt={4}
       pb={nextId ? 6 : 4}
       color={color}
       style={{ backgroundColor: bg }}
@@ -36,6 +49,7 @@ export default function PageSection({
           href={`#${nextId}`}
           title="Go to next page"
           bottom={0}
+          pb={5}
           color={color}
           hoverColor={bg}
         >
