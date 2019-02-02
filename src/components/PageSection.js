@@ -16,47 +16,51 @@ export default function PageSection({
   pt,
   pb,
   children,
+  angle: initialAngle = 64 * (Math.random() >= 0.5 ? 1 : -1),
   ...rest
 }) {
   // Create a positive or negative angle between 2 and 6 vh.
-  const [angle] = React.useState(
-    (Math.random() * 4 + 2) * (Math.random() > 0.5 ? 1 : -1)
-  );
+  const [angle] = React.useState(initialAngle);
   // Slide through the padding defaults from p to py to pt
   // and from p to py to pb. If nothing is defined use the base value:
   // scale 4 top padding,
   // and if there's a next button use scale 6, otherwise scale 4 for bottom padding.
-  pt = pt == null ? (py == null ? 4 : py) : pt;
-  pb = pb == null ? (py == null ? (p == null ? (nextId ? 6 : 4) : p) : py) : pb;
+  const paddingTop = pt == null ? (py == null ? 4 : py) : pt;
+  const paddingBottom =
+    pb == null ? (py == null ? (p == null ? (nextId ? 6 : 4) : p) : py) : pb;
   return (
     <Flex
       id={id}
       flexDirection="column"
       justifyContent="center"
       p={p}
-      py={py}
-      pt={pt}
-      pb={pb}
+      pt={paddingTop}
+      pb={paddingBottom}
       color={color}
       style={{ backgroundColor: bg, ...style }}
-      css={css`
-        min-height: 100vh;
-        position: relative;
-        scroll-snap-align: start;
-        @supports (clip-path: polygon(0 0, 100vw 100vh)) {
-          clip-path: polygon(
-            0 ${Math.max(angle, 0)}vh,
-            0 100%,
-            100% 100%,
-            100% ${Math.max(-angle, 0)}vh
-          );
-          margin-top: -${Math.abs(angle)}vh;
-          padding-top: ${pt == null
-            ? `calc(${Math.abs(angle)}vh + 32px)`
-            : undefined};
-          padding-bottom: ${pb == null ? 128 : undefined};
-        }
-      `}
+      css={[
+        css`
+          min-height: 100vh;
+          position: relative;
+          scroll-snap-align: start;
+        `,
+        angle &&
+          css`
+            @supports (clip-path: polygon(0 0, 100vw 100vh)) {
+              clip-path: polygon(
+                0 ${Math.max(angle, 0)}px,
+                0 100%,
+                100% 100%,
+                100% ${Math.max(-angle, 0)}px
+              );
+              margin-top: -${Math.abs(angle)}px;
+              padding-top: ${pt == null
+                ? `${Math.abs(angle) + 32}px`
+                : undefined};
+              padding-bottom: 128px;
+            }
+          `,
+      ]}
       {...rest}
     >
       {children}

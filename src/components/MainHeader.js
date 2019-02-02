@@ -41,6 +41,7 @@ function Header({
       color={color}
       pt={4}
       pb={0}
+      angle={0}
       alignItems="center"
       flexDirection={['column', 'row']}
       justifyContent="space-between"
