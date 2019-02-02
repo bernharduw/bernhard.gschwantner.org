@@ -46,7 +46,7 @@ export default function FrameScreenshot(props) {
               fluid(
                 maxWidth: 853
                 quality: 100
-                traceSVG: { color: "#555", threshold: 2 }
+                traceSVG: { color: "#555", threshold: 220 }
               ) {
                 ...GatsbyImageSharpFluid_withWebp_tracedSVG
               }
