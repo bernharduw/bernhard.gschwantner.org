@@ -29,7 +29,7 @@ function Year(props) {
 function Subtitle(props) {
   return (
     <Link
-      variant="hover"
+      variant="link"
       css={{ opacity: 0.75, display: 'block' }}
       pb={2}
       {...props}
