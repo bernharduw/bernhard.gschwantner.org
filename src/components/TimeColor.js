@@ -21,28 +21,15 @@ function getTimeColor(date) {
   return mix(mixFactor, next.color, previous.color);
 }
 
-export default class TimeColor extends React.PureComponent {
-  state = { color: undefined };
-  interval = undefined;
-
-  componentDidMount() {
-    this.setState({ color: getTimeColor(new Date('2017 18:00:00 GMT+01:00')) });
-    // Update the color every 10 minutes.
-    this.interval = setInterval(
-      () => this.setState({ color: getTimeColor(new Date()) }),
-      600000
+export default function TimeColor({ children, initialTime = new Date() }) {
+  const [color, setColor] = React.useState(getTimeColor(initialTime));
+  React.useEffect(() => {
+    const interval = setInterval(
+      () => setColor(getTimeColor(new Date())),
+      600000 // Adjust the color every 10 minutes.
     );
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  render() {
-    console.log(
-      this.state.color,
-      `${new Date().getHours()}:${new Date().getMinutes()}`
-    );
-    return this.props.children(this.state.color);
-  }
+    return () => clearInterval(interval);
+  }, []);
+  console.log(color, `${new Date().getHours()}:${new Date().getMinutes()}`);
+  return children(color);
 }
