@@ -8,7 +8,7 @@ const timeColors = [
   { time: 24, color: '#4D94AA' },
 ];
 
-function getTimeColor(date) {
+function getDaytimeColor(date) {
   const currentTime = date.getHours() + date.getMinutes() / 60;
   const nextIndex = timeColors.findIndex(({ time }) => time > currentTime);
   const previousIndex = nextIndex === 0 ? timeColors.length - 1 : nextIndex - 1;
@@ -21,15 +21,15 @@ function getTimeColor(date) {
   return mix(mixFactor, next.color, previous.color);
 }
 
-export default function TimeColor({ children, initialTime = new Date() }) {
-  const [color, setColor] = React.useState(getTimeColor(initialTime));
+export default function useDaytimeColor(initialTime = new Date()) {
+  const [color, setColor] = React.useState(getDaytimeColor(initialTime));
   React.useEffect(() => {
     const interval = setInterval(
-      () => setColor(getTimeColor(new Date())),
+      () => setColor(getDaytimeColor(new Date())),
       600000 // Adjust the color every 10 minutes.
     );
     return () => clearInterval(interval);
   }, []);
   console.log(color, `${new Date().getHours()}:${new Date().getMinutes()}`);
-  return children(color);
+  return color;
 }

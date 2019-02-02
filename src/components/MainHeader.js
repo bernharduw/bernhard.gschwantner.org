@@ -8,7 +8,7 @@ import styled, { keyframes } from 'styled-components';
 import Button from '../components/Button';
 import SemiContainer from '../components/SemiContainer';
 import { P, Title } from '../components/Text';
-import TimeColor from '../components/TimeColor';
+import useDaytimeColor from '../components/useDaytimeColor';
 import PageSection from './PageSection';
 
 function getGradient(color) {
@@ -81,51 +81,43 @@ function Header({
 }
 
 function MainHeader({ id, nextId }) {
+  const bg = useDaytimeColor(new Date());
   return (
-    <TimeColor>
-      {bg => (
-        <Header
-          // animate
-          bg={bg}
-          color="#fff"
-          id={id}
+    <Header
+      // animate
+      bg={bg}
+      color="#fff"
+      id={id}
+    >
+      <SemiContainer width={[1, 1 / 2]} fontSize={[3, 4]} py={5}>
+        <P mb={1}>Hi, my name is</P>
+        <Title
+          fontSize={[6, 7, 8, 96]}
+          mb={[3, 4]}
+          css={{ whiteSpace: 'nowrap' }}
         >
-          <SemiContainer width={[1, 1 / 2]} fontSize={[3, 4]} py={5}>
-            <P mb={1}>Hi, my name is</P>
-            <Title
-              fontSize={[6, 7, 8, 96]}
-              mb={[3, 4]}
-              css={{ whiteSpace: 'nowrap' }}
-            >
-              Bernhard{' '}
-              <P fontSize={[5, 6, 6, 8]} as="small" css="display:block;">
-                Gschwantner.
-              </P>
-            </Title>
+          Bernhard{' '}
+          <P fontSize={[5, 6, 6, 8]} as="small" css="display:block;">
+            Gschwantner.
+          </P>
+        </Title>
 
-            <Text mb={5} css="max-width: 16em;">
-              I'm a long-time software developer, founder and tech enthusiast.
-            </Text>
-            <Button
-              href={`#${nextId}`}
-              color="#fff"
-              hoverColor={bg}
-              fontSize={2}
-            >
-              More about me <FiChevronsDown />
-            </Button>
-          </SemiContainer>
+        <Text mb={5} css="max-width: 16em;">
+          I'm a long-time software developer, founder and tech enthusiast.
+        </Text>
+        <Button href={`#${nextId}`} color="#fff" hoverColor={bg} fontSize={2}>
+          More about me <FiChevronsDown />
+        </Button>
+      </SemiContainer>
 
-          <Box width={[1, 1 / 2]} alignSelf="flex-end">
-            <StaticQuery query={query}>
-              {({ headerImage: { childImageSharp } }) => (
-                <Image fluid={childImageSharp.fluid} critical />
-              )}
-            </StaticQuery>
-          </Box>
-        </Header>
-      )}
-    </TimeColor>
+      <Box width={[1, 1 / 2]} alignSelf="flex-end">
+        <StaticQuery query={query}>
+          {({ headerImage: { childImageSharp } }) => (
+            <Image fluid={childImageSharp.fluid} critical />
+          )}
+        </StaticQuery>
+      </Box>
+    </Header>
   );
 }
 
