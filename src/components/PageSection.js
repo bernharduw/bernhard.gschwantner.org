@@ -34,8 +34,12 @@ export default function PageSection({
             0
           )}vh,0 100%, 100% 100%,100% ${Math.max(-angle, 0)}vh)`,
           marginTop: `-${Math.abs(angle)}vh`,
-          paddingTop: `calc(${Math.abs(angle)}vh + 32px)`,
-          paddingBottom: 128,
+          paddingTop:
+            rest.pt === undefined && rest.py === undefined
+              ? `calc(${Math.abs(angle)}vh + 32px)`
+              : undefined,
+          paddingBottom:
+            rest.pb === undefined && rest.py === undefined ? 128 : undefined,
         },
       }}
       pb={nextId ? 6 : 4}
