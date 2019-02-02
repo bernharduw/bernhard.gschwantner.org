@@ -4,7 +4,7 @@ import { adjustHue, darken, lighten } from 'polished';
 import React from 'react';
 import { FiChevronsDown } from 'react-icons/fi';
 import { Box, Text } from 'rebass';
-import styled, { keyframes } from 'styled-components';
+import { css, keyframes } from 'styled-components';
 import Button from '../components/Button';
 import SemiContainer from '../components/SemiContainer';
 import { P, Title } from '../components/Text';
@@ -17,29 +17,15 @@ function getGradient(color) {
     darken(0.2, adjustHue(-10, color)),
     color,
     lighten(0.05, adjustHue(30, color)),
-  ].join(',');
+  ].join(', ');
   // console.log(gradient);
   return gradient;
 }
-
-const Background = styled(PageSection)`
-  background-attachment: fixed;
-  background-size: 400% 100%;
-  background-position: 100% 50%;
-  transition: background 4s ease-out;
-  &:hover {
-    background-position: 25% 50%;
-  }
-`;
 
 const panBackgroundHorizontally = keyframes`
   0% { background-position: 100% 50%; }
   50% { background-position: 0% 50%; }
   100% { background-position: 100% 50%; }
-`;
-
-const AnimatedBackground = styled(Background)`
-  animation: ${panBackgroundHorizontally} 20s ease-in-out infinite;
 `;
 
 function Header({
@@ -49,29 +35,8 @@ function Header({
   animate = false,
   ...props
 }) {
-  if (animate) {
-    return (
-      <AnimatedBackground
-        bg={bg}
-        color={color}
-        pt={0}
-        pb={0}
-        alignItems="center"
-        flexDirection={['column', 'row']}
-        justifyContent="space-between"
-        style={{
-          backgroundColor: bg,
-          backgroundImage: `linear-gradient(to bottom left, ${getGradient(
-            bg
-          )})`,
-        }}
-        {...props}
-      />
-    );
-  }
-
   return (
-    <Background
+    <PageSection
       bg={bg}
       color={color}
       pt={4}
@@ -82,6 +47,20 @@ function Header({
       style={{
         backgroundImage: `linear-gradient(to bottom left, ${getGradient(bg)})`,
       }}
+      css={`
+        background-attachment: fixed;
+        background-size: 400% 100%;
+        background-position: 100% 50%;
+        transition: background 4s ease-out;
+        &:hover {
+          background-position: 25% 50%;
+        }
+        ${animate
+          ? css`
+              animation: ${panBackgroundHorizontally} 20s ease-in-out infinite;
+            `
+          : ''}
+      `}
       {...props}
     />
   );
@@ -92,12 +71,7 @@ function MainHeader({ id, nextId }) {
   // console.log(bg, `${new Date().getHours()}:${new Date().getMinutes()}`);
 
   return (
-    <Header
-      // animate
-      bg={bg}
-      color="#fff"
-      id={id}
-    >
+    <Header /* animate */ bg={bg} color="#fff" id={id}>
       <SemiContainer width={[1, 1 / 2]} fontSize={[3, 4]} py={5}>
         <P mb={1}>Hi, my name is</P>
         <Title
