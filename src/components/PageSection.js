@@ -16,7 +16,7 @@ export default function PageSection({
   pt,
   pb,
   children,
-  angle: initialAngle = 64 * (Math.random() >= 0.5 ? 1 : -1),
+  angle: initialAngle /* = 64 * (Math.random() >= 0.5 ? 1 : -1) */,
   ...rest
 }) {
   // Create a positive or negative angle between 2 and 6 vh.
