@@ -18,7 +18,7 @@ function getGradient(color) {
     color,
     lighten(0.05, adjustHue(30, color)),
   ].join(', ');
-  // console.log(gradient);
+  console.log('gradient', gradient);
   return gradient;
 }
 
@@ -35,6 +35,7 @@ function Header({
   animate = false,
   ...props
 }) {
+  console.log(bg, 'in Header');
   return (
     <PageSection
       bg={bg}
@@ -69,7 +70,7 @@ function Header({
 
 function MainHeader({ id, nextId }) {
   const bg = useDaytimeColor();
-  // console.log(bg, `${new Date().getHours()}:${new Date().getMinutes()}`);
+  console.log(bg, `${new Date().getHours()}:${new Date().getMinutes()}`);
 
   return (
     <Header /* animate */ bg={bg} color="#fff" id={id}>
