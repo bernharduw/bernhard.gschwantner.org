@@ -23,8 +23,7 @@ const Laptop = styled(Image).attrs({
 
 const Frame = styled.div`
   position: relative;
-  padding: 12.5%;
-  // margin: -2.5%; /* Make up for the transparent border on the laptop frame. */
+  padding: 4% 10% 8.5%;
 `;
 
 export function PureScreenshot(props) {
@@ -47,7 +46,7 @@ export default function FrameScreenshot(props) {
               fluid(
                 maxWidth: 853
                 quality: 100
-                traceSVG: { color: "#555", threshold: 2 }
+                traceSVG: { color: "#555", threshold: 220 }
               ) {
                 ...GatsbyImageSharpFluid_withWebp_tracedSVG
               }

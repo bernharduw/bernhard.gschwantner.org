@@ -8,9 +8,9 @@ import ProjectTeaser from './ProjectTeaser';
 
 export default function GschwantnerOrgTeaser(props) {
   return (
-    <PageSection as="article" bg="#CA336C" color="#fff" {...props}>
+    <PageSection as="article" bg="#a92859" color="#fff" {...props}>
       <ProjectTeaser
-        bg="#CA336C"
+        bg="#a92859"
         reverse={props.reverse}
         title="Personal site"
         subtitle="bernhard.gschwantner.org"

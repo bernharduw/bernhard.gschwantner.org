@@ -1,7 +1,7 @@
 import React from 'react';
 import { FiChevronsDown, FiChevronsUp } from 'react-icons/fi';
 import { Flex, Text } from 'rebass';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Link from './Link';
 
 export default function PageSection({
@@ -10,23 +10,57 @@ export default function PageSection({
   nextId,
   color,
   bg,
+  style,
+  p,
+  py,
+  pt,
+  pb,
   children,
+  angle: initialAngle /* = 64 * (Math.random() >= 0.5 ? 1 : -1) */,
   ...rest
 }) {
+  // Create a positive or negative angle between 2 and 6 vh.
+  const [angle] = React.useState(initialAngle);
+  // Slide through the padding defaults from p to py to pt
+  // and from p to py to pb. If nothing is defined use the base value:
+  // scale 4 top padding,
+  // and if there's a next button use scale 6, otherwise scale 4 for bottom padding.
+  const paddingTop = pt == null ? (py == null ? 4 : py) : pt;
+  const paddingBottom =
+    pb == null ? (py == null ? (p == null ? (nextId ? 6 : 4) : p) : py) : pb;
   return (
     <Flex
       id={id}
       flexDirection="column"
       justifyContent="center"
-      css={{
-        minHeight: '100vh',
-        position: 'relative',
-        scrollSnapAlign: 'start',
-      }}
-      pt={4}
-      pb={nextId ? 6 : 4}
+      p={p}
+      pt={paddingTop}
+      pb={paddingBottom}
       color={color}
-      bg={bg}
+      style={{ backgroundColor: bg, ...style }}
+      css={[
+        css`
+          min-height: 100vh;
+          position: relative;
+          scroll-snap-align: start;
+        `,
+        angle &&
+          css`
+            @supports (clip-path: polygon(0 0, 100vw 100vh)) {
+              clip-path: polygon(
+                0 ${Math.max(angle, 0)}px,
+                0 100%,
+                100% 100%,
+                100% ${Math.max(-angle, 0)}px
+              );
+              margin-top: -${Math.abs(angle)}px;
+              padding-top: ${pt == null
+                ? `${Math.abs(angle) + 32}px`
+                : undefined};
+              padding-bottom: 128px;
+            }
+          `,
+      ]}
       {...rest}
     >
       {children}
@@ -36,6 +70,7 @@ export default function PageSection({
           href={`#${nextId}`}
           title="Go to next page"
           bottom={0}
+          pb={5}
           color={color}
           hoverColor={bg}
         >

@@ -8,9 +8,9 @@ import ProjectTeaser from './ProjectTeaser';
 
 export default function AlexandraKleinheinzTeaser(props) {
   return (
-    <PageSection as="article" bg="#FB7888" color="#000" {...props}>
+    <PageSection as="article" bg="#f48693" color="#000" {...props}>
       <ProjectTeaser
-        bg="#FB7888"
+        bg="#f48693"
         reverse={props.reverse}
         title="Alexandra Kleinheinz"
         subtitle="www.alexandrakleinheinz.at"
