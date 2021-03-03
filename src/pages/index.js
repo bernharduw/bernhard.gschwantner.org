@@ -1,19 +1,18 @@
 import React from 'react';
-import Layout from '../components/layout';
-import MainHeader from '../components/MainHeader';
-import EventDirectoryTeaser from '../components/projects/EventDirectory';
-import UnserWein2018Teaser from '../components/projects/UnserWein2018';
-import GschwantnerOrgTeaser from '../components/projects/GschwantnerOrg';
-import TastingManagerTeaser from '../components/projects/TastingManager';
-import LandhausAltlengbachTeaser from '../components/projects/LandhausAltlengbach';
-import BrindlmayerTeaser from '../components/projects/Brindlmayer';
-import SumeraTeaser from '../components/projects/Sumera';
-import AlexandraKleinheinzTeaser from '../components/projects/AlexandraKleinheinz';
-import Unserwein2014Teaser from '../components/projects/UnserWein2014';
-import BGKSTeaser from '../components/projects/BGKS';
-import BrigitteKattTeaser from '../components/projects/BrigitteKatt';
 import About from '../components/About';
 import Footer from '../components/Footer';
+import Layout from '../components/layout';
+import MainHeader from '../components/MainHeader';
+import AlexandraKleinheinzTeaser from '../components/projects/AlexandraKleinheinz';
+import BGKSTeaser from '../components/projects/BGKS';
+import BrigitteKattTeaser from '../components/projects/BrigitteKatt';
+import BrindlmayerTeaser from '../components/projects/Brindlmayer';
+import EventDirectoryTeaser from '../components/projects/EventDirectory';
+import GschwantnerOrgTeaser from '../components/projects/GschwantnerOrg';
+import LandhausAltlengbachTeaser from '../components/projects/LandhausAltlengbach';
+import TastingManagerTeaser from '../components/projects/TastingManager';
+import Unserwein2014Teaser from '../components/projects/UnserWein2014';
+import UnserWein2018Teaser from '../components/projects/UnserWein2018';
 
 // function Post(props) {
 //   return <Box pb={4} as="section" {...props} />;
@@ -60,30 +59,30 @@ function IndexPage() {
           // previousId="landhaus-altlengbach"
           // nextId="sumera"
         />
-        <SumeraTeaser
+        {/* <SumeraTeaser
           reverse
           id="sumera"
           // previousId="brindlmayer"
           // nextId="alexandra-kleinheinz"
-        />
+        /> */}
         <AlexandraKleinheinzTeaser
           id="alexandra-kleinheinz"
+          reverse
           // previousId="sumera"
           // nextId="unserwein-2014"
         />
         <Unserwein2014Teaser
-          reverse
           id="unserwein-2014"
           // previousId="alexandra-kleinheinz"
           // nextId="bgks"
         />
         <BGKSTeaser
+          reverse
           id="bgks"
           // previousId="unserwein-2014"
           // nextId="brigitte-katt"
         />
         <BrigitteKattTeaser
-          reverse
           id="brigitte-katt"
           // previousId="bgks"
           // nextId="blog"
